@@ -123,7 +123,7 @@ public class ProgramSessionBeanTest {
         try 
         {
             Context c = new InitialContext();
-            
+            //Not able to find program session bean local interface
             return (ProgramSessionBeanLocal) c.lookup("java:global/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/ProgramSessionBean!ejb.session.stateless.ProgramSessionBeanLocal");
         } 
         catch (NamingException ne)
