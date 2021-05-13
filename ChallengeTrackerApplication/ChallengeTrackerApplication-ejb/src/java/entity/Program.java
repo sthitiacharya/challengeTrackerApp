@@ -6,7 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,6 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Program.findByTitle", query = "SELECT p FROM Program p WHERE p.title = :title"),
     @NamedQuery(name = "Program.findByDescription", query = "SELECT p FROM Program p WHERE p.description = :description"),
     @NamedQuery(name = "Program.findByStartDate", query = "SELECT p FROM Program p WHERE p.startDate = :startDate"),
-    @NamedQuery(name = "Program.findByTargetCompletionDate", query = "SELECT p FROM Program p WHERE p.targetCompletionDate = :targetCompletionDate")})
+    @NamedQuery(name = "Program.findByTargetCompletionDate", query = "SELECT p FROM Program p WHERE p.targetCompletionDate = :targetCompletionDate"),
+    @NamedQuery(name = "Program.findByActualCompletionDate", query = "SELECT p FROM Program p WHERE p.actualCompletionDate = :actualCompletionDate"),
+    @NamedQuery(name = "Program.findByCurrentProgressRate", query = "SELECT p FROM Program p WHERE p.currentProgressRate = :currentProgressRate")})
 public class Program implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,11 +67,23 @@ public class Program implements Serializable {
     @Column(name = "targetCompletionDate")
     @Temporal(TemporalType.DATE)
     private Date targetCompletionDate;
+    @Column(name = "actualCompletionDate")
+    @Temporal(TemporalType.DATE)
+    private Date actualCompletionDate;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "currentProgressRate")
+    private Double currentProgressRate;
+    @JoinTable(name = "programmembers", joinColumns = {
+        @JoinColumn(name = "programId", referencedColumnName = "programId")}, inverseJoinColumns = {
+        @JoinColumn(name = "programMember", referencedColumnName = "userId")})
+    @ManyToMany
+    private List<User> userList;
     @JoinColumn(name = "programManager", referencedColumnName = "userId")
     @ManyToOne(optional = false)
     private User programManager;
 
     public Program() {
+        userList = new ArrayList<>();
     }
 
     public Program(Long programId) {
@@ -77,12 +96,13 @@ public class Program implements Serializable {
     }
 
     public Program(String title, String description, Date startDate, Date targetCompletionDate) {
+        this();
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.targetCompletionDate = targetCompletionDate;
     }
-
+   
     public Long getProgramId() {
         return programId;
     }
@@ -121,6 +141,31 @@ public class Program implements Serializable {
 
     public void setTargetCompletionDate(Date targetCompletionDate) {
         this.targetCompletionDate = targetCompletionDate;
+    }
+
+    public Date getActualCompletionDate() {
+        return actualCompletionDate;
+    }
+
+    public void setActualCompletionDate(Date actualCompletionDate) {
+        this.actualCompletionDate = actualCompletionDate;
+    }
+
+    public Double getCurrentProgressRate() {
+        return currentProgressRate;
+    }
+
+    public void setCurrentProgressRate(Double currentProgressRate) {
+        this.currentProgressRate = currentProgressRate;
+    }
+
+    @XmlTransient
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     public User getProgramManager() {

@@ -1,19 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb.session.stateless;
 
 import entity.Program;
 import entity.User;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -31,13 +32,12 @@ import util.exception.UserNotFoundException;
 @Stateless
 public class ProgramSessionBean implements ProgramSessionBeanLocal {
 
+    @EJB
+    private UserEntitySessionBeanLocal userSessionBeanLocal;
+
     @PersistenceContext(unitName = "ChallengeTrackerApplication-ejbPU")
     private EntityManager em;
     
-    @EJB(name="userSessionBeanLocal")
-    private UserEntitySessionBeanLocal userSessionBeanLocal;
-    
-
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
     
@@ -49,7 +49,7 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
         validator = validatorFactory.getValidator();
     }
     
-    /* public void persist(Object object) {
+   /* public void persist(Object object) {
         try {
             Context ctx = new InitialContext();
             UserTransaction utx = (UserTransaction) ctx.lookup("java:comp/env/UserTransaction");
@@ -122,20 +122,20 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
                     User programManager = userSessionBeanLocal.retrieveUserByUserId(programManagerId);
                     em.persist(program);
                     program.setProgramManager(programManager);
-                    programManager.getProgramCollection().add(program);
+                    programManager.getProgramsManaging().add(program);
                 }
                 else
                 {
                     throw new CreateNewProgramException("Program must be associated with a program manager");
                 }
-                
-                
-                if ((!userIds.isEmpty()) && userIds != null)
+                                
+                if (userIds != null && (!userIds.isEmpty()))
                 {
                     for (Long userId : userIds)
                     {
                         User user = userSessionBeanLocal.retrieveUserByUserId(userId);
-                        
+                        program.getUserList().add(user);
+                        user.getEnrolledPrograms().add(program);
                     }
                 }
 
@@ -158,10 +158,7 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
                 else
                 {
                     throw new UnknownPersistenceException(ex.getMessage());
-                }
-            //} catch (Exception e) {
-            //    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            //    throw new RuntimeException(e);
+                }           
             } catch (UserNotFoundException ex) {
                 throw new CreateNewProgramException();
             }
@@ -170,6 +167,13 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
         {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
+    }
+    
+    @Override
+    public List<Program> retrieveAllPrograms()
+    {
+        Query query = em.createQuery("SELECT p FROM Program p");
+        return query.getResultList();
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Program>>constraintViolations)

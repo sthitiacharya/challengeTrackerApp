@@ -6,7 +6,8 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -57,12 +59,24 @@ public class User implements Serializable {
     @Size(max = 255)
     @Column(name = "username")
     private String username;
+    @ManyToMany(mappedBy = "userList")
+    private List<Program> enrolledPrograms;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programManager")
-    private Collection<Program> programCollection;
+    private List<Program> programsManaging;
 
     public User() {
+        enrolledPrograms = new ArrayList<>();
+        programsManaging = new ArrayList<>();
     }
 
+    public User(String email, String mailingAddress, String password, String username) {
+        this();
+        this.email = email;
+        this.mailingAddress = mailingAddress;
+        this.password = password;
+        this.username = username;
+    }
+    
     public User(Long userId) {
         this.userId = userId;
     }
@@ -108,12 +122,21 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Program> getProgramCollection() {
-        return programCollection;
+    public List<Program> getEnrolledPrograms() {
+        return enrolledPrograms;
     }
 
-    public void setProgramCollection(Collection<Program> programCollection) {
-        this.programCollection = programCollection;
+    public void setEnrolledPrograms(List<Program> enrolledPrograms) {
+        this.enrolledPrograms = enrolledPrograms;
+    }
+
+    @XmlTransient
+    public List<Program> getProgramsManaging() {
+        return programsManaging;
+    }
+
+    public void setProgramsManaging(List<Program> programsManaging) {
+        this.programsManaging = programsManaging;
     }
 
     @Override

@@ -1,14 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ejb.session.stateless;
 
 import entity.Program;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -26,10 +26,7 @@ import util.exception.InputDataValidationException;
 import util.exception.ProgramTitleExistException;
 import util.exception.UnknownPersistenceException;
 
-/**
- *
- * @author sthit
- */
+
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProgramSessionBeanTest {
 
@@ -68,7 +65,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, null);
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(1l);
+        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);
         
         assertNotNull(actualProgramId);
         assertEquals(1l, actualProgramId.longValue());        
@@ -82,7 +81,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, null);     
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(1l);
+        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);     
     }
 
     @Test(expected = InputDataValidationException.class)
@@ -93,7 +94,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, null);     
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(1l);
+        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);     
     }
 
     @Test(expected = CreateNewProgramException.class)
@@ -104,7 +107,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 2l, null);     
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(1l);
+        Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 2l, userIds);     
     }
  
     @Test(expected = CreateNewProgramException.class)
@@ -117,17 +122,14 @@ public class ProgramSessionBeanTest {
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
         Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, null, null);     
     }
-    
-    private static ProgramSessionBeanLocal lookupProgramSessionBeanLocal()
-    {
-        try 
-        {
+          
+
+    private static ProgramSessionBeanLocal lookupProgramSessionBeanLocal() {
+        try {
             Context c = new InitialContext();
-            //Not able to find program session bean local interface
             return (ProgramSessionBeanLocal) c.lookup("java:global/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/ProgramSessionBean!ejb.session.stateless.ProgramSessionBeanLocal");
-        } 
-        catch (NamingException ne)
-        {
+        } catch (NamingException ne) {
+            //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }

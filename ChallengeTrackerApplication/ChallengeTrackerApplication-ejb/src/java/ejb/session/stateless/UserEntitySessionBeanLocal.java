@@ -6,6 +6,7 @@
 package ejb.session.stateless;
 
 import entity.User;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.UserNotFoundException;
 
@@ -15,6 +16,8 @@ import util.exception.UserNotFoundException;
  */
 @Local
 public interface UserEntitySessionBeanLocal {
+    
+    public List<User> retrieveAllUsers();
     
     public User retrieveUserByUserId(Long userId) throws UserNotFoundException;
     

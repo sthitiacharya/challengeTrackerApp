@@ -1,0 +1,76 @@
+<section id="content" class="content">
+			
+	<h3>Create New Program</h3>
+	<br/>
+	
+	<div *ngIf="resultSuccess == true" style="color:blue;">
+		{{message}}
+	</div>
+	
+	<div *ngIf="resultError == true" style="color:red;">
+		{{message}}
+	</div>
+		
+    <form #createProgramForm="ngForm" (ngSubmit)="create(createProgramForm)" >
+	
+		<table width="100%">			
+			<tr>
+				<td width="20%" style="font-weight: bold;">Program Title: </td>
+				<td><input id="title" name="title" #title="ngModel" type="text" [(ngModel)]="newProgram.title" required="true" /></td>
+				<td>
+					<div *ngIf="title.invalid && (title.dirty || title.touched || submitted)" class="errorText">
+						<div *ngIf="title.errors != null && title.errors.required">
+							Program Title is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Program Description: </td>
+				<td><input id="description" name="description" #description="ngModel" type="text" [(ngModel)]="newProgram.description"/></td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Program Start Date: </td>
+				<td><input id="startDate" name="startDate" #startDate="ngModel" type="date" placeholder="yyyy-mm-dd" [(ngModel)]="newProgram.startDate" required="true" /></td>
+				<td>
+					<div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched || submitted)" class="errorText">
+						<div *ngIf="startDate.errors != null && startDate.errors.required">
+							Start Date is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Program Target Completion Date: </td>
+				<td><input id="targetCompletionDate" name="targetCompletionDate" #targetCompletionDate="ngModel" type="date" placeholder="yyyy-mm-dd" [(ngModel)]="newProgram.targetCompletionDate" required="true" /></td>
+				<td>
+					<div *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
+						<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
+							Target Completion Date is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Assign Users to Program: </td>
+				<td>
+					<select id="user" name="user" [(ngModel)]="userIds" multiple="true">
+						<option *ngFor="let user of users" value="{{user.userId}}">{{user.username}}</option>
+					</select>
+					
+				</td>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align: center;">
+					<input type="submit" value="Create New Program" />
+				</td>
+			</tr>
+			
+		</table>
+		
+	</form>
+	
+</section>

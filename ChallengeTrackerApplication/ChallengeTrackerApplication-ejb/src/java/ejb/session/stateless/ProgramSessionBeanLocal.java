@@ -21,4 +21,5 @@ import util.exception.UnknownPersistenceException;
 public interface ProgramSessionBeanLocal {
     public Long createProgram(Program program) throws ProgramTitleExistException, UnknownPersistenceException, InputDataValidationException;
     public Long createProgram(Program program, Long programManagerId, List<Long> userIds) throws ProgramTitleExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProgramException;
+    public List<Program> retrieveAllPrograms();
 }
