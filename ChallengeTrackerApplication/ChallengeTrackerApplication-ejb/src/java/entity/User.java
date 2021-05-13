@@ -61,12 +61,18 @@ public class User implements Serializable {
     private String username;
     @ManyToMany(mappedBy = "userList")
     private List<Program> enrolledPrograms;
+    @OneToMany(mappedBy = "assignedUser")
+    private List<Milestone> milestoneList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "milestoneCreatedBy")
+    private List<Milestone> milestonesCreated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programManager")
     private List<Program> programsManaging;
 
     public User() {
-        enrolledPrograms = new ArrayList<>();
-        programsManaging = new ArrayList<>();
+        this.enrolledPrograms = new ArrayList<>();
+        this.programsManaging = new ArrayList<>();
+        this.milestoneList = new ArrayList<>();
+        this.milestonesCreated = new ArrayList<>();
     }
 
     public User(String email, String mailingAddress, String password, String username) {
@@ -76,7 +82,7 @@ public class User implements Serializable {
         this.password = password;
         this.username = username;
     }
-    
+ 
     public User(Long userId) {
         this.userId = userId;
     }
@@ -128,6 +134,24 @@ public class User implements Serializable {
 
     public void setEnrolledPrograms(List<Program> enrolledPrograms) {
         this.enrolledPrograms = enrolledPrograms;
+    }
+
+    @XmlTransient
+    public List<Milestone> getMilestoneList() {
+        return milestoneList;
+    }
+
+    public void setMilestoneList(List<Milestone> milestoneList) {
+        this.milestoneList = milestoneList;
+    }
+
+    @XmlTransient
+    public List<Milestone> getMilestonesCreated() {
+        return milestonesCreated;
+    }
+
+    public void setMilestonesCreated(List<Milestone> milestonesCreated) {
+        this.milestonesCreated = milestonesCreated;
     }
 
     @XmlTransient

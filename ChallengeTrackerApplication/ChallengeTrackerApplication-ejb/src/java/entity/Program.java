@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -78,12 +80,15 @@ public class Program implements Serializable {
         @JoinColumn(name = "programMember", referencedColumnName = "userId")})
     @ManyToMany
     private List<User> userList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "programId")
+    private List<Milestone> milestoneList;
     @JoinColumn(name = "programManager", referencedColumnName = "userId")
     @ManyToOne(optional = false)
     private User programManager;
 
     public Program() {
-        userList = new ArrayList<>();
+        this.userList = new ArrayList<>();
+        this.milestoneList = new ArrayList<>();
     }
 
     public Program(Long programId) {
@@ -102,7 +107,7 @@ public class Program implements Serializable {
         this.startDate = startDate;
         this.targetCompletionDate = targetCompletionDate;
     }
-   
+
     public Long getProgramId() {
         return programId;
     }
@@ -166,6 +171,15 @@ public class Program implements Serializable {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    @XmlTransient
+    public List<Milestone> getMilestoneList() {
+        return milestoneList;
+    }
+
+    public void setMilestoneList(List<Milestone> milestoneList) {
+        this.milestoneList = milestoneList;
     }
 
     public User getProgramManager() {

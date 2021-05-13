@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
 
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ejb.session.stateless.ProgramSessionBeanTest.class})
+@Suite.SuiteClasses({ejb.session.stateless.ProgramSessionBeanTest.class, ejb.session.stateless.MilestoneSessionBeanTest.class})
 
 public class TestSuite 
 {

@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateNewProgramComponent } from './program/create-new-program/create-new-program.component';
+import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/create-new-milestone.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateNewProgramComponent
+    CreateNewProgramComponent,
+    CreateNewMilestoneComponent
   ],
   imports: [
     BrowserModule,

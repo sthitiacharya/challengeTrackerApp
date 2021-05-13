@@ -1,0 +1,114 @@
+<section id="content" class="content">
+			
+	<h3>Create New Milestone</h3>
+	<br/>
+	
+	<div *ngIf="resultSuccess == true" style="color:blue;">
+		{{message}}
+	</div>
+	
+	<div *ngIf="resultError == true" style="color:red;">
+		{{message}}
+	</div>
+		
+    <form #createMilestoneForm="ngForm" (ngSubmit)="create(createMilestoneForm)" >
+	
+		<table width="100%">			
+			<tr>
+				<td width="20%" style="font-weight: bold;">Milestone Title: </td>
+				<td><input id="title" name="title" #title="ngModel" type="text" [(ngModel)]="newMilestone.title" required="true" /></td>
+				<td>
+					<div *ngIf="title.invalid && (title.dirty || title.touched || submitted)" class="errorText">
+						<div *ngIf="title.errors != null && title.errors.required">
+							Program Title is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Milestone Description: </td>
+				<td><input id="description" name="description" #description="ngModel" type="text" [(ngModel)]="newMilestone.description"/></td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Milestone Target Completion Date: </td>
+				<td><input id="targetCompletionDate" name="targetCompletionDate" #targetCompletionDate="ngModel" type="date" placeholder="yyyy-mm-dd" [(ngModel)]="newMilestone.targetCompletionDate" required="true" /></td>
+				<td>
+					<div *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
+						<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
+							Target Completion Date is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Milestone Type: </td>
+				<td>
+                    <select #milestoneType="ngModel" [(ngModel)]="newMilestone.milestoneType">
+                        <option value="Individual">Individual</option>
+                        <option value="Program">Program</option>
+                    </select>
+                </td>
+				<td>
+					<div *ngIf="milestoneType.invalid && (milestoneType.dirty || milestoneType.touched || submitted)" class="errorText">
+						<div *ngIf="milestoneType.errors != null && milestoneType.errors.required">
+							Milestone type is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">How would you like to measure your milestone by?</td>
+				<td><input id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" /></td>
+				<td>
+					<div *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
+						<div *ngIf="valueType.errors != null && valueType.errors.required">
+							Milestone type is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Initial Value: </td>
+				<td><input id="initialValue" name="initialValue" #initialValue="ngModel" type="text" [(ngModel)]="newMilestone.initialValue" required="true" /></td>
+				<td>
+					<div *ngIf="initialValue.invalid && (initialValue.dirty || initialValue.touched || submitted)" class="errorText">
+						<div *ngIf="initialValue.errors != null && initialValue.errors.required">
+							Initial value is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Target Value: </td>
+				<td><input id="targetValue" name="targetValue" #targetValue="ngModel" type="text" [(ngModel)]="newMilestone.targetValue" required="true" /></td>
+				<td>
+					<div *ngIf="targetValue.invalid && (targetValue.dirty || targetValue.touched || submitted)" class="errorText">
+						<div *ngIf="targetValue.errors != null && targetValue.errors.required">
+							Target Value is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Reward Value: </td>
+				<td><input id="rewardValue" name="rewardValue" #rewardValue="ngModel" type="text" [(ngModel)]="newMilestone.rewardValue" required="true" /></td>
+				<td>
+					<div *ngIf="rewardValue.invalid && (rewardValue.dirty || rewardValue.touched || submitted)" class="errorText">
+						<div *ngIf="rewardValue.errors != null && rewardValue.errors.required">
+							Reward Value is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align: center;">
+                    <button routerLink="/program/createProgram">Back</button>
+					<input type="submit" value="Create New Milestone" />
+				</td>
+			</tr>
+			
+		</table>
+		
+	</form>
+	
+</section>

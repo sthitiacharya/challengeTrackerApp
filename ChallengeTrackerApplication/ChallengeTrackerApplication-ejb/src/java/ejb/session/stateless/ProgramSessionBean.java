@@ -21,6 +21,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.CreateNewProgramException;
 import util.exception.InputDataValidationException;
+import util.exception.ProgramNotFoundException;
 import util.exception.ProgramTitleExistException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UserNotFoundException;
@@ -49,21 +50,6 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
         validator = validatorFactory.getValidator();
     }
     
-   /* public void persist(Object object) {
-        try {
-            Context ctx = new InitialContext();
-            UserTransaction utx = (UserTransaction) ctx.lookup("java:comp/env/UserTransaction");
-            utx.begin();
-            EntityManager em = (EntityManager) ctx.lookup("java:comp/env/persistence/LogicalName");
-            em.persist(object);
-            utx.commit();
-        } catch (Exception e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            throw new RuntimeException(e);
-        }
-    }
-    */
-
     @Override
     public Long createProgram(Program program) throws ProgramTitleExistException, UnknownPersistenceException, InputDataValidationException
     {
@@ -72,13 +58,8 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
         if (constraintViolations.isEmpty())
         {
             try {
-            //Context ctx = new InitialContext();
-            //UserTransaction utx = (UserTransaction) ctx.lookup("java:comp/env/UserTransaction");
-            //utx.begin();
-            //EntityManager em = (EntityManager) ctx.lookup("java:comp/env/persistence/LogicalName");
                 em.persist(program);
                 em.flush();
-                //utx.commit();
                 return program.getProgramId();
             }
             catch (PersistenceException ex)
@@ -98,9 +79,6 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
                 {
                     throw new UnknownPersistenceException(ex.getMessage());
                 }
-            //} catch (Exception e) {
-            //    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", e);
-            //    throw new RuntimeException(e);
             }
         }
         else
@@ -172,8 +150,24 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
     @Override
     public List<Program> retrieveAllPrograms()
     {
-        Query query = em.createQuery("SELECT p FROM Program p");
+        Query query = em.createNamedQuery("Program.findAll");
         return query.getResultList();
+    }
+    
+    @Override
+     public Program retrieveProgramByProgramId(Long programId) throws ProgramNotFoundException
+    {
+       
+        Program program = em.find(Program.class, programId);
+        
+        if(program != null)
+        {
+            return program;
+        }
+        else
+        {
+            throw new ProgramNotFoundException("Program ID " + programId + " does not exist!");
+        }
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Program>>constraintViolations)

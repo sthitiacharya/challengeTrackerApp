@@ -27,7 +27,8 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     @Override
     public List<User> retrieveAllUsers()
     {
-        Query query = em.createQuery("SELECT u FROM User u");
+        //Query query = em.createQuery("SELECT u FROM User u");
+        Query query = em.createNamedQuery("User.findAll");
         return query.getResultList();
     }
     
