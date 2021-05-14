@@ -81,7 +81,7 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
                 {
                     if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
                     {
-                        throw new MilestoneTitleExistException();
+                        throw new MilestoneTitleExistException("Milestone Title already exists");
                     }
                     else
                     {
@@ -93,7 +93,7 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
                     throw new UnknownPersistenceException(ex.getMessage());
                 }           
             } catch (ProgramNotFoundException ex) {
-                throw new CreateNewMilestoneException();
+                throw new CreateNewMilestoneException("Invalid Program ID keyed in");
             }
         }
         else

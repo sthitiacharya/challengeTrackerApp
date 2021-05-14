@@ -57,7 +57,7 @@ public class Program implements Serializable {
     private Long programId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 64)
+    @Size(min = 4, max = 64)
     @Column(name = "title")
     private String title;
     @Size(max = 255)

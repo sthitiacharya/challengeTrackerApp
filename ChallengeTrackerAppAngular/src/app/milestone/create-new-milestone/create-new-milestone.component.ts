@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 import { MilestoneService } from "../../services/milestone.service";
 import { Milestone } from "../../models/milestone";
 
-
 @Component({
   selector: 'app-create-new-milestone',
   templateUrl: './create-new-milestone.component.html',
@@ -26,7 +25,7 @@ export class CreateNewMilestoneComponent implements OnInit {
     private milestoneService: MilestoneService) {
       this.submitted = false;
       this.newMilestone = new Milestone();
-      this.programId = 4;
+      this.programId = null;
 
       this.resultSuccess = false;
       this.resultError = false;
@@ -38,11 +37,12 @@ export class CreateNewMilestoneComponent implements OnInit {
   create(createMilestoneForm: NgForm)
 	{	
 		this.submitted = true;
-		let progId = this.activatedRoute.snapshot.paramMap.get('programId');
+		let progId = this.milestoneService.getProgramId();
 		if (progId != null)
 		{
-			this.programId = parseInt(progId);
+			this.programId = progId;
 		}
+		
 		if (createMilestoneForm.valid) 
 		{
 			this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(

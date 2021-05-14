@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 
 import { ProgramService } from "../../services/program.service";
 import { UserService } from "../../services/user.service";
+import { MilestoneService } from "../../services/milestone.service";
 import { Program } from "../../models/program";
 import { User } from "../../models/user";
 
@@ -29,7 +30,8 @@ export class CreateNewProgramComponent implements OnInit {
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private programService: ProgramService,
-              private userService: UserService) { 
+              private userService: UserService,
+			  private milestoneService: MilestoneService) { 
 
     this.submitted = false;
     this.newProgram = new Program();
@@ -72,6 +74,7 @@ export class CreateNewProgramComponent implements OnInit {
 			this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds, this.startDate, this.targetCompletionDate).subscribe(
 				response => {
 					let newProgramId: number = response;
+					this.milestoneService.setProgramId(newProgramId);
 					this.resultSuccess = true;
 					this.resultError = false;
 					this.message = "New program " + newProgramId + " created successfully";

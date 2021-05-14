@@ -126,7 +126,7 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
                 {
                     if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
                     {
-                        throw new ProgramTitleExistException();
+                        throw new ProgramTitleExistException("Program Title already exists");
                     }
                     else
                     {
@@ -138,7 +138,7 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
                     throw new UnknownPersistenceException(ex.getMessage());
                 }           
             } catch (UserNotFoundException ex) {
-                throw new CreateNewProgramException();
+                throw new CreateNewProgramException("Invalid User ID keyed in");
             }
         }
         else

@@ -15,6 +15,7 @@ const httpOptions = {
 })
 export class MilestoneService {
   baseUrl: string = "/api/Milestone";
+  programId: number | undefined | null;
   constructor(private httpClient : HttpClient) { }
 
   createNewMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
@@ -43,5 +44,15 @@ export class MilestoneService {
     console.error(errorMessage);
     
     return throwError(errorMessage);		
+  }
+
+  setProgramId(programId?: number | null)
+  {
+    this.programId = programId;
+  }
+
+  getProgramId()
+  {
+    return this.programId;
   }
 }
