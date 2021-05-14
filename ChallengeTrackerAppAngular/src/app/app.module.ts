@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateNewProgramComponent } from './program/create-new-program/create-new-program.component';
 import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/create-new-milestone.component';
+import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateNewProgramComponent,
-    CreateNewMilestoneComponent
+    CreateNewMilestoneComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
