@@ -17,7 +17,9 @@ export class RegisterUserComponent implements OnInit {
 	resultError: boolean;
 	message: string | undefined;
 
-  constructor(private userService: UserService) 
+  constructor(private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService) 
   { 
     this.submitted = false;
     this.newUser = new User();
@@ -27,7 +29,7 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  
+
   create(createUserForm: NgForm){
     this.submitted = true;
     if(createUserForm.valid){
