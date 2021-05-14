@@ -8,6 +8,7 @@ package ws.rest;
 import ejb.session.stateless.ProgramSessionBeanLocal;
 import entity.Program;
 import entity.User;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -88,7 +89,12 @@ public class ProgramResource {
             {
                 System.out.println("In createProgram RESTful Web Service");
                 //System.out.println("Program ID: " + createProgramReq.getProgram().getProgramId());
-                //Date date = new SimpleDateFormat("dd-MM-yyyy").parse(createProgramReq.getProgram().getStartDate());
+                //String startDate = (createProgramReq.getStartDate()).toString();
+                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(createProgramReq.getStartDate());
+                createProgramReq.getProgram().setStartDate(date);
+                //String targetCompletionDate = (createProgramReq.getTargetCompletionDate()).toString();
+                Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(createProgramReq.getTargetCompletionDate());
+                createProgramReq.getProgram().setTargetCompletionDate(date2);
                 //Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
                 Long programId = programSessionBeanLocal.createProgram(createProgramReq.getProgram(), createProgramReq.getUserId(), createProgramReq.getUserIds());
                 System.out.println("********** ProgramResource.createProgram(): Program " + programId + " details passed in via web service");
@@ -96,6 +102,11 @@ public class ProgramResource {
             }
             catch(CreateNewProgramException | ProgramTitleExistException ex)
             {
+                return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+            }
+            catch (ParseException ex)
+            {
+                System.out.println("Date parsed incorrectly");
                 return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
             }
             catch(Exception ex)

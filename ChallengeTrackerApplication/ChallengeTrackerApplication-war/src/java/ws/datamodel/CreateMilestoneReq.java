@@ -15,10 +15,16 @@ public class CreateMilestoneReq {
     
     private Milestone milestone;
     private Long programId;
+    private String targetCompletionDate;
 
-    public CreateMilestoneReq(Milestone milestone, Long programId) {
+    public CreateMilestoneReq()
+    {
+        
+    }
+    public CreateMilestoneReq(Milestone milestone, Long programId, String targetCompletionDate) {
         this.milestone = milestone;
         this.programId = programId;
+        this.targetCompletionDate = targetCompletionDate;
     }
 
     /**
@@ -47,6 +53,20 @@ public class CreateMilestoneReq {
      */
     public void setProgramId(Long programId) {
         this.programId = programId;
+    }
+
+    /**
+     * @return the targetCompletionDate
+     */
+    public String getTargetCompletionDate() {
+        return targetCompletionDate;
+    }
+
+    /**
+     * @param targetCompletionDate the targetCompletionDate to set
+     */
+    public void setTargetCompletionDate(String targetCompletionDate) {
+        this.targetCompletionDate = targetCompletionDate;
     }
     
     

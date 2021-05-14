@@ -6,6 +6,9 @@
 package ws.rest;
 
 import ejb.session.stateless.MilestoneSessionBeanLocal;
+import ejb.session.stateless.UserEntitySessionBeanLocal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -30,7 +33,10 @@ import ws.datamodel.CreateMilestoneReq;
 @Path("Milestone")
 public class MilestoneResource {
 
+    UserEntitySessionBeanLocal userEntitySessionBean = lookupUserEntitySessionBeanLocal();
+
     MilestoneSessionBeanLocal milestoneSessionBean = lookupMilestoneSessionBeanLocal();
+    
 
     @Context
     private UriInfo context;
@@ -52,6 +58,11 @@ public class MilestoneResource {
             try
             {
                 System.out.println("In createMilestone RESTful Web Service");
+                Date creationDate = new Date();
+                createMilestoneReq.getMilestone().setCreationDate(creationDate);
+                Date date = new SimpleDateFormat("dd-MM-yyyy").parse(createMilestoneReq.getTargetCompletionDate());
+                createMilestoneReq.getMilestone().setTargetCompletionDate(date);
+                createMilestoneReq.getMilestone().setMilestoneCreatedBy(userEntitySessionBean.retrieveUserByUserId(1l));
                 Long milestoneId = milestoneSessionBean.createMilestone(createMilestoneReq.getMilestone(), createMilestoneReq.getProgramId());
                 System.out.println("********** MilestoneResource.createMilestone(): Milestone " + milestoneId + " details passed in via web service");
                 
@@ -76,6 +87,16 @@ public class MilestoneResource {
         try {
             javax.naming.Context c = new InitialContext();
             return (MilestoneSessionBeanLocal) c.lookup("java:global/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/MilestoneSessionBean!ejb.session.stateless.MilestoneSessionBeanLocal");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private UserEntitySessionBeanLocal lookupUserEntitySessionBeanLocal() {
+        try {
+            javax.naming.Context c = new InitialContext();
+            return (UserEntitySessionBeanLocal) c.lookup("java:global/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/UserEntitySessionBean!ejb.session.stateless.UserEntitySessionBeanLocal");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

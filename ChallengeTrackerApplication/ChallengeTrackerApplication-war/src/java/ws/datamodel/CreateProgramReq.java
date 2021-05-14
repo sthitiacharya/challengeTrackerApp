@@ -16,14 +16,19 @@ public class CreateProgramReq {
     private Program program;
     private Long userId;
     private List<Long> userIds;
-
+    
+    private String startDate;
+    private String targetCompletionDate;
+    
     public CreateProgramReq() {
     }
 
-    public CreateProgramReq(Program program, Long userId, List<Long> userIds) {
+    public CreateProgramReq(Program program, Long userId, List<Long> userIds, String startDate, String targetCompletionDate) {
         this.program = program;
         this.userId = userId;
         this.userIds = userIds;
+        this.startDate = startDate;
+        this.targetCompletionDate = targetCompletionDate;
     }
 
     /**
@@ -66,6 +71,34 @@ public class CreateProgramReq {
      */
     public void setUserIds(List<Long> userIds) {
         this.userIds = userIds;
+    }
+
+    /**
+     * @return the startDate
+     */
+    public String getStartDate() {
+        return startDate;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return the targetCompletionDate
+     */
+    public String getTargetCompletionDate() {
+        return targetCompletionDate;
+    }
+
+    /**
+     * @param targetCompletionDate the targetCompletionDate to set
+     */
+    public void setTargetCompletionDate(String targetCompletionDate) {
+        this.targetCompletionDate = targetCompletionDate;
     }
 
 }

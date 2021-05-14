@@ -7,10 +7,15 @@ export class CreateProgramReq {
     userId: number | undefined | null;
     userIds: number[] | undefined;
 
-    constructor(program?: Program, userId?: number | null, userIds?: number[])
+    startDate: string | undefined | null;
+    targetCompletionDate: string | undefined | null;
+
+    constructor(program?: Program, userId?: number | null, userIds?: number[], startDate?: string | null, targetCompletionDate?: string | null)
     {
         this.program = program;
         this.userId = userId;
         this.userIds = userIds;
+        this.startDate = startDate;
+        this.targetCompletionDate = targetCompletionDate;
     }
 }

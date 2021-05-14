@@ -1,6 +1,6 @@
 <section id="content" class="content">
 			
-	<h3>Create New Milestone</h3>
+	<h3>Create New Program - Adding Milestones</h3>
 	<br/>
 	
 	<div *ngIf="resultSuccess == true" style="color:blue;">
@@ -31,19 +31,19 @@
 			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">Milestone Target Completion Date: </td>
-				<td><input id="targetCompletionDate" name="targetCompletionDate" #targetCompletionDate="ngModel" type="date" placeholder="yyyy-mm-dd" [(ngModel)]="newMilestone.targetCompletionDate" required="true" /></td>
-				<td>
+				<td><input id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" /></td>
+				<!--<td>
 					<div *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
 						<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
 							Target Completion Date is required.
 						</div>
 					</div>
-				</td>
+				</td>-->
 			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">Milestone Type: </td>
 				<td>
-                    <select #milestoneType="ngModel" [(ngModel)]="newMilestone.milestoneType">
+                    <select id="milestoneType" name="milestoneType" #milestoneType="ngModel" [(ngModel)]="newMilestone.milestoneType">
                         <option value="Individual">Individual</option>
                         <option value="Program">Program</option>
                     </select>

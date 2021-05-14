@@ -13,12 +13,14 @@ import { User } from "../../models/user";
   styleUrls: ['./create-new-program.component.css']
 })
 export class CreateNewProgramComponent implements OnInit {
-  submitted: boolean;
+	submitted: boolean;
 	newProgram: Program;
 	programManager: number | null;
 	userIds: string[];
-	
-  users: User[];
+	startDate: string | undefined | null;
+	targetCompletionDate: string | undefined | null;
+
+	users: User[];
 
 	resultSuccess: boolean;
 	resultError: boolean;
@@ -34,9 +36,10 @@ export class CreateNewProgramComponent implements OnInit {
     this.programManager = 1;
     this.userIds = new Array();
     this.users = new Array();
-
+	this.startDate = null;
+	this.targetCompletionDate = null;
     this.resultSuccess = false;
-		this.resultError = false;
+	this.resultError = false;
   }
 
   ngOnInit(): void {
@@ -60,10 +63,13 @@ export class CreateNewProgramComponent implements OnInit {
 		}			
 	
 		this.submitted = true;
+
+		//let startDateString: string = this.parseDate(this.startDate);
+		//let targetDateString: string = this.parseDate(this.targetCompletionDate);
 		
 		if (createProgramForm.valid) 
 		{
-			this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds).subscribe(
+			this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds, this.startDate, this.targetCompletionDate).subscribe(
 				response => {
 					let newProgramId: number = response;
 					this.resultSuccess = true;
@@ -78,6 +84,18 @@ export class CreateNewProgramComponent implements OnInit {
 					console.log('********** CreateNewProgramComponent.ts: ' + error);
 				}
 			);
+		}
+	}
+
+	parseDate(d: Date | undefined | null)
+	{		
+		if(d != null)
+		{
+			return d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
+		}
+		else
+		{
+			return '';
 		}
 	}
 }

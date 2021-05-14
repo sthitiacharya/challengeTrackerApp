@@ -19,9 +19,9 @@ export class ProgramService {
   { 
   }
 
-  createNewProgram(program?: Program, userId?: number | null, userIds?: number[]): Observable<number>
+  createNewProgram(program?: Program, userId?: number | null, userIds?: number[], startDate?: string | null, targetCompletionDate?: string | null): Observable<number>
   {		
-    let createProgReq: CreateProgramReq = new CreateProgramReq(program, userId, userIds);
+    let createProgReq: CreateProgramReq = new CreateProgramReq(program, userId, userIds, startDate, targetCompletionDate);
 
     return this.httpClient.put<number>(this.baseUrl, createProgReq, httpOptions).pipe
     (

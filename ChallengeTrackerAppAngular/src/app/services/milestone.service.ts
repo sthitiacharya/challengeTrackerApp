@@ -17,9 +17,9 @@ export class MilestoneService {
   baseUrl: string = "/api/Milestone";
   constructor(private httpClient : HttpClient) { }
 
-  createNewMilestone(milestone?: Milestone, programId?: number | null): Observable<number>
+  createNewMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
   {		
-    let createMilestoneReq: CreateMilestoneReq = new CreateMilestoneReq(milestone, programId);
+    let createMilestoneReq: CreateMilestoneReq = new CreateMilestoneReq(milestone, programId, targetCompletionDate);
 
     return this.httpClient.put<number>(this.baseUrl, createMilestoneReq, httpOptions).pipe
     (

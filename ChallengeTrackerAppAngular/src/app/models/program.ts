@@ -4,13 +4,13 @@ export class Program {
     programId: number | undefined;
 	title: string | undefined;
     description: string | undefined;
-	startDate: Date | undefined;
+	startDate: string | undefined;
 	targetCompletionDate: Date | undefined;
 	programManager: User | undefined;
     users: User[] | undefined;
 	
 	
-	constructor(programId?: number, title?: string, description?: string, startDate?: Date, targetCompletionDate?: Date)
+	constructor(programId?: number, title?: string, description?: string, startDate?: string, targetCompletionDate?: Date)
 	{
 		this.programId = programId;		
 		this.title = title;

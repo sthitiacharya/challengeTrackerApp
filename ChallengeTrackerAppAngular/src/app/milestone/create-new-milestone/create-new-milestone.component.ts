@@ -12,9 +12,10 @@ import { Milestone } from "../../models/milestone";
   styleUrls: ['./create-new-milestone.component.css']
 })
 export class CreateNewMilestoneComponent implements OnInit {
-  submitted: boolean;
+  	submitted: boolean;
 	newMilestone: Milestone;
 	programId: number | null;
+	targetCompletionDate: string | undefined;
 
 	resultSuccess: boolean;
 	resultError: boolean;
@@ -25,7 +26,7 @@ export class CreateNewMilestoneComponent implements OnInit {
     private milestoneService: MilestoneService) {
       this.submitted = false;
       this.newMilestone = new Milestone();
-      this.programId = 1;
+      this.programId = 4;
 
       this.resultSuccess = false;
       this.resultError = false;
@@ -37,10 +38,14 @@ export class CreateNewMilestoneComponent implements OnInit {
   create(createMilestoneForm: NgForm)
 	{	
 		this.submitted = true;
-		
+		let progId = this.activatedRoute.snapshot.paramMap.get('productId');
+		if (progId != null)
+		{
+			this.programId = parseInt(progId);
+		}
 		if (createMilestoneForm.valid) 
 		{
-			this.milestoneService.createNewMilestone(this.newMilestone, this.programId).subscribe(
+			this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(
 				response => {
 					let newMilestoneId: number = response;
 					this.resultSuccess = true;
