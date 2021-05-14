@@ -65,6 +65,11 @@ public class ProgramResource {
             for(Program program : programs)
             {
                 program.getUserList().clear();
+                program.getMilestoneList().clear();
+                program.getProgramManager().getEnrolledPrograms().clear();
+                program.getProgramManager().getMilestoneList().clear();
+                program.getProgramManager().getMilestonesCreated().clear();
+                program.getProgramManager().getProgramsManaging().clear();
             }
             
             GenericEntity<List<Program>> genericEntity = new GenericEntity<List<Program>>(programs) {

@@ -38,7 +38,7 @@ export class CreateNewMilestoneComponent implements OnInit {
   create(createMilestoneForm: NgForm)
 	{	
 		this.submitted = true;
-		let progId = this.activatedRoute.snapshot.paramMap.get('productId');
+		let progId = this.activatedRoute.snapshot.paramMap.get('programId');
 		if (progId != null)
 		{
 			this.programId = parseInt(progId);

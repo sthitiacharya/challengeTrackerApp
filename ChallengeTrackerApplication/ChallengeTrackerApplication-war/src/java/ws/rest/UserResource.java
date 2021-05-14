@@ -6,6 +6,7 @@
 package ws.rest;
 
 import ejb.session.stateless.UserEntitySessionBeanLocal;
+import entity.Program;
 import entity.User;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,8 +58,20 @@ public class UserResource {
             
             for(User user : users)
             {
+                /*for (Program program : user.getEnrolledPrograms())
+                {
+                    program.getMilestoneList().clear();
+                    program.getUserList().clear();
+                }*/
                 user.getEnrolledPrograms().clear();
+                /*for (Program program : user.getProgramsManaging())
+                {
+                    program.getMilestoneList().clear();
+                    program.getUserList().clear();
+                }*/
                 user.getProgramsManaging().clear();
+                user.getMilestoneList().clear();
+                user.getMilestonesCreated().clear();
             }
             
             GenericEntity<List<User>> genericEntity = new GenericEntity<List<User>>(users) {
