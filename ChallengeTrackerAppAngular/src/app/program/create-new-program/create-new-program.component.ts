@@ -79,6 +79,7 @@ export class CreateNewProgramComponent implements OnInit {
 					this.resultSuccess = true;
 					this.resultError = false;
 					this.message = "New program " + newProgramId + " created successfully";
+					this.router.navigate(['/milestone/createMilestone']);
 				},
 				error => {
 					this.resultError = true;
