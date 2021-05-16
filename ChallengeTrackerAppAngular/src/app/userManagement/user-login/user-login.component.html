@@ -32,7 +32,8 @@
 
   <ng-template [ngIf]="sessionService.getIsLogin() == true">
     <div>Welcome, {{sessionService.getCurrentUser().username}}</div>
-    <input type="button" [routerLink]="['/program/createProgram']" value="Create Program" />    
+    <input type="button" [routerLink]="['/program/createProgram']" value="Create Program" />
+    <input type="button" (click)="userLogout()" value="Logout"/>    
   </ng-template>
   <br/><br/>
 </section>

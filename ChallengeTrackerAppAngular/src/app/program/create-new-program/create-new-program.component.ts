@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { ProgramService } from "../../services/program.service";
 import { UserService } from "../../services/user.service";
 import { MilestoneService } from "../../services/milestone.service";
+import { SessionService } from "../../services/session.service";
 import { Program } from "../../models/program";
 import { User } from "../../models/user";
 
@@ -16,7 +17,7 @@ import { User } from "../../models/user";
 export class CreateNewProgramComponent implements OnInit {
 	submitted: boolean;
 	newProgram: Program;
-	programManager: number | null;
+	programManager: number | undefined;
 	userIds: string[];
 	startDate: string | undefined | null;
 	targetCompletionDate: string | undefined | null;
@@ -31,11 +32,11 @@ export class CreateNewProgramComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private programService: ProgramService,
               private userService: UserService,
-			  private milestoneService: MilestoneService) { 
+			  private milestoneService: MilestoneService,
+			  private sessionService: SessionService) { 
 
     this.submitted = false;
     this.newProgram = new Program();
-    this.programManager = 1;
     this.userIds = new Array();
     this.users = new Array();
 	this.startDate = null;
@@ -68,7 +69,7 @@ export class CreateNewProgramComponent implements OnInit {
 
 		//let startDateString: string = this.parseDate(this.startDate);
 		//let targetDateString: string = this.parseDate(this.targetCompletionDate);
-		
+		this.programManager = this.sessionService.getCurrentUser().userId;
 		if (createProgramForm.valid) 
 		{
 			this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds, this.startDate, this.targetCompletionDate).subscribe(

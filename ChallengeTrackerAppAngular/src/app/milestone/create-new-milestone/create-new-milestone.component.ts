@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { MilestoneService } from "../../services/milestone.service";
+import { SessionService } from "../../services/session.service";
 import { Milestone } from "../../models/milestone";
 
 @Component({
@@ -22,7 +23,8 @@ export class CreateNewMilestoneComponent implements OnInit {
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
-    private milestoneService: MilestoneService) {
+    private milestoneService: MilestoneService,
+	private sessionService: SessionService) {
       this.submitted = false;
       this.newMilestone = new Milestone();
       this.programId = null;
@@ -42,7 +44,7 @@ export class CreateNewMilestoneComponent implements OnInit {
 		{
 			this.programId = progId;
 		}
-		
+		this.newMilestone.milestoneCreatedBy = this.sessionService.getCurrentUser();
 		if (createMilestoneForm.valid) 
 		{
 			this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(

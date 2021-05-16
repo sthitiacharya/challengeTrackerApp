@@ -62,7 +62,6 @@ public class MilestoneResource {
                 createMilestoneReq.getMilestone().setCreationDate(creationDate);
                 Date date = new SimpleDateFormat("dd-MM-yyyy").parse(createMilestoneReq.getTargetCompletionDate());
                 createMilestoneReq.getMilestone().setTargetCompletionDate(date);
-                createMilestoneReq.getMilestone().setMilestoneCreatedBy(userEntitySessionBean.retrieveUserByUserId(1l));
                 Long milestoneId = milestoneSessionBean.createMilestone(createMilestoneReq.getMilestone(), createMilestoneReq.getProgramId());
                 System.out.println("********** MilestoneResource.createMilestone(): Milestone " + milestoneId + " details passed in via web service");
                 
