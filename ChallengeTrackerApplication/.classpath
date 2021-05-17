@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="ChallengeTrackerApplication-ejb/src/java"/>
+	<classpathentry kind="src" path="ChallengeTrackerApplication-ejb/test"/>
+	<classpathentry kind="src" path="ChallengeTrackerApplication-war/src/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

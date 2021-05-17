@@ -39,11 +39,11 @@ public class MilestoneSessionBeanTest {
     
     
     public MilestoneSessionBeanTest() {
-        milestoneSessionBean = lookupMilestoneSessionBeanLocal();
     }
     
     @BeforeClass
     public static void setUpClass() {
+        milestoneSessionBean = lookupMilestoneSessionBeanLocal();
     }
     
     @AfterClass

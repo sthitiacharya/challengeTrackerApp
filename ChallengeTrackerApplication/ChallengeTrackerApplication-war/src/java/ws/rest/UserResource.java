@@ -55,18 +55,17 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(User newUser) {
-        if (newUser != null) {
-            try {
-                Long userEntityId = userEntitySessionBeanLocal.createNewUser(newUser);
-                return Response.status(Response.Status.OK).entity(userEntityId).build();
-            } catch (UserUsernameExistException | UnknownPersistenceException ex) {
-                return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
-            } catch (InputDataValidationException ex) {
-                return Response.status(Status.UNAUTHORIZED).entity(ex.getMessage()).build();
-            }
-        } else {
+        if (newUser == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Invalid create new user request").build();
         }
+        try {
+            Long userEntityId = userEntitySessionBeanLocal.createNewUser(newUser);
+            return Response.status(Response.Status.OK).entity(userEntityId).build();
+        } catch (UserUsernameExistException | UnknownPersistenceException ex) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(ex.getMessage()).build();
+        } catch (InputDataValidationException ex) {
+            return Response.status(Status.UNAUTHORIZED).entity(ex.getMessage()).build();
+        }        
     }
     
     @Path("userLogin")

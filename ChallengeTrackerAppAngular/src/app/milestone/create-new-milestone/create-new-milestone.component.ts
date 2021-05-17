@@ -45,23 +45,27 @@ export class CreateNewMilestoneComponent implements OnInit {
 			this.programId = progId;
 		}
 		this.newMilestone.milestoneCreatedBy = this.sessionService.getCurrentUser();
-		if (createMilestoneForm.valid) 
+		if (createMilestoneForm.invalid)
 		{
-			this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(
-				response => {
-					let newMilestoneId: number = response;
-					this.resultSuccess = true;
-					this.resultError = false;
-					this.message = "New milestone " + newMilestoneId + " created successfully";
-				},
-				error => {
-					this.resultError = true;
-					this.resultSuccess = false;
-					this.message = "An error has occurred while creating the new program: " + error;
-					
-					console.log('********** CreateNewMilestoneComponent.ts: ' + error);
-				}
-			);
+			this.resultError = true;
+			this.resultSuccess = false;
+			this.message = "An error has occurred while creating the new milestone";
+			console.log('********** CreateNewMilestoneComponent.ts: ERROR **********');
 		}
+		this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(
+			response => {
+				let newMilestoneId: number = response;
+				this.resultSuccess = true;
+				this.resultError = false;
+				this.message = "New milestone " + newMilestoneId + " created successfully";
+			},
+			error => {
+				this.resultError = true;
+				this.resultSuccess = false;
+				this.message = "An error has occurred while creating the new program: " + error;
+				
+				console.log(`********** CreateNewMilestoneComponent.ts: ${error}`);
+			}
+		);		
 	}
 }

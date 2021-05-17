@@ -56,40 +56,41 @@ export class CreateNewProgramComponent implements OnInit {
 		);
   }
 
-  create(createProgramForm: NgForm)
-	{	
+  create(createProgramForm: NgForm) {	
 		let longUserIds: number[] = new Array();
 		
 		for(var i = 0; i < this.userIds.length; i++)
 		{
 			longUserIds.push(parseInt(this.userIds[i]));
 		}			
-	
-		this.submitted = true;
 
-		//let startDateString: string = this.parseDate(this.startDate);
-		//let targetDateString: string = this.parseDate(this.targetCompletionDate);
+		this.submitted = true;
 		this.programManager = this.sessionService.getCurrentUser().userId;
-		if (createProgramForm.valid) 
+		if (createProgramForm.invalid)
 		{
-			this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds, this.startDate, this.targetCompletionDate).subscribe(
-				response => {
-					let newProgramId: number = response;
-					this.milestoneService.setProgramId(newProgramId);
-					this.resultSuccess = true;
-					this.resultError = false;
-					this.message = "New program " + newProgramId + " created successfully";
-					this.router.navigate(['/milestone/createMilestone']);
-				},
-				error => {
-					this.resultError = true;
-					this.resultSuccess = false;
-					this.message = "An error has occurred while creating the new program: " + error;
-					
-					console.log('********** CreateNewProgramComponent.ts: ' + error);
-				}
-			);
+			this.resultError = true;
+			this.resultSuccess = false;
+			this.message = "An error has occurred while creating the new program";
+			
+			console.log('********** CreateNewProgramComponent.ts: error');
 		}
+		this.programService.createNewProgram(this.newProgram, this.programManager, longUserIds, this.startDate, this.targetCompletionDate).subscribe(
+			response => {
+				let newProgramId: number = response;
+				this.milestoneService.setProgramId(newProgramId);
+				this.resultSuccess = true;
+				this.resultError = false;
+				this.message = "New program " + newProgramId + " created successfully";
+				this.router.navigate(['/milestone/createMilestone']);
+			},
+			error => {
+				this.resultError = true;
+				this.resultSuccess = false;
+				this.message = "An error has occurred while creating the new program: " + error;
+				
+				console.log(`********** CreateNewProgramComponent.ts: ${error}`);
+			}
+		);
 	}
 
 	parseDate(d: Date | undefined | null)

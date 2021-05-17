@@ -41,17 +41,17 @@ export class UserLoginComponent implements OnInit {
       (response: any) => {
         let user: User = response;
 
-        if (user != null) {
-          this.sessionService.setIsLogin(true);
-          this.sessionService.setCurrentUser(user);
-          this.loginError = false;
-
-          this.childEvent.emit();
-
-          this.router.navigate(['/index']);
-        } else {
+        if (user == null)
+        {
           this.loginError = true;
         }
+        this.sessionService.setIsLogin(true);
+        this.sessionService.setCurrentUser(user);
+        this.loginError = false;
+
+        this.childEvent.emit();
+
+        this.router.navigate(['/index']);
       },
       (error: string | undefined) => {
         this.loginError = true;

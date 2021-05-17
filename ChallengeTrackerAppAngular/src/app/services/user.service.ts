@@ -23,6 +23,7 @@ export class UserService {
       catchError(this.handleError)
     )
   }
+
   userLogin(username: string | undefined, password: string | undefined): Observable<User> {
     return this.httpClient.get<User>(this.baseUrl +'/userLogin?username=' + username +'&password=' + 
     password).pipe(catchError(this.handleError));
