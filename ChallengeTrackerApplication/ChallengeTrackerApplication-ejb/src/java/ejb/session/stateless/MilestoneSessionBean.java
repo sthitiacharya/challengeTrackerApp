@@ -35,7 +35,7 @@ import util.exception.UserNotFoundException;
 public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
 
     @PersistenceContext(unitName = "ChallengeTrackerApplication-ejbPU")
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @EJB
     private ProgramSessionBeanLocal programSessionBeanLocal;
@@ -56,49 +56,45 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
     public Long createMilestone(Milestone newMilestone, Long programId) throws MilestoneTitleExistException, UnknownPersistenceException, CreateNewMilestoneException, InputDataValidationException
     {
         Set<ConstraintViolation<Milestone>>constraintViolations = validator.validate(newMilestone);
-        
-        if (constraintViolations.isEmpty())
-        {
-            try {
-                if (programId != null)
-                {
-                    Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
-                    em.persist(newMilestone);
-                    newMilestone.setProgramId(program);
-                    program.getMilestoneList().add(newMilestone);
-                }
-                else
-                {
-                    throw new CreateNewMilestoneException("Milestone must be associated with a program");
-                }
-                
-                em.flush();
-                return newMilestone.getMilestoneId();
-            }
-            catch (PersistenceException ex)
+        try {
+            if (!constraintViolations.isEmpty())
             {
-                if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            }
+            if (programId != null)
+            {
+                Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
+                entityManager.persist(newMilestone);
+                newMilestone.setProgramId(program);
+                program.getMilestoneList().add(newMilestone);
+            }
+            else
+            {
+                throw new CreateNewMilestoneException("Milestone must be associated with a program");
+            }
+
+            entityManager.flush();
+            return newMilestone.getMilestoneId();
+        }
+        catch (PersistenceException ex)
+        {
+            if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+            {
+                if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
                 {
-                    if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                    {
-                        throw new MilestoneTitleExistException("Milestone Title already exists");
-                    }
-                    else
-                    {
-                        throw new UnknownPersistenceException(ex.getMessage());
-                    }
+                    throw new MilestoneTitleExistException("Milestone Title already exists");
                 }
                 else
                 {
                     throw new UnknownPersistenceException(ex.getMessage());
-                }           
-            } catch (ProgramNotFoundException ex) {
-                throw new CreateNewMilestoneException("Invalid Program ID keyed in");
+                }
             }
-        }
-        else
-        {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            else
+            {
+                throw new UnknownPersistenceException(ex.getMessage());
+            }           
+        } catch (ProgramNotFoundException ex) {
+            throw new CreateNewMilestoneException("Invalid Program ID keyed in");
         }
     }
     
