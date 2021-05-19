@@ -61,38 +61,32 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
             {
                 throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
-            if (programId != null)
-            {
-                Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
-                entityManager.persist(newMilestone);
-                newMilestone.setProgramId(program);
-                program.getMilestoneList().add(newMilestone);
-            }
-            else
+            
+            if (programId == null)
             {
                 throw new CreateNewMilestoneException("Milestone must be associated with a program");
             }
 
+            Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
+            entityManager.persist(newMilestone);
+            newMilestone.setProgramId(program);
+            program.getMilestoneList().add(newMilestone);
+
             entityManager.flush();
             return newMilestone.getMilestoneId();
         }
+        
         catch (PersistenceException ex)
         {
-            if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+            if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
             {
-                if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                {
-                    throw new MilestoneTitleExistException("Milestone Title already exists");
-                }
-                else
-                {
-                    throw new UnknownPersistenceException(ex.getMessage());
-                }
+                throw new MilestoneTitleExistException("Milestone Title already exists");
             }
             else
             {
                 throw new UnknownPersistenceException(ex.getMessage());
-            }           
+            }         
+            
         } catch (ProgramNotFoundException ex) {
             throw new CreateNewMilestoneException("Invalid Program ID keyed in");
         }

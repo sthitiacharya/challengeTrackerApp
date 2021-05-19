@@ -66,16 +66,10 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
         }
         catch (PersistenceException ex)
         {
-            if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+            //catch constraint violation when persisting object to database
+            if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
             {
-                if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                {
-                    throw new ProgramTitleExistException();
-                }
-                else
-                {
-                    throw new UnknownPersistenceException(ex.getMessage());
-                }
+                throw new ProgramTitleExistException();
             }
             else
             {
