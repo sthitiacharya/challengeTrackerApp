@@ -57,15 +57,17 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
 
             return newUserEntity.getUserId();
         } catch (PersistenceException ex) {
-            if (ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException")) {
+            //identify database exception
+            //if (ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException")) {
+                //within the database, catch the constraint violation exception
                 if (ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
                     throw new UserUsernameExistException();
                 } else {
                     throw new UnknownPersistenceException(ex.getMessage());
                 }
-            } else {
-                throw new UnknownPersistenceException(ex.getMessage());
-            }
+            //} else {
+            //    throw new UnknownPersistenceException(ex.getMessage());
+            //}
         }
     }
     

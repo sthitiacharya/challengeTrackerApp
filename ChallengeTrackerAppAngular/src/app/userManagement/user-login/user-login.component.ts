@@ -44,6 +44,7 @@ export class UserLoginComponent implements OnInit {
         if (user == null)
         {
           this.loginError = true;
+          return;
         }
         this.sessionService.setIsLogin(true);
         this.sessionService.setCurrentUser(user);
@@ -61,9 +62,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   userLogout(): void {
-    this.sessionService.setIsLogin(false);
-    this.sessionService.setCurrentUser(null);
-
+    this.sessionService.setIsLogin(false); 
     this.router.navigate(['/index']);
   }
 
