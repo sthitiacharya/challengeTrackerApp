@@ -46,16 +46,16 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
 
     @Override
     public Long createNewUser(User newUserEntity) throws UserUsernameExistException, UnknownPersistenceException, InputDataValidationException {
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(newUserEntity);
         try {
+            Set<ConstraintViolation<User>> constraintViolations = validator.validate(newUserEntity);
             if (!constraintViolations.isEmpty())
             {
                 throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
             entityManager.persist(newUserEntity);
             entityManager.flush();
-
             return newUserEntity.getUserId();
+            
         } catch (PersistenceException ex) {
             //within the database, catch the constraint violation exception
             if (ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
@@ -69,7 +69,6 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     @Override
     public List<User> retrieveAllUsers()
     {
-        //Query query = em.createQuery("SELECT u FROM User u");
         Query query = entityManager.createNamedQuery("User.findAll");
         return query.getResultList();
     }
@@ -77,7 +76,6 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     @Override
     public User retrieveUserByUserId(Long userId) throws UserNotFoundException
     {
-       
         User userEntity = entityManager.find(User.class, userId);
         
         if(userEntity != null)
@@ -120,7 +118,7 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<User>> constraintViolations) {
-        String msg = "Input data validation error!:";
+        String msg = "Input data validation error:";
 
         for (ConstraintViolation constraintViolation : constraintViolations) {
             msg += "\n\t" + constraintViolation.getPropertyPath() + " - " + constraintViolation.getInvalidValue() + "; " + constraintViolation.getMessage();

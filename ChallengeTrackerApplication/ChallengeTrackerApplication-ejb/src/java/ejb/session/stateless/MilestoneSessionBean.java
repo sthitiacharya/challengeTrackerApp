@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Milestone;
 import entity.Program;
-import entity.User;
 import java.util.Set;
 import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolation;
@@ -19,13 +18,10 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.CreateNewMilestoneException;
-import util.exception.CreateNewProgramException;
 import util.exception.InputDataValidationException;
 import util.exception.MilestoneTitleExistException;
 import util.exception.ProgramNotFoundException;
-import util.exception.ProgramTitleExistException;
 import util.exception.UnknownPersistenceException;
-import util.exception.UserNotFoundException;
 
 /**
  *
@@ -42,7 +38,6 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
     
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
-    
     
     
     public MilestoneSessionBean()
@@ -62,13 +57,17 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
                 throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
             
+            //ensures mandatory association of milestone with program
             if (programId == null)
             {
                 throw new CreateNewMilestoneException("Milestone must be associated with a program");
             }
 
+            //persisting of object into database
             Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
             entityManager.persist(newMilestone);
+            
+            //bi-directional association
             newMilestone.setProgramId(program);
             program.getMilestoneList().add(newMilestone);
 
@@ -92,9 +91,9 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
         }
     }
     
-     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Milestone>>constraintViolations)
+    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Milestone>>constraintViolations)
     {
-        String msg = "Input data validation error!:";
+        String msg = "Input data validation error:";
             
         for(ConstraintViolation constraintViolation:constraintViolations)
         {

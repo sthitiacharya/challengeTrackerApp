@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Program.findByDescription", query = "SELECT p FROM Program p WHERE p.description = :description"),
     @NamedQuery(name = "Program.findByStartDate", query = "SELECT p FROM Program p WHERE p.startDate = :startDate"),
     @NamedQuery(name = "Program.findByTargetCompletionDate", query = "SELECT p FROM Program p WHERE p.targetCompletionDate = :targetCompletionDate"),
-    @NamedQuery(name = "Program.findByActualCompletionDate", query = "SELECT p FROM Program p WHERE p.actualCompletionDate = :actualCompletionDate"),
+    @NamedQuery(name = "Program.findByActualCompletedDate", query = "SELECT p FROM Program p WHERE p.actualCompletedDate = :actualCompletedDate"),
     @NamedQuery(name = "Program.findByCurrentProgressRate", query = "SELECT p FROM Program p WHERE p.currentProgressRate = :currentProgressRate")})
 public class Program implements Serializable {
 
@@ -57,7 +57,7 @@ public class Program implements Serializable {
     private Long programId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 4, max = 64)
+    @Size(min = 1, max = 64)
     @Column(name = "title")
     private String title;
     @Size(max = 255)
@@ -69,9 +69,9 @@ public class Program implements Serializable {
     @Column(name = "targetCompletionDate")
     @Temporal(TemporalType.DATE)
     private Date targetCompletionDate;
-    @Column(name = "actualCompletionDate")
+    @Column(name = "actualCompletedDate")
     @Temporal(TemporalType.DATE)
-    private Date actualCompletionDate;
+    private Date actualCompletedDate;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "currentProgressRate")
     private Double currentProgressRate;
@@ -87,8 +87,8 @@ public class Program implements Serializable {
     private User programManager;
 
     public Program() {
-        this.userList = new ArrayList<>();
         this.milestoneList = new ArrayList<>();
+        this.userList = new ArrayList<>();
     }
 
     public Program(Long programId) {
@@ -148,12 +148,12 @@ public class Program implements Serializable {
         this.targetCompletionDate = targetCompletionDate;
     }
 
-    public Date getActualCompletionDate() {
-        return actualCompletionDate;
+    public Date getActualCompletedDate() {
+        return actualCompletedDate;
     }
 
-    public void setActualCompletionDate(Date actualCompletionDate) {
-        this.actualCompletionDate = actualCompletionDate;
+    public void setActualCompletedDate(Date actualCompletedDate) {
+        this.actualCompletedDate = actualCompletedDate;
     }
 
     public Double getCurrentProgressRate() {

@@ -1,11 +1,14 @@
 import { Program } from "./program";
 import { User } from "./user";
+import { ValueCategoryEnum } from "./value-category-enum.enum";
 
 export class Milestone {
     milestoneId: number | undefined;
 	title: string | undefined;
     description: string | undefined;
     milestoneType: string | undefined;
+    valueCategory: ValueCategoryEnum | undefined;
+    //valueCategory: string | undefined;
     valueType: string | undefined;
     initialValue: number | undefined;
     targetValue: number | undefined;
@@ -20,13 +23,14 @@ export class Milestone {
     assignedUser: User | undefined;
 
     constructor(milestoneId?: number, title?: string, description?: string, 
-        milestoneType?: string, valueType?: string, initialValue?: number, targetValue?: number, 
+        milestoneType?: string, valueCategory?: ValueCategoryEnum, valueType?: string, initialValue?: number, targetValue?: number, 
         targetCompletionDate?: Date, rewardValue?: number)
 	{
 		this.milestoneId = milestoneId;		
 		this.title = title;
 		this.description = description;
         this.milestoneType = milestoneType;
+        this.valueCategory = valueCategory;
         this.valueType = valueType;
         this.initialValue = initialValue;
         this.targetValue = targetValue;

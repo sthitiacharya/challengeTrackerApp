@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +9,8 @@ import { CreateNewProgramComponent } from './program/create-new-program/create-n
 import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/create-new-milestone.component';
 import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
 import { UserLoginComponent } from './userManagement/user-login/user-login.component';
+
+import { AuthInterceptor } from './helpers/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { UserLoginComponent } from './userManagement/user-login/user-login.compo
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

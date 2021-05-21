@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { MilestoneService } from "../../services/milestone.service";
 import { SessionService } from "../../services/session.service";
 import { Milestone } from "../../models/milestone";
+import { ValueCategoryEnum } from "../../models/value-category-enum.enum";
 
 @Component({
   selector: 'app-create-new-milestone',
@@ -16,7 +17,15 @@ export class CreateNewMilestoneComponent implements OnInit {
 	newMilestone: Milestone;
 	programId: number | null;
 	targetCompletionDate: string | undefined;
-
+	valueCategoryEnum = ValueCategoryEnum;
+	public valueCategories = Object.values(this.valueCategoryEnum).filter(value => typeof value === 'string');
+	//valueCategories = ["Health", "Career", "Finance", "Education"];
+	valueTypes = new Array();
+	healthValueType = ["Weight (kgs)", "Weight (pounds)", "No. of steps / day", "Walking distance (km)",
+	 "Walking distance (miles)", "Hours of sleep", "Hours of Screen Time", "Calorie intake"];
+	careerValueType = ["Work hours / day", "No. of certificates completed"];
+	financeValueType = ["Amount Saved", "Expenditure Amount", "Amount Invested"];
+	educationValueType = ["No. of hours studied / day", "No. of books read / day", "No. of assignments completed", "No. of courses completed"];
 	resultSuccess: boolean;
 	resultError: boolean;
 	message: string | undefined;
@@ -28,12 +37,28 @@ export class CreateNewMilestoneComponent implements OnInit {
       this.submitted = false;
       this.newMilestone = new Milestone();
       this.programId = null;
-
+	  //this.valueCategories = new Array();
       this.resultSuccess = false;
       this.resultError = false;
      }
 
   ngOnInit(): void {
+	  if (this.newMilestone.valueCategory == 'Health')
+	  {
+		  this.valueTypes = this.healthValueType;
+	  }
+	  if (this.newMilestone.valueCategory == 'Career')
+	  {
+		  this.valueTypes = this.careerValueType;
+	  }
+	  if (this.newMilestone.valueCategory == 'Finance')
+	  {
+		  this.valueTypes = this.financeValueType;
+	  }
+	  if (this.newMilestone.valueCategory == 'Education')
+	  {
+		  this.valueTypes = this.educationValueType;
+	  }
   }
 
   create(createMilestoneForm: NgForm)

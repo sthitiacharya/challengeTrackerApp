@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { LoginReq } from '../models/login-req';
+import { SessionService } from "./session.service";
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,7 +18,8 @@ export class UserService {
 
   baseUrl: string = "/api/User";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private sessionService: SessionService) { }
 
   createNewUser(newUser: User): Observable<number> {
     //newUser.authbody = window.btoa(newUser.username + ":" + newUser.password);

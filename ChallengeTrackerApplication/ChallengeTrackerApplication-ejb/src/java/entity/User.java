@@ -36,9 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByMailingAddress", query = "SELECT u FROM User u WHERE u.mailingAddress = :mailingAddress"),
+    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username")})
+    @NamedQuery(name = "User.findByMailingAddress", query = "SELECT u FROM User u WHERE u.mailingAddress = :mailingAddress")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,20 +48,26 @@ public class User implements Serializable {
     @Column(name = "userId")
     private Long userId;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 255)
-    @Column(name = "email")
+    @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "email")
     private String email;
-    @Size(max = 255)
-    @Column(name = "mailingAddress")
-    private String mailingAddress;
-    @Size(max = 255)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
+    @Column(name = "username")
+    private String username;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
     @Column(name = "password")
     private String password;
-    @Size(max = 255)
-    @Column(name = "username")
+    @Basic(optional = false)
     @NotNull
-    private String username;
+    @Size(min = 1, max = 255)
+    @Column(name = "mailingAddress")
+    private String mailingAddress;
     @ManyToMany(mappedBy = "userList")
     private List<Program> enrolledPrograms;
     @OneToMany(mappedBy = "assignedUser")
@@ -73,21 +79,22 @@ public class User implements Serializable {
 
     public User() {
         this.enrolledPrograms = new ArrayList<>();
-        this.programsManaging = new ArrayList<>();
         this.milestoneList = new ArrayList<>();
         this.milestonesCreated = new ArrayList<>();
+        this.programsManaging = new ArrayList<>();
     }
 
-    public User(String email, String mailingAddress, String password, String username) {
+    public User(Long userId) {
+        this();
+        this.userId = userId;
+    }
+
+    public User(String email, String username, String password, String mailingAddress) {
         this();
         this.email = email;
-        this.mailingAddress = mailingAddress;
-        this.password = password;
         this.username = username;
-    }
- 
-    public User(Long userId) {
-        this.userId = userId;
+        this.password = password;
+        this.mailingAddress = mailingAddress;
     }
 
     public Long getUserId() {
@@ -106,12 +113,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getMailingAddress() {
-        return mailingAddress;
+    public String getUsername() {
+        return username;
     }
 
-    public void setMailingAddress(String mailingAddress) {
-        this.mailingAddress = mailingAddress;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -122,12 +129,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMailingAddress() {
+        return mailingAddress;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMailingAddress(String mailingAddress) {
+        this.mailingAddress = mailingAddress;
     }
 
     @XmlTransient

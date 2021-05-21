@@ -56,13 +56,42 @@
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Which of these categories does this milestone fit in?</td>
+				<td>
+					<select id="valueCategory" name="valueCategory" #valueCategory="ngModel" [(ngModel)]="newMilestone.valueCategory">
+                        <option *ngFor="let name of valueCategories" [value]="name"> {{valueCategoryEnum[name]}} </option>
+                    </select>	
+				</td>
+				<td>
+					<div *ngIf="valueCategory.invalid && (valueCategory.dirty || valueCategory.touched || submitted)" class="errorText">
+						<div *ngIf="valueCategory.errors != null && valueCategory.errors.required">
+							Value category is required.
+						</div>
+					</div>
+				</td>
+			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">How would you like to measure your milestone by?</td>
-				<td><input id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" /></td>
+				<td>
+					<select *ngIf="newMilestone.valueCategory == 'Health'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let healthValue of healthValueType" [value]="healthValue"> {{healthValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Career'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let careerValue of careerValueType" [value]="careerValue"> {{careerValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Finance'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let financeValue of financeValueType" [value]="financeValue"> {{financeValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </option>
+					</select>
+				</td>
+				<td><input id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" /></td>-
 				<td>
 					<div *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
 						<div *ngIf="valueType.errors != null && valueType.errors.required">
-							Milestone type is required.
+							Value type is required.
 						</div>
 					</div>
 				</td>
