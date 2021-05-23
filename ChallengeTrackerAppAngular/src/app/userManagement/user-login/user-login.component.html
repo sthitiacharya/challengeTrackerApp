@@ -1,10 +1,11 @@
-<section id="content" class="content" (childEvent)="parentEvent()">
+<section (childEvent)="parentEvent()">
+  <br/><br/><br/>
   <div *ngIf="sessionService.getIsLogin() == false" class="welcome">
     <h1><b>Welcome to TrackVision! To get started, please login</b></h1>
   </div>
   <br/>
   <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box"*ngIf="sessionService.getIsLogin() == false">
+    <mat-card class="box" *ngIf="sessionService.getIsLogin() == false">
         <mat-card-content>
             <mat-card-header>
                 <mat-card-title>Log In</mat-card-title>
@@ -31,8 +32,20 @@
           {{ errorMessage }}
         </mat-error>
     </mat-card>
+
+    <mat-card class="box"*ngIf="sessionService.getIsLogin() == true">
+        <mat-card-content>
+            <mat-card-header>
+                <mat-card-title>Welcome, {{sessionService.getCurrentUser().username}}</mat-card-title>
+            </mat-card-header>
+            <button mat-raised-button color="primary" [routerLink]="['/program/createProgram']">Create Program</button>
+            <br/>
+            <br/>
+            <button mat-raised-button color="primary" (click)="userLogout()">Logout</button>
+        </mat-card-content>
+    </mat-card>
   </div>
-  
+</section>  
 <!--
     <aside id="loginbox" class="loginbox">
         <div *ngIf="sessionService.getIsLogin() == false">
@@ -61,18 +74,3 @@
         </div>
     </aside>
 -->
-    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
-        <mat-card class="box"*ngIf="sessionService.getIsLogin() == true">
-            <mat-card-content>
-                <mat-card-header>
-                    <mat-card-title>Welcome, {{sessionService.getCurrentUser().username}}</mat-card-title>
-                </mat-card-header>
-                <button mat-raised-button color="primary" [routerLink]="['/program/createProgram']">Create Program</button>
-                <br/>
-                <br/>
-                <button mat-raised-button color="primary" (click)="userLogout()">Logout</button>
-            </mat-card-content>
-        </mat-card>
-    </div>
-  <br/><br/>
-</section>

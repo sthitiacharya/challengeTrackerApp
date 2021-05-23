@@ -37,7 +37,7 @@ mat-sidenav {
     margin: 16px;
     width: 200px;
     border-right: none;
-    background: #002b5c;
+    background: #673ab7;
     color: white;
     border-radius: 10px;
     padding: 16px;
@@ -45,7 +45,10 @@ mat-sidenav {
 }
 
 mat-sidenav-container {
-    height: calc(100vh - 65px);
+    min-height: 100vh;
+    background-color: #f8ceec;
+    background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
+	font-family: 'Roboto', sans-serif;
 }
 
 .menu-button {
@@ -54,10 +57,6 @@ mat-sidenav-container {
     align-items: center;
     justify-content: flex-start;
     font-size: 1rem;
-}
-
-mat-icon {
-    margin-right: 8px;
 }
 
 .app-header {

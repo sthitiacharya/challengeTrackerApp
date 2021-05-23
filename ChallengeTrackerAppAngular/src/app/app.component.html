@@ -1,19 +1,28 @@
 <mat-toolbar color="primary" class="app-header">
+  <button *ngIf="sessionService.getIsLogin() == true" mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">
+        menu
+    </mat-icon>
+    <mat-icon *ngIf="sidenav.opened">
+        close
+    </mat-icon>
+  </button>
   <span class="positronx" style="text-align: center;">TrackVision</span>
   <span class="nav-tool-items">
     <a *ngIf="sessionService.getIsLogin() == true" mat-button mat-raised-button (click)="userLogout()" [routerLink]="['/index']">Logout</a>
   </span>
 </mat-toolbar> 
-
-<mat-sidenav>
-  <button mat-button [routerLink]="['/index']" class="menu-button">
-    <mat-icon>home</mat-icon>
-    <span>Home</span>
-  </button>
-  <button mat-button [routerLink]="['/program/createProgram']" class="menu-button">
-    <mat-icon>add</mat-icon>
-    <span>Create Program</span>
-  </button>
-</mat-sidenav>
-
-<router-outlet></router-outlet>
+<br/><br/><br/>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav">
+    <button mat-button [routerLink]="['/index']">
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-button [routerLink]="['/program/createProgram']">
+      <mat-icon>add</mat-icon>
+      <span>Create Program</span>
+    </button>
+  </mat-sidenav>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
