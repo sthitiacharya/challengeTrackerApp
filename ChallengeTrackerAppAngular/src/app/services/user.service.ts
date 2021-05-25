@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import { LoginReq } from '../models/login-req';
+import { SessionService } from "./session.service";
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -16,16 +18,26 @@ export class UserService {
 
   baseUrl: string = "/api/User";
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private sessionService: SessionService) { }
 
   createNewUser(newUser: User): Observable<number> {
+    //newUser.authbody = window.btoa(newUser.username + ":" + newUser.password);
     return this.httpClient.put<number>(this.baseUrl, newUser, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
+
+  //userLogin(username: string | undefined, password: string | undefined): Observable<User> {
+  //  return this.httpClient.get<User>(this.baseUrl + '/userLogin?username=' + username +
+  //   '&password=' + password).pipe(catchError(this.handleError));
+  //}
+
   userLogin(username: string | undefined, password: string | undefined): Observable<User> {
-    return this.httpClient.get<User>(this.baseUrl +'/userLogin?username=' + username +'&password=' + 
-    password).pipe(catchError(this.handleError));
+    let loginReq : LoginReq = new LoginReq(username, password);
+    return this.httpClient.post<User>(this.baseUrl + '/login', loginReq, httpOptions)
+    .pipe(
+      catchError(this.handleError));
   }
 
   getUsers(): Observable<User[]>

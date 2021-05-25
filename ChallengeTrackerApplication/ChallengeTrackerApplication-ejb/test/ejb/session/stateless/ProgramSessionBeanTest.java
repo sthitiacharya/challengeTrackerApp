@@ -4,6 +4,7 @@ import entity.Program;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.naming.Context;
@@ -62,8 +63,10 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        List<Long> userIds = new ArrayList<>();
-        userIds.add(1l);
+        Long[] temp = new Long[1];
+        temp[0] = 1l;
+        List<Long> userIds = Arrays.asList(temp);
+        //userIds.add(1l);
         Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);
         
         assertNotNull(actualProgramId);
@@ -78,8 +81,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        List<Long> userIds = new ArrayList<>();
-        userIds.add(1l);
+        Long[] temp = new Long[1];
+        temp[0] = 1l;
+        List<Long> userIds = Arrays.asList(temp);
         Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);     
     }
 
@@ -91,8 +95,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        List<Long> userIds = new ArrayList<>();
-        userIds.add(1l);
+        Long[] temp = new Long[1];
+        temp[0] = 1l;
+        List<Long> userIds = Arrays.asList(temp);
         Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 1l, userIds);     
     }
 
@@ -104,8 +109,9 @@ public class ProgramSessionBeanTest {
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
         Program expectedProgram = new Program("Title 1", "Description 1", date, date2);
-        List<Long> userIds = new ArrayList<>();
-        userIds.add(1l);
+        Long[] temp = new Long[1];
+        temp[0] = 1l;
+        List<Long> userIds = Arrays.asList(temp);
         Long actualProgramId = programSessionBeanLocal.createProgram(expectedProgram, 2l, userIds);     
     }
  

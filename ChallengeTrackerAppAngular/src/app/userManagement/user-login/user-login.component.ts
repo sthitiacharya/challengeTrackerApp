@@ -41,17 +41,18 @@ export class UserLoginComponent implements OnInit {
       (response: any) => {
         let user: User = response;
 
-        if (user != null) {
-          this.sessionService.setIsLogin(true);
-          this.sessionService.setCurrentUser(user);
-          this.loginError = false;
-
-          this.childEvent.emit();
-
-          this.router.navigate(['/index']);
-        } else {
+        if (user == null)
+        {
           this.loginError = true;
+          return;
         }
+        this.sessionService.setIsLogin(true);
+        this.sessionService.setCurrentUser(user);
+        this.loginError = false;
+
+        this.childEvent.emit();
+
+        this.router.navigate(['/index']);
       },
       (error: string | undefined) => {
         this.loginError = true;
@@ -61,9 +62,7 @@ export class UserLoginComponent implements OnInit {
   }
 
   userLogout(): void {
-    this.sessionService.setIsLogin(false);
-    this.sessionService.setCurrentUser(null);
-
+    this.sessionService.setIsLogin(false); 
     this.router.navigate(['/index']);
   }
 

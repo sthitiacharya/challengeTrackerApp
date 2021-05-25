@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import entity.Milestone;
 import entity.Program;
-import entity.User;
 import java.util.Set;
 import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolation;
@@ -19,13 +18,10 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.CreateNewMilestoneException;
-import util.exception.CreateNewProgramException;
 import util.exception.InputDataValidationException;
 import util.exception.MilestoneTitleExistException;
 import util.exception.ProgramNotFoundException;
-import util.exception.ProgramTitleExistException;
 import util.exception.UnknownPersistenceException;
-import util.exception.UserNotFoundException;
 
 /**
  *
@@ -35,14 +31,13 @@ import util.exception.UserNotFoundException;
 public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
 
     @PersistenceContext(unitName = "ChallengeTrackerApplication-ejbPU")
-    private EntityManager em;
+    private EntityManager entityManager;
 
     @EJB
     private ProgramSessionBeanLocal programSessionBeanLocal;
     
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
-    
     
     
     public MilestoneSessionBean()
@@ -56,55 +51,49 @@ public class MilestoneSessionBean implements MilestoneSessionBeanLocal {
     public Long createMilestone(Milestone newMilestone, Long programId) throws MilestoneTitleExistException, UnknownPersistenceException, CreateNewMilestoneException, InputDataValidationException
     {
         Set<ConstraintViolation<Milestone>>constraintViolations = validator.validate(newMilestone);
-        
-        if (constraintViolations.isEmpty())
-        {
-            try {
-                if (programId != null)
-                {
-                    Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
-                    em.persist(newMilestone);
-                    newMilestone.setProgramId(program);
-                    program.getMilestoneList().add(newMilestone);
-                }
-                else
-                {
-                    throw new CreateNewMilestoneException("Milestone must be associated with a program");
-                }
-                
-                em.flush();
-                return newMilestone.getMilestoneId();
-            }
-            catch (PersistenceException ex)
+        try {
+            if (!constraintViolations.isEmpty())
             {
-                if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
-                {
-                    if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                    {
-                        throw new MilestoneTitleExistException("Milestone Title already exists");
-                    }
-                    else
-                    {
-                        throw new UnknownPersistenceException(ex.getMessage());
-                    }
-                }
-                else
-                {
-                    throw new UnknownPersistenceException(ex.getMessage());
-                }           
-            } catch (ProgramNotFoundException ex) {
-                throw new CreateNewMilestoneException("Invalid Program ID keyed in");
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
+            
+            //ensures mandatory association of milestone with program
+            if (programId == null)
+            {
+                throw new CreateNewMilestoneException("Milestone must be associated with a program");
+            }
+
+            //persisting of object into database
+            Program program = programSessionBeanLocal.retrieveProgramByProgramId(programId);
+            entityManager.persist(newMilestone);
+            
+            //bi-directional association
+            newMilestone.setProgramId(program);
+            program.getMilestoneList().add(newMilestone);
+
+            entityManager.flush();
+            return newMilestone.getMilestoneId();
         }
-        else
+        
+        catch (PersistenceException ex)
         {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
+            {
+                throw new MilestoneTitleExistException("Milestone Title already exists");
+            }
+            else
+            {
+                throw new UnknownPersistenceException(ex.getMessage());
+            }         
+            
+        } catch (ProgramNotFoundException ex) {
+            throw new CreateNewMilestoneException("Invalid Program ID keyed in");
         }
     }
     
-     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Milestone>>constraintViolations)
+    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Milestone>>constraintViolations)
     {
-        String msg = "Input data validation error!:";
+        String msg = "Input data validation error:";
             
         for(ConstraintViolation constraintViolation:constraintViolations)
         {

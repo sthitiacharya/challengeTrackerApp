@@ -33,7 +33,7 @@ import util.exception.UserUsernameExistException;
 public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     
     @PersistenceContext(unitName = "ChallengeTrackerApplication-ejbPU")
-    private EntityManager em;
+    private EntityManager entityManager;
     
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
@@ -46,44 +46,37 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
 
     @Override
     public Long createNewUser(User newUserEntity) throws UserUsernameExistException, UnknownPersistenceException, InputDataValidationException {
-        Set<ConstraintViolation<User>> constraintViolations = validator.validate(newUserEntity);
-
-        if (constraintViolations.isEmpty()) {
-            try {
-
-                em.persist(newUserEntity);
-                em.flush();
-
-                return newUserEntity.getUserId();
-            } catch (PersistenceException ex) {
-                if (ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException")) {
-                    if (ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
-                        throw new UserUsernameExistException();
-                    } else {
-                        throw new UnknownPersistenceException(ex.getMessage());
-                    }
-                } else {
-                    throw new UnknownPersistenceException(ex.getMessage());
-                }
+        try {
+            Set<ConstraintViolation<User>> constraintViolations = validator.validate(newUserEntity);
+            if (!constraintViolations.isEmpty())
+            {
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
-        } else {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            entityManager.persist(newUserEntity);
+            entityManager.flush();
+            return newUserEntity.getUserId();
+            
+        } catch (PersistenceException ex) {
+            //within the database, catch the constraint violation exception
+            if (ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
+                throw new UserUsernameExistException();
+            } else {
+                throw new UnknownPersistenceException(ex.getMessage());
+            }
         }
     }
     
     @Override
     public List<User> retrieveAllUsers()
     {
-        //Query query = em.createQuery("SELECT u FROM User u");
-        Query query = em.createNamedQuery("User.findAll");
+        Query query = entityManager.createNamedQuery("User.findAll");
         return query.getResultList();
     }
     
     @Override
     public User retrieveUserByUserId(Long userId) throws UserNotFoundException
     {
-       
-        User userEntity = em.find(User.class, userId);
+        User userEntity = entityManager.find(User.class, userId);
         
         if(userEntity != null)
         {
@@ -96,11 +89,10 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     }
     
     @Override
-    public User retrieveUserByUsername(String username) throws UserNotFoundException {
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :inUsername");
-        query.setParameter("inUsername", username);
-
+    public User retrieveUserByUsername(String username) throws UserNotFoundException {       
         try {
+            Query query = entityManager.createNamedQuery("User.findByUsername");
+            query.setParameter("username", username);
             return (User) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
             throw new UserNotFoundException("User Username " + username + " does not exist!");
@@ -111,7 +103,6 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     public User userLogin(String username, String password) throws InvalidLoginCredentialException {
         try {
             User userEntity = retrieveUserByUsername(username);
-
             if (userEntity.getPassword().equals(password)) {
                 userEntity.getEnrolledPrograms().size();
                 userEntity.getMilestoneList().size();
@@ -127,7 +118,7 @@ public class UserEntitySessionBean implements UserEntitySessionBeanLocal {
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<User>> constraintViolations) {
-        String msg = "Input data validation error!:";
+        String msg = "Input data validation error:";
 
         for (ConstraintViolation constraintViolation : constraintViolations) {
             msg += "\n\t" + constraintViolation.getPropertyPath() + " - " + constraintViolation.getInvalidValue() + "; " + constraintViolation.getMessage();

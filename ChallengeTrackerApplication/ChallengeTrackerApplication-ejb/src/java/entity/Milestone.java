@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import util.enumeration.ValueCategoryEnum;
 
 /**
  *
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Milestone.findByActualCompletedDate", query = "SELECT m FROM Milestone m WHERE m.actualCompletedDate = :actualCompletedDate"),
     @NamedQuery(name = "Milestone.findByInitialValue", query = "SELECT m FROM Milestone m WHERE m.initialValue = :initialValue"),
     @NamedQuery(name = "Milestone.findByTargetValue", query = "SELECT m FROM Milestone m WHERE m.targetValue = :targetValue"),
+    @NamedQuery(name = "Milestone.findByValueCategory", query = "SELECT m FROM Milestone m WHERE m.valueCategory = :valueCategory"),
     @NamedQuery(name = "Milestone.findByValueType", query = "SELECT m FROM Milestone m WHERE m.valueType = :valueType"),
     @NamedQuery(name = "Milestone.findByRewardValue", query = "SELECT m FROM Milestone m WHERE m.rewardValue = :rewardValue"),
     @NamedQuery(name = "Milestone.findByReminderStartDate", query = "SELECT m FROM Milestone m WHERE m.reminderStartDate = :reminderStartDate"),
@@ -57,7 +59,7 @@ public class Milestone implements Serializable {
     private Long milestoneId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 4, max = 64)
+    @Size(min = 1, max = 64)
     @Column(name = "title")
     private String title;
     @Size(max = 255)
@@ -93,6 +95,11 @@ public class Milestone implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
+    @Column(name = "valueCategory")
+    private String valueCategory;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
     @Column(name = "valueType")
     private String valueType;
     @Basic(optional = false)
@@ -122,19 +129,7 @@ public class Milestone implements Serializable {
         this.milestoneId = milestoneId;
     }
 
-    public Milestone(Long milestoneId, String title, String milestoneType, Date creationDate, Date targetCompletionDate, BigDecimal initialValue, BigDecimal targetValue, String valueType, int rewardValue) {
-        this.milestoneId = milestoneId;
-        this.title = title;
-        this.milestoneType = milestoneType;
-        this.creationDate = creationDate;
-        this.targetCompletionDate = targetCompletionDate;
-        this.initialValue = initialValue;
-        this.targetValue = targetValue;
-        this.valueType = valueType;
-        this.rewardValue = rewardValue;
-    }
-
-    public Milestone(String title, String description, String milestoneType, Date creationDate, Date targetCompletionDate, BigDecimal initialValue, BigDecimal targetValue, String valueType, int rewardValue) {
+    public Milestone(String title, String description, String milestoneType, Date creationDate, Date targetCompletionDate, BigDecimal initialValue, BigDecimal targetValue, String valueCategory, String valueType, int rewardValue) {
         this.title = title;
         this.description = description;
         this.milestoneType = milestoneType;
@@ -142,6 +137,7 @@ public class Milestone implements Serializable {
         this.targetCompletionDate = targetCompletionDate;
         this.initialValue = initialValue;
         this.targetValue = targetValue;
+        this.valueCategory = valueCategory;
         this.valueType = valueType;
         this.rewardValue = rewardValue;
     }
@@ -216,6 +212,14 @@ public class Milestone implements Serializable {
 
     public void setTargetValue(BigDecimal targetValue) {
         this.targetValue = targetValue;
+    }
+
+    public String getValueCategory() {
+        return valueCategory;
+    }
+
+    public void setValueCategory(String valueCategory) {
+        this.valueCategory = valueCategory;
     }
 
     public String getValueType() {
