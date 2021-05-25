@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { CreateNewProgramComponent } from './program/create-new-program/create-new-program.component';
 import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/create-new-milestone.component';
 import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
+import { UserLoginComponent } from './userManagement/user-login/user-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateNewProgramComponent,
     CreateNewMilestoneComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,

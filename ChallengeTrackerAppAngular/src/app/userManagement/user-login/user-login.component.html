@@ -1,0 +1,38 @@
+<section id="content" class="content" (childEvent)="parentEvent()">
+  <article *ngIf="sessionService.getIsLogin() == false">
+    <p>Welcome to TrackVision! To get started, please login</p>
+  </article>
+
+  <aside id="loginbox" class="loginbox">
+    <div *ngIf="sessionService.getIsLogin() == false">
+      <h2 style="text-align: center;">Log in</h2> &nbsp;
+      <div>
+        <input class="textbox" type="text" [(ngModel)]="username" placeholder="Username" size="16" required
+          maxlength="32" style="width: 400px;"/>
+      </div>
+      &nbsp;
+      <div>
+        <input class="textbox" type="password" [(ngModel)]="password" placeholder="Password" size="16" required
+          maxlength="32" style="width: 400px;" />
+      </div>
+      &nbsp;
+      <div>
+        <input type="button" (click)="userLogin()" value="Login"/>
+        &nbsp;
+        <p>New to this platform? </p>
+        <input type="button" [routerLink]="['/register']" value="Register" />
+        &nbsp;
+      </div>
+    </div>
+
+    <div *ngIf="loginError == true" style="text-align: right; color: red">
+      {{ errorMessage }}
+    </div>
+  </aside>
+
+  <ng-template [ngIf]="sessionService.getIsLogin() == true">
+    <div>Welcome, {{sessionService.getCurrentUser().username}}</div>
+    <input type="button" [routerLink]="['/program/createProgram']" value="Create Program" />    
+  </ng-template>
+  <br/><br/>
+</section>
