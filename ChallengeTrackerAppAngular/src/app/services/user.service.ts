@@ -18,6 +18,12 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  createNewUser(newUser: User): Observable<number> {
+    return this.httpClient.put<number>(this.baseUrl, newUser, httpOptions).pipe(
+      catchError(this.handleError)
+    )
+  }
+
   getUsers(): Observable<User[]>
   {				
     return this.httpClient.get<User[]>(this.baseUrl + "/retrieveAllUsers").pipe
