@@ -10,7 +10,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class AppComponent {
   @ViewChild(MatSidenav)
- sidenav!: MatSidenav;
+  sidenav!: MatSidenav;
   title = 'ChallengeTrackerAppAngular';
   constructor(private router: Router,
     public sessionService: SessionService) { }

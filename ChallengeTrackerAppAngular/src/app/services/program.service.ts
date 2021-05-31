@@ -23,12 +23,27 @@ export class ProgramService {
   {		
     let createProgReq: CreateProgramReq = new CreateProgramReq(program, userId, userIds, startDate, targetCompletionDate);
 
-    return this.httpClient.put<number>(this.baseUrl, createProgReq, httpOptions).pipe
+    return this.httpClient.post<number>(this.baseUrl + "/createProgram", createProgReq, httpOptions).pipe
     (
       catchError(this.handleError)
     );
   }
 	
+  getEnrolledPrograms(userId?: number | null): Observable<Program[]>
+  {		
+    return this.httpClient.get<Program[]>(this.baseUrl + `/getEnrolledPrograms?userId=${userId}`, httpOptions).pipe
+    (
+      catchError(this.handleError)
+    );
+  }
+
+  getProgram(programId?: number): Observable<Program>
+  {
+    return this.httpClient.get<Program>(this.baseUrl + `/getEnrolledPrograms/${programId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 	private handleError(error: HttpErrorResponse)
   {
     let errorMessage: string = "";

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { User } from '../models/user';
 import { LoginReq } from '../models/login-req';
-import { SessionService } from "./session.service";
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -18,12 +17,11 @@ export class UserService {
 
   baseUrl: string = "/api/User";
 
-  constructor(private httpClient: HttpClient,
-    private sessionService: SessionService) { }
+  constructor(private httpClient: HttpClient) { }
 
   createNewUser(newUser: User): Observable<number> {
     //newUser.authbody = window.btoa(newUser.username + ":" + newUser.password);
-    return this.httpClient.put<number>(this.baseUrl, newUser, httpOptions).pipe(
+    return this.httpClient.post<number>(this.baseUrl + "/register", newUser, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
@@ -33,9 +31,14 @@ export class UserService {
   //   '&password=' + password).pipe(catchError(this.handleError));
   //}
 
-  userLogin(username: string | undefined, password: string | undefined): Observable<User> {
+  userLogin(username: string | undefined , password: string | undefined): Observable<User> {
+    console.log(`${username} ${password}`);
     let loginReq : LoginReq = new LoginReq(username, password);
-    return this.httpClient.post<User>(this.baseUrl + '/login', loginReq, httpOptions)
+    const httpHeaders = { headers: new HttpHeaders({"Authorization": `Basic ${btoa(`${username}:${password}`)}`}) };
+    //httpOptions.headers.append('Authorization', `Basic ${username}:${password}`);
+    console.log("test");
+    console.log(JSON.stringify(httpHeaders.headers.getAll('Authorization')));
+    return this.httpClient.post<User>(this.baseUrl + "/login", loginReq, httpHeaders)
     .pipe(
       catchError(this.handleError));
   }
