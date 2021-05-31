@@ -22,7 +22,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import util.enumeration.ValueCategoryEnum;
 import util.exception.CreateNewMilestoneException;
 import util.exception.InputDataValidationException;
 import util.exception.MilestoneTitleExistException;

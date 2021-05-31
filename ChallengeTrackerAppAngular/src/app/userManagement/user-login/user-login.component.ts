@@ -52,7 +52,7 @@ export class UserLoginComponent implements OnInit {
 
         this.childEvent.emit();
 
-        this.router.navigate(['/index']);
+        this.router.navigate(['/login']);
       },
       (error: string | undefined) => {
         this.loginError = true;
@@ -63,7 +63,7 @@ export class UserLoginComponent implements OnInit {
 
   userLogout(): void {
     this.sessionService.setIsLogin(false); 
-    this.router.navigate(['/index']);
+    this.router.navigate(['/login']);
   }
 
 }
