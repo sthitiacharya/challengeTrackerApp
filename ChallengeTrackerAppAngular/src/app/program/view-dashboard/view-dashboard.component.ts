@@ -30,6 +30,7 @@ export class ViewDashboardComponent implements OnInit {
      }
 
   ngOnInit(): void {
+
     this.programService.getEnrolledPrograms(this.sessionService.getCurrentUser().userId).subscribe(
 			response => {
 				this.enrolledPrograms = response;
@@ -38,6 +39,7 @@ export class ViewDashboardComponent implements OnInit {
 				console.log('********** ViewAllProductsComponent.ts: ' + error);
 			}
 		);
+    
     console.log(this.enrolledPrograms);
     this.username = this.sessionService.getUsername();
   }
