@@ -14,25 +14,16 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MilestoneService {
-
   baseUrl: string = "/api/Milestone";
   programId: number | undefined | null;
-
   constructor(private httpClient : HttpClient) { }
 
   createNewMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
   {		
     let createMilestoneReq: CreateMilestoneReq = new CreateMilestoneReq(milestone, programId, targetCompletionDate);
 
-    return this.httpClient.post<number>(this.baseUrl + "/createMilestone", createMilestoneReq, httpOptions).pipe
+    return this.httpClient.put<number>(this.baseUrl, createMilestoneReq, httpOptions).pipe
     (
-      catchError(this.handleError)
-    );
-  }
-
-  getProgramMilestones(programId?: number | null) : Observable<Milestone[]>
-  {
-    return this.httpClient.get<Milestone[]>(this.baseUrl + `/getProgramMilestones?programId=${programId}`, httpOptions).pipe(
       catchError(this.handleError)
     );
   }

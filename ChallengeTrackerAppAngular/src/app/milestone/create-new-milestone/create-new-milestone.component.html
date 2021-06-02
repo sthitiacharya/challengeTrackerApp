@@ -56,7 +56,6 @@
 				<mat-select *ngIf="newMilestone.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
 					<mat-option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </mat-option>
 				</mat-select>
-				<mat-label>None of the options above fit your needs? Specify your own measurement for the milestone here!</mat-label>
 				<input matInput id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" />
 			  </mat-form-field>
 			  <mat-error *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">

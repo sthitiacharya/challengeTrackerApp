@@ -3,6 +3,7 @@ package ejb.session.stateless;
 import entity.Program;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -128,7 +129,7 @@ public class ProgramSessionBeanTest {
 
     private static ProgramSessionBeanLocal lookupProgramSessionBeanLocal() {
         try {
-            Context c = (Context) new InitialContext();
+            Context c = new InitialContext();
             return (ProgramSessionBeanLocal) c.lookup("java:global/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/ProgramSessionBean!ejb.session.stateless.ProgramSessionBeanLocal");
         } catch (NamingException ne) {
             //Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);

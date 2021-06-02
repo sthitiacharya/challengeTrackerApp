@@ -14,14 +14,10 @@
 </mat-toolbar> 
 <br/><br/><br/>
 <mat-sidenav-container>
-  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <button mat-button [routerLink]="['/login']">
+  <mat-sidenav #sidenav="matSidenav">
+    <button mat-button [routerLink]="['/index']">
       <mat-icon>home</mat-icon>
       <span>Home</span>
-    </button>
-    <button mat-button [routerLink]="['/dashboard']">
-      <mat-icon>home</mat-icon>
-      <span>Dashboard</span>
     </button>
     <button mat-button [routerLink]="['/program/createProgram']">
       <mat-icon>add</mat-icon>

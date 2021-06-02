@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-//import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+//import { PanelModule } from 'primeng/panel';
+//import { InputTextModule } from 'primeng/inputtext';
+//import { ButtonModule } from 'primeng/button';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +14,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,10 +22,8 @@ import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/cr
 import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
 import { UserLoginComponent } from './userManagement/user-login/user-login.component';
 
-//import { AuthInterceptor } from './helpers/auth-interceptor';
+import { AuthInterceptor } from './helpers/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
-import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +31,7 @@ import { ViewProgramDetailsComponent } from './program/view-program-details/view
     CreateNewProgramComponent,
     CreateNewMilestoneComponent,
     RegisterUserComponent,
-    UserLoginComponent,
-    ViewDashboardComponent,
-    ViewProgramDetailsComponent
+    UserLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -52,11 +48,13 @@ import { ViewProgramDetailsComponent } from './program/view-program-details/view
     MatSelectModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatIconModule,
-    MatTableModule
+    MatIconModule
+    //PanelModule,
+   // InputTextModule,
+    //ButtonModule
   ],
   providers: [
-    //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
