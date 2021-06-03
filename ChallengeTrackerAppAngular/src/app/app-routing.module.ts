@@ -6,6 +6,7 @@ import { RegisterUserComponent } from "./userManagement/register-user/register-u
 import { UserLoginComponent } from "./userManagement/user-login/user-login.component";
 import { ViewDashboardComponent } from "./program/view-dashboard/view-dashboard.component";
 import { ViewProgramDetailsComponent } from "./program/view-program-details/view-program-details.component";
+import { EditProgramComponent } from "./program/edit-program/edit-program.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterUserComponent },
   { path: 'login', component: UserLoginComponent },
   {path: 'dashboard', component: ViewDashboardComponent},
-  {path: 'program/:programId', component: ViewProgramDetailsComponent}
+  {path: 'program/:programId', component: ViewProgramDetailsComponent},
+  {path: 'program/edit/:programId', component: EditProgramComponent}
 ];
 
 @NgModule({

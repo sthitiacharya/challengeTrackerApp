@@ -16,6 +16,7 @@
                 <h4>Description: {{program.description}}</h4>
                 <h4>Program Start Date: {{program.startDate}}</h4>
                 <h4>Target Completion Date: {{program.targetCompletionDate}}</h4>
+                <button mat-stroked-button color="primary" class="btn-block" routerLink="/program/edit/{{programId}}">Edit</button>
                 <h4>Milestones: </h4>
                 <ul style="margin-left: 20px;">
 					<li *ngFor="let milestone of milestones">

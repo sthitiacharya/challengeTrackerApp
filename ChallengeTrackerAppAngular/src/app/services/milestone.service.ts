@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { CreateMilestoneReq } from "../models/create-milestone-req";
+import { UpdateMilestoneReq } from "../models/update-milestone-req";
 import { Milestone } from "../models/milestone";
 
 const httpOptions = {
@@ -33,6 +34,16 @@ export class MilestoneService {
   getProgramMilestones(programId?: number | null) : Observable<Milestone[]>
   {
     return this.httpClient.get<Milestone[]>(this.baseUrl + `/getProgramMilestones?programId=${programId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
+  {		
+    let updateMilestoneReq: UpdateMilestoneReq = new UpdateMilestoneReq(milestone, programId, targetCompletionDate);
+
+    return this.httpClient.put<number>(this.baseUrl + "/editMilestone", updateMilestoneReq, httpOptions).pipe
+    (
       catchError(this.handleError)
     );
   }

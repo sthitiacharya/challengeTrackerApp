@@ -1,0 +1,58 @@
+<section id="content">
+    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card class="box">
+		  <mat-card-header>
+			<mat-card-title>Edit Program</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #updateProgramForm="ngForm" (ngSubmit)="update(updateProgramForm)">
+            <mat-card-content>
+              <mat-form-field class="example-full-width">
+                  <mat-label>Update Program Manager</mat-label>
+                  <mat-select id="user" name="user" [(ngModel)]="userId">
+                      <mat-option *ngFor="let user of users" value="{{user.userId}}">{{user.username}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+			  <mat-form-field class="example-full-width">
+				<mat-label>Title</mat-label>
+				<input matInput id="title" name="title" #title="ngModel" type="text" [(ngModel)]="programToUpdate.title" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="title.invalid && (title.dirty || title.touched || submitted)" class="errorText">
+				<div *ngIf="title.errors != null && title.errors.required">
+					Program Title is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Description</mat-label>
+				<textarea matInput id="description" name="description" #description="ngModel" [(ngModel)]="programToUpdate.description"></textarea>
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Start Date</mat-label>
+				<input matInput id="startDate" name="startDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="startDate" required="true" />
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Completion Date</mat-label>
+				<input matInput id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" />
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Assign Users To Program</mat-label>
+				<mat-select id="user" name="user" [(ngModel)]="userIds" multiple="true">
+					<mat-option *ngFor="let user of users" value="{{user.userId}}">{{user.username}}</mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			</mat-card-content>
+			<button mat-stroked-button color="primary" class="btn-block" *ngIf="resultSuccess == false" type="submit">Update</button>
+		  </form>
+		  <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+		</mat-card>
+	</div>
+</section>

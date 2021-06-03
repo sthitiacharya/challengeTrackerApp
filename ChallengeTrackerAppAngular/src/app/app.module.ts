@@ -26,6 +26,7 @@ import { UserLoginComponent } from './userManagement/user-login/user-login.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
+import { EditProgramComponent } from './program/edit-program/edit-program.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ViewProgramDetailsComponent } from './program/view-program-details/view
     RegisterUserComponent,
     UserLoginComponent,
     ViewDashboardComponent,
-    ViewProgramDetailsComponent
+    ViewProgramDetailsComponent,
+    EditProgramComponent
   ],
   imports: [
     BrowserModule,
