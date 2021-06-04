@@ -53,7 +53,7 @@ export class ProgramService {
     let updateProgReq: UpdateProgramReq = new UpdateProgramReq(program, userId, userIds, startDate, 
       targetCompletionDate, this.sessionService.getCurrentUser().userId);
 
-    return this.httpClient.put<number>(this.baseUrl + "/editProgram", updateProgReq, httpOptions).pipe
+    return this.httpClient.put<number>(`${this.baseUrl}/editProgram`, updateProgReq, httpOptions).pipe
     (
       catchError(this.handleError)
     );
