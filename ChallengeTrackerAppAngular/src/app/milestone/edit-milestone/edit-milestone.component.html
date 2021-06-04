@@ -1,0 +1,107 @@
+<section id="content" class="content">
+	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card *ngIf="retrieveMilestoneError == false" class="box">
+		  <mat-card-header>
+			<mat-card-title>Edit Milestone</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #updateMilestoneForm="ngForm" (ngSubmit)="update(updateMilestoneForm)">
+			<mat-card-content>
+			  <mat-form-field class="example-full-width">
+				<mat-label>Title</mat-label>
+				<input matInput id="title" name="title" #title="ngModel" type="text" [(ngModel)]="milestoneToUpdate.title" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="title.invalid && (title.dirty || title.touched || submitted)">
+				<div *ngIf="title.errors != null && title.errors.required">
+					Milestone Title is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Description</mat-label>
+				<textarea matInput id="description" name="description" #description="ngModel" [(ngModel)]="milestoneToUpdate.description"></textarea>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Completion Date</mat-label>
+				<input matInput id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" />
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Milestone Type</mat-label>
+				<mat-select id="milestoneType" name="milestoneType" #milestoneType="ngModel" [(ngModel)]="milestoneToUpdate.milestoneType">
+					<mat-option value="Individual">Individual</mat-option>
+					<mat-option value="Program">Program</mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Which of these categories does this milestone fit in?</mat-label>
+				<mat-select id="valueCategory" name="valueCategory" #valueCategory="ngModel" [(ngModel)]="milestoneToUpdate.valueCategory">
+					<mat-option *ngFor="let name of valueCategories" [value]="name"> {{valueCategoryEnum[name]}} </mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>How would you like to measure your milestone by?</mat-label>
+				<mat-select *ngIf="milestoneToUpdate.valueCategory == 'Health'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="milestoneToUpdate.valueType" required="true">
+					<mat-option *ngFor="let healthValue of healthValueType" [value]="healthValue"> {{healthValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="milestoneToUpdate.valueCategory == 'Career'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="milestoneToUpdate.valueType" required="true">
+					<mat-option *ngFor="let careerValue of careerValueType" [value]="careerValue"> {{careerValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="milestoneToUpdate.valueCategory == 'Finance'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="milestoneToUpdate.valueType" required="true">
+					<mat-option *ngFor="let financeValue of financeValueType" [value]="financeValue"> {{financeValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="milestoneToUpdate.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="milestoneToUpdate.valueType" required="true">
+					<mat-option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </mat-option>
+				</mat-select>
+				<mat-label>None of the options above fit your needs? Specify your own measurement for the milestone here!</mat-label>
+				<input matInput id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="milestoneToUpdate.valueType" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
+				<div *ngIf="valueType.errors != null && valueType.errors.required">
+					Value type is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Initial Value</mat-label>
+				<input matInput id="initialValue" name="initialValue" #initialValue="ngModel" type="text" [(ngModel)]="milestoneToUpdate.initialValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="initialValue.invalid && (initialValue.dirty || initialValue.touched || submitted)">
+				<div *ngIf="initialValue.errors != null && initialValue.errors.required">
+					Initial value is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Value</mat-label>
+				<input matInput id="targetValue" name="targetValue" #targetValue="ngModel" type="text" [(ngModel)]="milestoneToUpdate.targetValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="targetValue.invalid && (targetValue.dirty || targetValue.touched || submitted)">
+				<div *ngIf="targetValue.errors != null && targetValue.errors.required">
+					Target value is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Reward Value</mat-label>
+				<input matInput id="rewardValue" name="rewardValue" #rewardValue="ngModel" type="text" [(ngModel)]="milestoneToUpdate.rewardValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="rewardValue.invalid && (rewardValue.dirty || rewardValue.touched || submitted)">
+				<div *ngIf="rewardValue.errors != null && rewardValue.errors.required">
+					Reward value is required.
+				</div>
+			  </mat-error>
+			</mat-card-content>
+			<button mat-stroked-button color="primary" class="btn-block" type="submit">Update Milestone</button>
+		  </form>
+		  <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+		</mat-card>
+	</div>
+</section>

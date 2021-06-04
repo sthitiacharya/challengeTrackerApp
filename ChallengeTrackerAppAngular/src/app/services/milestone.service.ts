@@ -38,11 +38,18 @@ export class MilestoneService {
     );
   }
 
+  getMilestone(milestoneId?: number | null) : Observable<Milestone>
+  {
+    return this.httpClient.get<Milestone>(`${this.baseUrl}/${milestoneId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   updateMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
   {		
     let updateMilestoneReq: UpdateMilestoneReq = new UpdateMilestoneReq(milestone, programId, targetCompletionDate);
 
-    return this.httpClient.put<number>(this.baseUrl + "/editMilestone", updateMilestoneReq, httpOptions).pipe
+    return this.httpClient.put<number>(this.baseUrl + `/editMilestone/${milestone?.milestoneId}`, updateMilestoneReq, httpOptions).pipe
     (
       catchError(this.handleError)
     );

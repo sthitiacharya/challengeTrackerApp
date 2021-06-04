@@ -14,6 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
 import { EditProgramComponent } from './program/edit-program/edit-program.component';
+import { EditMilestoneComponent } from './milestone/edit-milestone/edit-milestone.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { EditProgramComponent } from './program/edit-program/edit-program.compon
     UserLoginComponent,
     ViewDashboardComponent,
     ViewProgramDetailsComponent,
-    EditProgramComponent
+    EditProgramComponent,
+    EditMilestoneComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { EditProgramComponent } from './program/edit-program/edit-program.compon
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
+    MatListModule
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

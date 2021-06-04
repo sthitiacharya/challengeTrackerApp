@@ -70,6 +70,8 @@ export class ViewProgramDetailsComponent implements OnInit {
 				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
 			}
 		);
+
+    this.milestoneService.setProgramId(parseInt(this.programId));
   }
 
 }

@@ -7,6 +7,7 @@ import { UserLoginComponent } from "./userManagement/user-login/user-login.compo
 import { ViewDashboardComponent } from "./program/view-dashboard/view-dashboard.component";
 import { ViewProgramDetailsComponent } from "./program/view-program-details/view-program-details.component";
 import { EditProgramComponent } from "./program/edit-program/edit-program.component";
+import { EditMilestoneComponent } from "./milestone/edit-milestone/edit-milestone.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,9 +15,10 @@ const routes: Routes = [
   { path: 'milestone/createMilestone', component: CreateNewMilestoneComponent },
   { path: 'register', component: RegisterUserComponent },
   { path: 'login', component: UserLoginComponent },
-  {path: 'dashboard', component: ViewDashboardComponent},
-  {path: 'program/:programId', component: ViewProgramDetailsComponent},
-  {path: 'program/edit/:programId', component: EditProgramComponent}
+  { path: 'dashboard', component: ViewDashboardComponent },
+  { path: 'program/:programId', component: ViewProgramDetailsComponent },
+  { path: 'program/edit/:programId', component: EditProgramComponent },
+  { path: 'milestone/edit/:milestoneId', component: EditMilestoneComponent }
 ];
 
 @NgModule({
