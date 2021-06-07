@@ -1,0 +1,73 @@
+<section id="content" class="content">
+    <br/><br/><br/>
+    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+        <mat-card *ngIf="retrieveMilestoneError == true" class="box">
+            <mat-card-header>
+              <mat-card-title style="color: red;">Milestone ID {{milestoneId}} does not exist!</mat-card-title>
+            </mat-card-header>
+            <button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Back</button>
+        </mat-card>
+
+		<mat-card *ngIf="retrieveMilestoneError == false" class="programbox">
+		  <mat-card-header>
+			<mat-card-title>{{milestone.title}}</mat-card-title>
+		  </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <div mat-subheader>Milestone Details</div>
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>note</mat-icon>
+                        <div mat-line>Milestone Title: {{milestone.title}}</div>
+                        <div mat-line>Description: {{milestone.description}}</div>
+                        <div mat-line>Target Completion Date: {{milestone.targetCompletionDate}}</div>
+                        <div mat-line>Milestone Type: {{milestone.milestoneType}}</div>
+                        <div mat-line>Value Type: {{milestone.valueType}}</div>
+                        <div mat-line>Initial Value: {{milestone.initialValue}}</div>
+                        <div mat-line>Target Value: {{milestone.targetValue}}</div>
+                        <button mat-stroked-button color="primary" routerLink="/milestone/edit/{{milestone.milestoneId}}">Edit</button>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <div mat-subheader>Progress</div>
+                        <table style="width:100%;">
+                            <thead>
+                                <tr>				
+                                    <th>Log Date</th>
+                                    <th>Value</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center;">
+                                <tr *ngFor="let progressHistory of progressHistories">
+                                    <td>{{progressHistory.dateOfRecord}}</td>
+                                    <td>{{progressHistory.value}}</td>				
+                                    <td><button mat-button color="primary" (click)="deleteProgressHistory(progressHistory.progressHistoryId)">Delete</button>
+                                        <button mat-stroked-button color="primary" routerLink="/progressLog/edit/{{progressHistory.progressHistoryId}}">Edit</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <!--
+                        <table mat-table *ngFor="let progressHistory of progressHistories">
+                            <ng-container matColumnDef="logDate">
+                                <th mat-header-cell *matHeaderCellDef>Log Date</th>
+                                <td mat-cell *matCellDef="let progressHistory">{{progressHistory.dateOfRecord}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="value">
+                                <th mat-header-cell *matHeaderCellDef>Value</th>
+                                <td mat-cell *matCellDef="let progressHistory">{{progressHistory.value}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef>Action</th>
+                                <button mat-button color="primary" routerLink="/progressLog/edit/{{milestone.milestoneId}}">Edit</button>
+                                <button mat-button color="primary" routerLink="/progressLog/delete/{{milestone.milestoneId}}">Delete</button>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        -->
+                    </mat-list>
+            </mat-card-content>
+            <button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Back</button>
+		</mat-card>
+	</div>
+</section>
+

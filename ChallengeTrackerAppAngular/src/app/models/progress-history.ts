@@ -2,6 +2,7 @@ import { Milestone } from "./milestone";
 import { Program } from "./program";
 
 export class ProgressHistory {
+    progressHistoryId: number | undefined;
     milestoneId : Milestone | undefined;
     programId: Program | undefined;
     dateOfRecord: Date | undefined;

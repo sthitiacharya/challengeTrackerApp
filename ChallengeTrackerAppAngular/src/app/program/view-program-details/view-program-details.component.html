@@ -1,6 +1,6 @@
 <section id="content" class="content">
     <br/><br/><br/>
-    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <div class="main-wrapper" fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-card *ngIf="retrieveProgramError == true" class="box">
             <mat-card-header>
               <mat-card-title style="color: red;">Program ID {{programId}} does not exist!</mat-card-title>
@@ -20,6 +20,7 @@
                         <div mat-line>Program Start Date: {{program.startDate}}</div>
                         <div mat-line>Target Completion Date: {{program.targetCompletionDate}}</div>
                         <button mat-stroked-button color="primary" routerLink="/program/edit/{{programId}}">Edit</button>
+                        &nbsp; &nbsp;
                         <button mat-stroked-button color="primary" (click)="deleteProgram()">Delete</button>
                     </mat-list-item>
                     <mat-divider></mat-divider>
@@ -33,9 +34,13 @@
                       <div mat-line>Value Type: {{milestone.valueType}}</div>
                       <div mat-line>Initial Value: {{milestone.initialValue}}</div>
                       <div mat-line>Target Value: {{milestone.targetValue}}</div>
+                      <button mat-stroked-button color="blue" routerLink="/milestone/{{milestone.milestoneId}}">View</button>
+                      &nbsp; &nbsp;
                       <button mat-stroked-button color="primary" routerLink="/milestone/edit/{{milestone.milestoneId}}">Edit</button>
-                      <button mat-stroked-button color="primary" routerLink="/progressLog/add/{{milestone.milestoneId}}">Log Progress</button>
-                      <button mat-stroked-button color="primary" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
+                      &nbsp; &nbsp;
+                      <button mat-stroked-button color="green" routerLink="/progressLog/add/{{milestone.milestoneId}}">Log Progress</button>
+                      &nbsp; &nbsp;
+                      <button mat-stroked-button color="pink" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
                     </mat-list-item>
                 </mat-list>
                 <!--

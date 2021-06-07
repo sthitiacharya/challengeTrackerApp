@@ -31,6 +31,8 @@ import { EditProgramComponent } from './program/edit-program/edit-program.compon
 import { EditMilestoneComponent } from './milestone/edit-milestone/edit-milestone.component';
 import { AddProgressLogComponent } from './progressHistory/add-progress-log/add-progress-log.component';
 import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-milestone.component';
+import { ViewMilestoneDetailsComponent } from './milestone/view-milestone-details/view-milestone-details.component';
+import { EditProgressLogComponent } from './progressHistory/edit-progress-log/edit-progress-log.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-mi
     EditProgramComponent,
     EditMilestoneComponent,
     AddProgressLogComponent,
-    DeleteMilestoneComponent
+    DeleteMilestoneComponent,
+    ViewMilestoneDetailsComponent,
+    EditProgressLogComponent
   ],
   imports: [
     BrowserModule,

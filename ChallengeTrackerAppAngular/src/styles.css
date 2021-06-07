@@ -111,7 +111,7 @@ mat-sidenav-container {
 	-webkit-transform: scale(1);
 	-ms-transform: scale(1);
 	z-index: 5;
-	max-width: 500px;
+	max-width: 800px;
 	margin-left: 15px;
 }
 
@@ -174,4 +174,16 @@ mat-sidenav-container {
 
 .main-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
 	padding: 0.8375em 0;
+}
+
+.mat-stroked-button.mat-blue {
+	color: blue;
+}
+
+.mat-stroked-button.mat-green {
+	color: #228b22;
+}
+
+.mat-stroked-button.mat-pink {
+	color: #e75480;
 }

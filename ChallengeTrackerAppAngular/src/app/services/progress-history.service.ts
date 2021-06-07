@@ -35,9 +35,24 @@ export class ProgressHistoryService {
     );
   }
 
+  retrieveProgressHistory(progressHistoryId?: number | null)
+  {
+    return this.httpClient.get<ProgressHistory>(`${this.baseUrl}/progressHistory/${progressHistoryId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
   updateProgressHistory(progressHistory?: ProgressHistory): Observable<number>
   {		
     return this.httpClient.put<number>(`${this.baseUrl}/editProgressHistory`, progressHistory, httpOptions).pipe
+    (
+      catchError(this.handleError)
+    );
+  }
+
+  deleteProgressHistory(progressHistoryId?: number): Observable<any>
+  {
+    return this.httpClient.delete<any>(`${this.baseUrl}/deleteProgressHistory/${progressHistoryId}`, httpOptions).pipe
     (
       catchError(this.handleError)
     );

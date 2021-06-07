@@ -10,6 +10,8 @@ import { EditProgramComponent } from "./program/edit-program/edit-program.compon
 import { EditMilestoneComponent } from "./milestone/edit-milestone/edit-milestone.component";
 import { AddProgressLogComponent } from "./progressHistory/add-progress-log/add-progress-log.component";
 import { DeleteMilestoneComponent } from "./milestone/delete-milestone/delete-milestone.component";
+import { ViewMilestoneDetailsComponent } from "./milestone/view-milestone-details/view-milestone-details.component";
+import { EditProgressLogComponent } from "./progressHistory/edit-progress-log/edit-progress-log.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,8 +23,10 @@ const routes: Routes = [
   { path: 'program/:programId', component: ViewProgramDetailsComponent },
   { path: 'program/edit/:programId', component: EditProgramComponent },
   { path: 'milestone/edit/:milestoneId', component: EditMilestoneComponent },
-  { path: 'progressLog/add/:milestoneId', component: AddProgressLogComponent},
-  { path: 'milestone/delete/:milestoneId', component: DeleteMilestoneComponent}
+  { path: 'progressLog/add/:milestoneId', component: AddProgressLogComponent },
+  { path: 'milestone/delete/:milestoneId', component: DeleteMilestoneComponent },
+  { path: 'milestone/:milestoneId', component: ViewMilestoneDetailsComponent },
+  { path: 'progressLog/edit/:progressHistoryId', component: EditProgressLogComponent }
 ];
 
 @NgModule({

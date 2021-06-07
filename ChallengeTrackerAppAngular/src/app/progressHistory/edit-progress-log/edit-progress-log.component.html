@@ -1,0 +1,29 @@
+<section id="content" class="content">
+	<br/><br/><br/>
+	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card class="box">
+		  <mat-card-header>
+			<mat-card-title>Update Progress Log</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #updateProgHistoryForm="ngForm" (ngSubmit)="update(updateProgHistoryForm)">
+			<mat-card-content>
+			  <mat-form-field class="example-full-width">
+				<input matInput id="value" name="value" #value="ngModel" type="text" [(ngModel)]="progressHistory.value" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="value.invalid && (value.dirty || value.touched || submitted)" class="errorText">
+				<div *ngIf="value.errors != null && value.errors.required">
+					Please input a value.
+				</div>
+			  </mat-error>
+            </mat-card-content>
+            <button mat-stroked-button color="primary" class="btn-block" type="submit">Update</button>
+          </form>
+          <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+        </mat-card>
+    </div>
+</section>
