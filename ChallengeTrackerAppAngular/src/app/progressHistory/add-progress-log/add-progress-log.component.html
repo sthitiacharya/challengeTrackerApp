@@ -19,6 +19,12 @@
             </mat-card-content>
             <button mat-stroked-button color="primary" class="btn-block" type="submit">Add to Progress Log</button>
           </form>
+          <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
         </mat-card>
     </div>
 </section>

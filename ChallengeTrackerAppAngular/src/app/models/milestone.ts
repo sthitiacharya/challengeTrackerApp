@@ -1,5 +1,6 @@
 import { Program } from "./program";
 import { User } from "./user";
+import { ProgressHistory } from "./progress-history";
 import { ValueCategoryEnum } from "./value-category-enum.enum";
 
 export class Milestone {
@@ -21,6 +22,7 @@ export class Milestone {
     program: Program | undefined;
     milestoneCreatedBy: User | undefined;
     assignedUser: User | undefined;
+    progressHistories: ProgressHistory[] | undefined;
 
     constructor(milestoneId?: number, title?: string, description?: string, 
         milestoneType?: string, valueCategory?: ValueCategoryEnum, valueType?: string, initialValue?: number, targetValue?: number, 

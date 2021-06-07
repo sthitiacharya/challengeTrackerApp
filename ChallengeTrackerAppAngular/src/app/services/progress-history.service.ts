@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProgressHistory } from "../models/progress-history";
+import { CreateProgHistoryReq } from "../models/create-prog-history-req";
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,9 +18,10 @@ export class ProgressHistoryService {
 
   constructor(private httpClient : HttpClient) { }
 
-  createProgressHistory(progressHistory?: ProgressHistory): Observable<number>
+  createProgressHistory(progressHistory?: ProgressHistory, milestoneId?: number): Observable<number>
   {		
-    return this.httpClient.post<number>(this.baseUrl + "/logProgress", progressHistory, httpOptions).pipe
+    let createProgHistoryReq: CreateProgHistoryReq = new CreateProgHistoryReq(progressHistory, milestoneId);
+    return this.httpClient.post<number>(this.baseUrl + "/logProgress", createProgHistoryReq, httpOptions).pipe
     (
       catchError(this.handleError)
     );

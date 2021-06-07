@@ -69,11 +69,14 @@ export class AddProgressLogComponent implements OnInit {
 			
 			console.log('********** AddProgressLogComponent.ts: error');
 		}
-
-    this.newLog.milestoneId = this.milestone;
-    this.newLog.programId = this.milestone.program;
-
-		this.progressHistoryService.createProgressHistory(this.newLog).subscribe(
+    if (this.milestoneId == null)
+    {
+      this.resultError = true;
+			this.resultSuccess = false;
+			this.message = "An error has occurred while creating the new progress history log";
+      return;
+    }
+		this.progressHistoryService.createProgressHistory(this.newLog, parseInt(this.milestoneId)).subscribe(
 			response => {
 				let newProgressHistoryId: number = response;
 				this.resultSuccess = true;
