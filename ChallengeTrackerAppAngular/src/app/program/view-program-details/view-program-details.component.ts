@@ -22,6 +22,9 @@ export class ViewProgramDetailsComponent implements OnInit {
   programManager: User | undefined;
   retrieveProgramError: boolean;
   isProgramManager: boolean;
+
+  error: boolean;
+  errorMessage: string | undefined;
   displayedColumns: string[] = ['title', 'description', 'targetCompletionDate', 'milestoneType', 'valueType', 'initialValue', 'targetValue'];
 
   constructor(private router: Router,
@@ -33,6 +36,7 @@ export class ViewProgramDetailsComponent implements OnInit {
       this.program = new Program();
       this.milestones = new Array();
       this.retrieveProgramError = false;
+      this.error = false;
       this.isProgramManager = false;
       this.programManager = new User();
     }
@@ -72,6 +76,26 @@ export class ViewProgramDetailsComponent implements OnInit {
 		);
 
     this.milestoneService.setProgramId(parseInt(this.programId));
+  }
+
+  deleteProgram()
+  {
+    if (this.programId == null)
+    {
+      this.retrieveProgramError = true;
+      return;
+    }
+
+    this.programService.deleteProgram(parseInt(this.programId)).subscribe(
+			response => {
+				this.router.navigate(['/dashboard']);
+			},
+			error => {
+        this.error = true;
+        this.errorMessage = error;
+				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
+			}
+		);
   }
 
 }

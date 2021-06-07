@@ -29,6 +29,8 @@ import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
 import { EditProgramComponent } from './program/edit-program/edit-program.component';
 import { EditMilestoneComponent } from './milestone/edit-milestone/edit-milestone.component';
+import { AddProgressLogComponent } from './progressHistory/add-progress-log/add-progress-log.component';
+import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-milestone.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { EditMilestoneComponent } from './milestone/edit-milestone/edit-mileston
     ViewDashboardComponent,
     ViewProgramDetailsComponent,
     EditProgramComponent,
-    EditMilestoneComponent
+    EditMilestoneComponent,
+    AddProgressLogComponent,
+    DeleteMilestoneComponent
   ],
   imports: [
     BrowserModule,

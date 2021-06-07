@@ -59,6 +59,13 @@ export class ProgramService {
     );
   }
 
+  deleteProgram(programId?: number): Observable<any>
+  {
+    return this.httpClient.delete<any>(this.baseUrl + `/deleteProgram/${programId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
 	private handleError(error: HttpErrorResponse)
   {
     let errorMessage: string = "";

@@ -20,6 +20,7 @@
                         <div mat-line>Program Start Date: {{program.startDate}}</div>
                         <div mat-line>Target Completion Date: {{program.targetCompletionDate}}</div>
                         <button mat-stroked-button color="primary" routerLink="/program/edit/{{programId}}">Edit</button>
+                        <button mat-stroked-button color="primary" (click)="deleteProgram()">Delete</button>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <div mat-subheader>Milestones</div>
@@ -33,6 +34,8 @@
                       <div mat-line>Initial Value: {{milestone.initialValue}}</div>
                       <div mat-line>Target Value: {{milestone.targetValue}}</div>
                       <button mat-stroked-button color="primary" routerLink="/milestone/edit/{{milestone.milestoneId}}">Edit</button>
+                      <button mat-stroked-button color="primary" routerLink="/progressLog/add/{{milestone.milestoneId}}">Log Progress</button>
+                      <button mat-stroked-button color="primary" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
                     </mat-list-item>
                 </mat-list>
                 <!--

@@ -54,6 +54,13 @@ export class MilestoneService {
       catchError(this.handleError)
     );
   }
+
+  deleteMilestone(milestoneId?: number | null) : Observable<any>
+  {
+    return this.httpClient.delete<any>(`${this.baseUrl}/deleteMilestone/${milestoneId}`, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 	
 	private handleError(error: HttpErrorResponse)
   {

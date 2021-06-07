@@ -83,6 +83,7 @@ export class CreateNewMilestoneComponent implements OnInit {
 				this.resultSuccess = true;
 				this.resultError = false;
 				this.message = "New milestone " + newMilestoneId + " created successfully";
+				this.router.navigate(['/dashboard']);
 			},
 			error => {
 				this.resultError = true;
