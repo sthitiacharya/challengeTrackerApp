@@ -27,6 +27,7 @@ export class EditMilestoneComponent implements OnInit {
 	public valueCategories = Object.values(this.valueCategoryEnum).filter(value => typeof value === 'string');
 	//valueCategories = ["Health", "Career", "Finance", "Education"];
 	valueTypes = new Array();
+  reminderIntervals = ["Daily", "Every 3 days", "Every 5 days", "Weekly", "None"];
 	healthValueType = ["Weight (kgs)", "Weight (pounds)", "No. of steps / day", "Walking distance (km)",
 	 "Walking distance (miles)", "Hours of sleep", "Hours of Screen Time", "Calorie intake"];
 	careerValueType = ["Work hours / day", "No. of certificates completed"];

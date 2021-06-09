@@ -12,6 +12,7 @@
                       <mat-option *ngFor="let user of users" value="{{user.userId}}">{{user.username}}</mat-option>
                   </mat-select>
               </mat-form-field>
+			  
 			  <mat-form-field class="example-full-width">
 				<mat-label>Title</mat-label>
 				<input matInput id="title" name="title" #title="ngModel" type="text" [(ngModel)]="programToUpdate.title" required="true" />
@@ -29,13 +30,27 @@
 			  
 			  <mat-form-field class="example-full-width">
 				<mat-label>Start Date</mat-label>
-				<input matInput id="startDate" name="startDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="startDate" required="true" />
+				<input matInput [matDatepicker]="picker" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="programToUpdate.startDate" required="true">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
 			  </mat-form-field>
-
+			  <mat-error *ngIf="startDate.invalid && (startDate.dirty || startDate.touched || submitted)" class="errorText">
+				<div *ngIf="startDate.errors != null && startDate.errors.required">
+					Program Start Date is required.
+				</div>
+			  </mat-error>
+			  
 			  <mat-form-field class="example-full-width">
 				<mat-label>Target Completion Date</mat-label>
-				<input matInput id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" />
+				<input matInput [matDatepicker]="picker2" id="targetCompletionDate" name="targetCompletionDate" #targetCompletionDate="ngModel" [(ngModel)]="programToUpdate.targetCompletionDate" required="true">
+				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+				<mat-datepicker #picker2></mat-datepicker>
 			  </mat-form-field>
+			  <mat-error *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
+				<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
+					Program Target Completion Date is required.
+				</div>
+			  </mat-error>
 			  
 			  <mat-form-field class="example-full-width">
 				<mat-label>Assign Users To Program</mat-label>

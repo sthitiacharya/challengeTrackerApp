@@ -19,6 +19,8 @@ export class CreateNewMilestoneComponent implements OnInit {
 	targetCompletionDate: string | undefined;
 	valueCategoryEnum = ValueCategoryEnum;
 	public valueCategories = Object.values(this.valueCategoryEnum).filter(value => typeof value === 'string');
+	reminderIntervals = ["Daily", "Every 3 days", "Every 5 days", "Weekly", "None"];
+	//public reminderIntervals = Object.values(this.reminderInterval).filter(value => typeof value === 'string')
 	//valueCategories = ["Health", "Career", "Finance", "Education"];
 	valueTypes = new Array();
 	healthValueType = ["Weight (kgs)", "Weight (pounds)", "No. of steps / day", "Walking distance (km)",
@@ -83,7 +85,6 @@ export class CreateNewMilestoneComponent implements OnInit {
 				this.resultSuccess = true;
 				this.resultError = false;
 				this.message = "New milestone " + newMilestoneId + " created successfully";
-				this.router.navigate(['/dashboard']);
 			},
 			error => {
 				this.resultError = true;

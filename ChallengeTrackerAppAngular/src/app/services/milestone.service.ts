@@ -61,6 +61,14 @@ export class MilestoneService {
       catchError(this.handleError)
     );
   }
+
+  getReminders(userId?: number | null) : Observable<string[]>
+  {
+    return this.httpClient.get<string[]>(`${this.baseUrl}/getReminders?userId=${userId}`, httpOptions).pipe
+    (
+      catchError(this.handleError)
+    );
+  }
 	
 	private handleError(error: HttpErrorResponse)
   {

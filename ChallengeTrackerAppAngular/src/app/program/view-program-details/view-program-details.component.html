@@ -25,6 +25,7 @@
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <div mat-subheader>Milestones</div>
+                    <button mat-stroked-button color="primary" routerLink="/milestone/createMilestone">Add Milestone</button>
                     <mat-list-item *ngFor="let milestone of milestones">
                       <mat-icon mat-list-icon>note</mat-icon>
                       <div mat-line>Milestone Title: {{milestone.title}}</div>

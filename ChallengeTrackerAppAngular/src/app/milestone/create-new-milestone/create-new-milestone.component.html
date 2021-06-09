@@ -2,7 +2,6 @@
 	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
 		<mat-card class="box">
 		  <mat-card-header>
-			<mat-card-title>Create Program: Step 2 of 2</mat-card-title>
 			<mat-card-title>Creating Milestones</mat-card-title>
 		  </mat-card-header>
 		  <form class="example-form" #createMilestoneForm="ngForm" (ngSubmit)="create(createMilestoneForm)">
@@ -24,9 +23,11 @@
 
 			  <mat-form-field class="example-full-width">
 				<mat-label>Target Completion Date</mat-label>
-				<input matInput id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" />
+				<input matInput [matDatepicker]="picker" id="targetCompletionDate" name="targetCompletionDate" placeholder="dd-mm-yyyy" #targetCompletionDate="ngModel" [(ngModel)]="newMilestone.targetCompletionDate">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
 			  </mat-form-field>
-			  
+
 			  <mat-form-field class="example-full-width">
 				<mat-label>Milestone Type</mat-label>
 				<mat-select id="milestoneType" name="milestoneType" #milestoneType="ngModel" [(ngModel)]="newMilestone.milestoneType">
@@ -94,9 +95,25 @@
 					Reward value is required.
 				</div>
 			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Set Reminder Start Date:</mat-label>
+				<input matInput [matDatepicker]="picker2" id="reminderStartDate" name="reminderStartDate" #reminderStartDate="ngModel" [(ngModel)]="newMilestone.reminderStartDate">
+				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+				<mat-datepicker #picker2></mat-datepicker>
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Reminder Interval</mat-label>
+				<mat-select id="reminderInterval" name="reminderInterval" #reminderInterval="ngModel" [(ngModel)]="newMilestone.reminderInterval">
+					<mat-option *ngFor="let reminder of reminderIntervals" [value]="reminder"> {{reminder}} </mat-option>
+				</mat-select>
+			  </mat-form-field>
+
 			</mat-card-content>
 			<button mat-stroked-button color="primary" class="btn-block" routerLink="/program/createProgram">Back</button>
 			<button mat-stroked-button color="primary" class="btn-block" type="submit">Create New Milestone</button>
+			<button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Finish</button>
 		  </form>
 		  <div *ngIf="resultSuccess == true" style="color:blue;">
 			{{message}}

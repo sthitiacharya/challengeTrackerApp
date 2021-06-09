@@ -15,6 +15,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +35,7 @@ import { AddProgressLogComponent } from './progressHistory/add-progress-log/add-
 import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-milestone.component';
 import { ViewMilestoneDetailsComponent } from './milestone/view-milestone-details/view-milestone-details.component';
 import { EditProgressLogComponent } from './progressHistory/edit-progress-log/edit-progress-log.component';
+import { ViewRemindersComponent } from './userManagement/view-reminders/view-reminders.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { EditProgressLogComponent } from './progressHistory/edit-progress-log/ed
     AddProgressLogComponent,
     DeleteMilestoneComponent,
     ViewMilestoneDetailsComponent,
-    EditProgressLogComponent
+    EditProgressLogComponent,
+    ViewRemindersComponent
   ],
   imports: [
     BrowserModule,
@@ -67,10 +71,14 @@ import { EditProgressLogComponent } from './progressHistory/edit-progress-log/ed
     MatSidenavModule,
     MatIconModule,
     MatTableModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   bootstrap: [AppComponent]
 })

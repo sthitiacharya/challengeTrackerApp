@@ -115,6 +115,12 @@ mat-sidenav-container {
 	margin-left: 15px;
 }
 
+.reminderbox {
+	background: #fff;
+	max-width: 800px;
+	margin-bottom: 15px;
+}
+
 .box.back {
 	transform: scale(.95);
 	-webkit-transform: scale(.95);

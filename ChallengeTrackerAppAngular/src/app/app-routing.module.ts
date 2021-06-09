@@ -12,6 +12,7 @@ import { AddProgressLogComponent } from "./progressHistory/add-progress-log/add-
 import { DeleteMilestoneComponent } from "./milestone/delete-milestone/delete-milestone.component";
 import { ViewMilestoneDetailsComponent } from "./milestone/view-milestone-details/view-milestone-details.component";
 import { EditProgressLogComponent } from "./progressHistory/edit-progress-log/edit-progress-log.component";
+import { ViewRemindersComponent } from "./userManagement/view-reminders/view-reminders.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'progressLog/add/:milestoneId', component: AddProgressLogComponent },
   { path: 'milestone/delete/:milestoneId', component: DeleteMilestoneComponent },
   { path: 'milestone/:milestoneId', component: ViewMilestoneDetailsComponent },
-  { path: 'progressLog/edit/:progressHistoryId', component: EditProgressLogComponent }
+  { path: 'progressLog/edit/:progressHistoryId', component: EditProgressLogComponent },
+  { path: 'reminders', component: ViewRemindersComponent}
 ];
 
 @NgModule({
