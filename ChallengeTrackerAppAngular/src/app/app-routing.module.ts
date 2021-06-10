@@ -13,6 +13,9 @@ import { DeleteMilestoneComponent } from "./milestone/delete-milestone/delete-mi
 import { ViewMilestoneDetailsComponent } from "./milestone/view-milestone-details/view-milestone-details.component";
 import { EditProgressLogComponent } from "./progressHistory/edit-progress-log/edit-progress-log.component";
 import { ViewRemindersComponent } from "./userManagement/view-reminders/view-reminders.component";
+import { ViewAllRewardsComponent } from "./reward/view-all-rewards/view-all-rewards.component";
+import { ViewRewardDetailsComponent } from "./reward/view-reward-details/view-reward-details.component";
+import { ViewRedeemedRewardsComponent } from "./reward/view-redeemed-rewards/view-redeemed-rewards.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -28,7 +31,10 @@ const routes: Routes = [
   { path: 'milestone/delete/:milestoneId', component: DeleteMilestoneComponent },
   { path: 'milestone/:milestoneId', component: ViewMilestoneDetailsComponent },
   { path: 'progressLog/edit/:progressHistoryId', component: EditProgressLogComponent },
-  { path: 'reminders', component: ViewRemindersComponent}
+  { path: 'reminders', component: ViewRemindersComponent },
+  { path: 'rewards', component: ViewAllRewardsComponent },
+  { path: 'rewards/:rewardId', component: ViewRewardDetailsComponent },
+  { path: 'redeemedRewards', component: ViewRedeemedRewardsComponent }
 ];
 
 @NgModule({

@@ -123,6 +123,7 @@ export class EditProgramComponent implements OnInit {
         this.resultSuccess = true;
         this.resultError = false;
         this.message = "Program updated successfully";
+        this.router.navigate([`program/${this.programId}`]);
       },
       error => {
         this.resultError = true;

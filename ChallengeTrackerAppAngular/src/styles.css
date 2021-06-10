@@ -1,16 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-
+/*background-image: linear-gradient(360deg, #f8ceec 0%, #a88beb 100%);*/
 html,
 body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	background:  #a88beb;
 }
 
 body {
 	min-height: 100vh;
-	background-color: #f8ceec;
-    background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
+	background-color:  #a88beb;
+	background-image: linear-gradient(315deg, #f8ceec 10%, #a88beb 90%);
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -34,20 +35,18 @@ h1 {
 }
 
 mat-sidenav {
-    margin: 16px;
-    width: 200px;
+    width: 300px;
     border-right: none;
     background: #673ab7;
     color: white;
-    border-radius: 10px;
     padding: 16px;
     text-align: center;
 }
 
 mat-sidenav-container {
     min-height: 100vh;
-    background-color: #f8ceec;
-    background-image: linear-gradient(315deg, #f8ceec 0%, #a88beb 74%);
+	background-color:  #a88beb;
+	background-image: linear-gradient(315deg, #f8ceec 10%, #a88beb 90%);
 	font-family: 'Roboto', sans-serif;
 }
 

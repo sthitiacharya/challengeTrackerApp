@@ -17,6 +17,7 @@ export class AddProgressLogComponent implements OnInit {
 
   submitted: boolean;
   milestoneId: string | null | undefined;
+  programId: number | null | undefined;
   milestone: Milestone;
 	newLog: ProgressHistory;
 
@@ -57,6 +58,8 @@ export class AddProgressLogComponent implements OnInit {
       }
       
     )
+
+    this.programId = this.milestoneService.getProgramId();
   }
 
   create(createProgressHistoryForm: NgForm) {	
@@ -82,7 +85,7 @@ export class AddProgressLogComponent implements OnInit {
 				this.resultSuccess = true;
 				this.resultError = false;
 				this.message = "New program " + newProgressHistoryId + " created successfully";
-				this.router.navigate(['/dashboard']);
+				this.router.navigate([`/program/${this.programId}`]);
 			},
 			error => {
 				this.resultError = true;

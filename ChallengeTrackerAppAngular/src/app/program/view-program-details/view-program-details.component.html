@@ -27,10 +27,11 @@
                     <div mat-subheader>Milestones</div>
                     <button mat-stroked-button color="primary" routerLink="/milestone/createMilestone">Add Milestone</button>
                     <mat-list-item *ngFor="let milestone of milestones">
-                      <mat-icon mat-list-icon>note</mat-icon>
+                      <mat-icon mat-list-icon>flag</mat-icon>
                       <div mat-line>Milestone Title: {{milestone.title}}</div>
                       <div mat-line>Description: {{milestone.description}}</div>
-                      <div mat-line>Target Completion Date: {{milestone.targetCompletionDate}}</div>
+                      <div mat-line *ngIf="milestone.actualCompletedDate == null">Target Completion Date: {{milestone.targetCompletionDate}}</div>
+                      <div mat-line *ngIf="milestone.actualCompletedDate != null">Completed On: {{milestone.actualCompletedDate}}</div>
                       <div mat-line>Milestone Type: {{milestone.milestoneType}}</div>
                       <div mat-line>Value Type: {{milestone.valueType}}</div>
                       <div mat-line>Initial Value: {{milestone.initialValue}}</div>
@@ -38,8 +39,9 @@
                       <button mat-stroked-button color="blue" routerLink="/milestone/{{milestone.milestoneId}}">View</button>
                       &nbsp; &nbsp;
                       <button mat-stroked-button color="primary" routerLink="/milestone/edit/{{milestone.milestoneId}}">Edit</button>
-                      &nbsp; &nbsp;
-                      <button mat-stroked-button color="green" routerLink="/progressLog/add/{{milestone.milestoneId}}">Log Progress</button>
+                      
+                      <button mat-stroked-button color="green" *ngIf="milestone.actualCompletedDate == null" routerLink="/progressLog/add/{{milestone.milestoneId}}">
+                        &nbsp; &nbsp;Log Progress</button>
                       &nbsp; &nbsp;
                       <button mat-stroked-button color="pink" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
                     </mat-list-item>

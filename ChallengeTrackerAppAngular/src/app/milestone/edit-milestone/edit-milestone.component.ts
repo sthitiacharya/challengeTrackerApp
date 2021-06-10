@@ -100,6 +100,7 @@ export class EditMilestoneComponent implements OnInit {
         this.resultSuccess = true;
         this.resultError = false;
         this.message = "Milestone updated successfully";
+        this.router.navigate([`program/${this.programId}`]);
       },
       error => {
         this.resultError = true;

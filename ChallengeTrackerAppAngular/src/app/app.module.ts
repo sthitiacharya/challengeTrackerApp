@@ -36,6 +36,9 @@ import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-mi
 import { ViewMilestoneDetailsComponent } from './milestone/view-milestone-details/view-milestone-details.component';
 import { EditProgressLogComponent } from './progressHistory/edit-progress-log/edit-progress-log.component';
 import { ViewRemindersComponent } from './userManagement/view-reminders/view-reminders.component';
+import { ViewAllRewardsComponent } from './reward/view-all-rewards/view-all-rewards.component';
+import { ViewRewardDetailsComponent } from './reward/view-reward-details/view-reward-details.component';
+import { ViewRedeemedRewardsComponent } from './reward/view-redeemed-rewards/view-redeemed-rewards.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { ViewRemindersComponent } from './userManagement/view-reminders/view-rem
     DeleteMilestoneComponent,
     ViewMilestoneDetailsComponent,
     EditProgressLogComponent,
-    ViewRemindersComponent
+    ViewRemindersComponent,
+    ViewAllRewardsComponent,
+    ViewRewardDetailsComponent,
+    ViewRedeemedRewardsComponent
   ],
   imports: [
     BrowserModule,

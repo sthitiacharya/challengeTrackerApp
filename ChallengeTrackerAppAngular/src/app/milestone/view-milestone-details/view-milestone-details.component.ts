@@ -16,6 +16,7 @@ import { User } from 'src/app/models/user';
 })
 export class ViewMilestoneDetailsComponent implements OnInit {
 
+  programId: number | null | undefined;
   milestoneId: string | null;
   milestone: Milestone;
   progressHistories: ProgressHistory[] | undefined;
@@ -65,6 +66,8 @@ export class ViewMilestoneDetailsComponent implements OnInit {
 				console.log('********** ViewMilestoneDetailsComponent.ts: ' + error);
 			}
 		);
+
+    this.programId = this.milestoneService.getProgramId();
   }
 
   deleteProgressHistory(progressHistoryId?: number)
@@ -72,7 +75,7 @@ export class ViewMilestoneDetailsComponent implements OnInit {
     this.progressHistoryService.deleteProgressHistory(progressHistoryId).subscribe(
       response =>
       {
-        this.router.navigate(['/milestone/{{milestoneId}}']);
+        this.router.navigate([`/milestone/${this.milestoneId}`]);
       },
       error => {
         this.error = true;
