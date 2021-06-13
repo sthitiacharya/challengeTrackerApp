@@ -20,6 +20,6 @@ export class AppComponent {
 
   userLogout(): void {
     this.sessionService.setIsLogin(false); 
-    this.router.navigate(['/index']);
+    this.router.navigate(['/login']);
   }
 }

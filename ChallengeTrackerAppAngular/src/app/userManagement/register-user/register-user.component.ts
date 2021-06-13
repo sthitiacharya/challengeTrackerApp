@@ -44,7 +44,8 @@ export class RegisterUserComponent implements OnInit {
         let newUserId: number = response;
         this.resultSuccess = true;
         this.resultError = false;
-        this.message = "New User " + newUserId + " created successfully";
+        this.message = "New User " + newUserId + " registered successfully";
+        this.router.navigate(['/login']);
       },
       error => {
         this.resultError = true;

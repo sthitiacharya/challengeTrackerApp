@@ -52,7 +52,7 @@ export class UserLoginComponent implements OnInit {
 
         this.childEvent.emit();
 
-        this.router.navigate(['/login']);
+        this.router.navigate(['/dashboard']);
       },
       (error: string | undefined) => {
         this.loginError = true;

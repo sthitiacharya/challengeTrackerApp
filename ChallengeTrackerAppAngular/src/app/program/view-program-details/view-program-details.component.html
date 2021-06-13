@@ -1,6 +1,6 @@
 <section id="content" class="content">
     <br/><br/><br/>
-    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <div class="main-wrapper" fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-card *ngIf="retrieveProgramError == true" class="box">
             <mat-card-header>
               <mat-card-title style="color: red;">Program ID {{programId}} does not exist!</mat-card-title>
@@ -8,25 +8,42 @@
             <button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Back</button>
         </mat-card>
 
-		<mat-card *ngIf="retrieveProgramError == false" class="box">
+		<mat-card *ngIf="retrieveProgramError == false" class="programbox">
 		  <mat-card-header>
 			<mat-card-title>{{program.title}}</mat-card-title>
 		  </mat-card-header>
             <mat-card-content>
-                <h4>Description: {{program.description}}</h4>
-                <h4>Program Start Date: {{program.startDate}}</h4>
-                <h4>Target Completion Date: {{program.targetCompletionDate}}</h4>
-                <h4>Milestones: </h4>
-                <ul style="margin-left: 20px;">
-					<li *ngFor="let milestone of milestones">
-                        Milestone Title: {{milestone.title}}
-                    <br/>Description: {{milestone.description}}
-                    <br/>Target Completion Date: {{milestone.targetCompletionDate}}
-                    <br/>Milestone Type: {{milestone.milestoneType}}
-                    <br/>Value Type: {{milestone.valueType}}
-                    <br/>Initial Value: {{milestone.initialValue}}
-                    <br/>Target Value: {{milestone.targetValue}}</li>
-				</ul>
+                <mat-list>
+                    <div mat-subheader>Program Details</div>
+                    <mat-list-item>
+                        <div mat-line>Description: {{program.description}}</div>
+                        <div mat-line>Program Start Date: {{program.startDate}}</div>
+                        <div mat-line>Target Completion Date: {{program.targetCompletionDate}}</div>
+                        <button mat-stroked-button color="primary" routerLink="/program/edit/{{programId}}">Edit</button>
+                        &nbsp; &nbsp;
+                        <button mat-stroked-button color="primary" (click)="deleteProgram()">Delete</button>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <div mat-subheader>Milestones</div>
+                    <button mat-stroked-button color="primary" routerLink="/milestone/createMilestone">Add Milestone</button>
+                    <mat-list-item *ngFor="let milestone of milestones">
+                      <mat-icon mat-list-icon>note</mat-icon>
+                      <div mat-line>Milestone Title: {{milestone.title}}</div>
+                      <div mat-line>Description: {{milestone.description}}</div>
+                      <div mat-line>Target Completion Date: {{milestone.targetCompletionDate}}</div>
+                      <div mat-line>Milestone Type: {{milestone.milestoneType}}</div>
+                      <div mat-line>Value Type: {{milestone.valueType}}</div>
+                      <div mat-line>Initial Value: {{milestone.initialValue}}</div>
+                      <div mat-line>Target Value: {{milestone.targetValue}}</div>
+                      <button mat-stroked-button color="blue" routerLink="/milestone/{{milestone.milestoneId}}">View</button>
+                      &nbsp; &nbsp;
+                      <button mat-stroked-button color="primary" routerLink="/milestone/edit/{{milestone.milestoneId}}">Edit</button>
+                      &nbsp; &nbsp;
+                      <button mat-stroked-button color="green" routerLink="/progressLog/add/{{milestone.milestoneId}}">Log Progress</button>
+                      &nbsp; &nbsp;
+                      <button mat-stroked-button color="pink" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
+                    </mat-list-item>
+                </mat-list>
                 <!--
                 <table mat-table *ngFor="let milestone of milestones">
                     <ng-container matColumnDef="title">

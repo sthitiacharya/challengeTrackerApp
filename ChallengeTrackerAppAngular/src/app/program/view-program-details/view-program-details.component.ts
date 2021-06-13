@@ -6,6 +6,7 @@ import { ProgramService } from "../../services/program.service";
 import { MilestoneService } from "../../services/milestone.service";
 import { Program } from "../../models/program";
 import { Milestone } from "../../models/milestone";
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-view-program-details',
@@ -17,7 +18,13 @@ export class ViewProgramDetailsComponent implements OnInit {
   programId: string | null;
   program: Program;
   milestones: Milestone[] | undefined;
+
+  programManager: User | undefined;
   retrieveProgramError: boolean;
+  isProgramManager: boolean;
+
+  error: boolean;
+  errorMessage: string | undefined;
   displayedColumns: string[] = ['title', 'description', 'targetCompletionDate', 'milestoneType', 'valueType', 'initialValue', 'targetValue'];
 
   constructor(private router: Router,
@@ -29,6 +36,9 @@ export class ViewProgramDetailsComponent implements OnInit {
       this.program = new Program();
       this.milestones = new Array();
       this.retrieveProgramError = false;
+      this.error = false;
+      this.isProgramManager = false;
+      this.programManager = new User();
     }
 
   ngOnInit(): void {
@@ -44,6 +54,12 @@ export class ViewProgramDetailsComponent implements OnInit {
     this.programService.getProgram(parseInt(this.programId)).subscribe(
 			response => {
 				this.program = response;
+        this.programManager = this.program.programManager;
+
+        if (this.programManager == this.sessionService.getCurrentUser())
+        {
+          this.isProgramManager = true;
+        }
 			},
 			error => {
 				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
@@ -55,6 +71,28 @@ export class ViewProgramDetailsComponent implements OnInit {
 				this.milestones = response;
 			},
 			error => {
+				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
+			}
+		);
+
+    this.milestoneService.setProgramId(parseInt(this.programId));
+  }
+
+  deleteProgram()
+  {
+    if (this.programId == null)
+    {
+      this.retrieveProgramError = true;
+      return;
+    }
+
+    this.programService.deleteProgram(parseInt(this.programId)).subscribe(
+			response => {
+				this.router.navigate(['/dashboard']);
+			},
+			error => {
+        this.error = true;
+        this.errorMessage = error;
 				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
 			}
 		);

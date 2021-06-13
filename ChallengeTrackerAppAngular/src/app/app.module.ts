@@ -14,6 +14,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +29,13 @@ import { UserLoginComponent } from './userManagement/user-login/user-login.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
+import { EditProgramComponent } from './program/edit-program/edit-program.component';
+import { EditMilestoneComponent } from './milestone/edit-milestone/edit-milestone.component';
+import { AddProgressLogComponent } from './progressHistory/add-progress-log/add-progress-log.component';
+import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-milestone.component';
+import { ViewMilestoneDetailsComponent } from './milestone/view-milestone-details/view-milestone-details.component';
+import { EditProgressLogComponent } from './progressHistory/edit-progress-log/edit-progress-log.component';
+import { ViewRemindersComponent } from './userManagement/view-reminders/view-reminders.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +45,14 @@ import { ViewProgramDetailsComponent } from './program/view-program-details/view
     RegisterUserComponent,
     UserLoginComponent,
     ViewDashboardComponent,
-    ViewProgramDetailsComponent
+    ViewProgramDetailsComponent,
+    EditProgramComponent,
+    EditMilestoneComponent,
+    AddProgressLogComponent,
+    DeleteMilestoneComponent,
+    ViewMilestoneDetailsComponent,
+    EditProgressLogComponent,
+    ViewRemindersComponent
   ],
   imports: [
     BrowserModule,
@@ -53,10 +70,15 @@ import { ViewProgramDetailsComponent } from './program/view-program-details/view
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   bootstrap: [AppComponent]
 })
