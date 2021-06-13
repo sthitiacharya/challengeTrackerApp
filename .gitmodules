@@ -1,0 +1,3 @@
+[submodule "visiontracker"]
+	path = visiontracker
+	url = https://github.com/sthitiacharya/visionTracker.git

@@ -13,6 +13,7 @@ import { Milestone } from "../../models/milestone";
   styleUrls: ['./view-program-details.component.css']
 })
 export class ViewProgramDetailsComponent implements OnInit {
+  
   programId: string | null;
   program: Program;
   milestones: Milestone[] | undefined;
