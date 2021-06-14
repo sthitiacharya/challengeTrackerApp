@@ -43,7 +43,7 @@
                       <button mat-stroked-button color="green" *ngIf="milestone.actualCompletedDate == null" routerLink="/progressLog/add/{{milestone.milestoneId}}">
                         Log Progress</button>
                       &nbsp; &nbsp;
-                      <button mat-stroked-button color="pink" routerLink="/milestone/delete/{{milestone.milestoneId}}">Delete</button>
+                      <button mat-stroked-button color="pink" (click)="deleteMilestone(milestone.milestoneId)">Delete</button>
                     </mat-list-item>
                 </mat-list>
                 <!--

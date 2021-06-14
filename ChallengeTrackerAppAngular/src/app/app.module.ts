@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ import { ViewRemindersComponent } from './userManagement/view-reminders/view-rem
 import { ViewAllRewardsComponent } from './reward/view-all-rewards/view-all-rewards.component';
 import { ViewRewardDetailsComponent } from './reward/view-reward-details/view-reward-details.component';
 import { ViewRedeemedRewardsComponent } from './reward/view-redeemed-rewards/view-redeemed-rewards.component';
+import { ConfirmDialogComponent } from './confirmDialog/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { ViewRedeemedRewardsComponent } from './reward/view-redeemed-rewards/vie
     ViewRemindersComponent,
     ViewAllRewardsComponent,
     ViewRewardDetailsComponent,
-    ViewRedeemedRewardsComponent
+    ViewRedeemedRewardsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,11 @@ import { ViewRedeemedRewardsComponent } from './reward/view-redeemed-rewards/vie
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

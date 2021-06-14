@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmDialogComponent } from '../../confirmDialog/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 import { SessionService } from "../../services/session.service";
 import { ProgramService } from "../../services/program.service";
@@ -25,10 +27,13 @@ export class ViewProgramDetailsComponent implements OnInit {
 
   error: boolean;
   errorMessage: string | undefined;
+
+
   displayedColumns: string[] = ['title', 'description', 'targetCompletionDate', 'milestoneType', 'valueType', 'initialValue', 'targetValue'];
 
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
+    private dialog : MatDialog,
 	  private sessionService: SessionService,
     private programService: ProgramService,
     private milestoneService: MilestoneService) { 
@@ -80,22 +85,60 @@ export class ViewProgramDetailsComponent implements OnInit {
 
   deleteProgram()
   {
-    if (this.programId == null)
-    {
-      this.retrieveProgramError = true;
-      return;
-    }
-
-    this.programService.deleteProgram(parseInt(this.programId)).subscribe(
-			response => {
-				this.router.navigate(['/dashboard']);
-			},
-			error => {
-        this.error = true;
-        this.errorMessage = error;
-				console.log('********** ViewProgramDetailsComponent.ts: ' + error);
-			}
-		);
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Program Confirmation',
+        message: 'Are you sure you want to remove this program?'
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === false) {
+        return;
+      }
+      if (this.programId == null)
+      {
+        this.retrieveProgramError = true;
+        return;
+      }
+      this.programService.deleteProgram(parseInt(this.programId)).subscribe(
+        response => {
+          this.router.navigate(['/dashboard']);
+        },
+        error => {
+          this.error = true;
+          this.errorMessage = error;
+          console.log('********** ViewProgramDetailsComponent.ts: ' + error);
+        }
+      );
+    });
   }
 
+  deleteMilestone(milestoneId?: number)
+  {
+    const confirmDialog = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete Milestone Confirmation',
+        message: 'Are you sure you want to remove this milestone?'
+      }
+    });
+    confirmDialog.afterClosed().subscribe(result => {
+      if (result === false) {
+        return;
+      }
+      if (milestoneId == null)
+      {
+        return;
+      }
+      this.milestoneService.deleteMilestone(milestoneId).subscribe(
+        response => {
+          this.router.navigate(['/dashboard']);
+        },
+        error => {
+          this.error = true;
+          this.errorMessage = error;
+          console.log('********** ViewProgramDetailsComponent.ts: ' + error);
+        }
+      );
+    });
+  }
 }
