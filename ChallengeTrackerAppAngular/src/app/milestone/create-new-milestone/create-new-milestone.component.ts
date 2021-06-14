@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { MilestoneService } from "../../services/milestone.service";
+import { UserService } from "../../services/user.service";
 import { SessionService } from "../../services/session.service";
 import { Milestone } from "../../models/milestone";
+import { User } from "../../models/user";
 import { ValueCategoryEnum } from "../../models/value-category-enum.enum";
 
 @Component({
@@ -28,6 +30,9 @@ export class CreateNewMilestoneComponent implements OnInit {
 	careerValueType = ["Work hours / day", "No. of certificates completed"];
 	financeValueType = ["Amount Saved", "Expenditure Amount", "Amount Invested"];
 	educationValueType = ["No. of hours studied / day", "No. of books read / day", "No. of assignments completed", "No. of courses completed"];
+	
+	programUsers: User[];
+	assignedUserId: number | null;
 	resultSuccess: boolean;
 	resultError: boolean;
 	message: string | undefined;
@@ -35,11 +40,14 @@ export class CreateNewMilestoneComponent implements OnInit {
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private milestoneService: MilestoneService,
-	private sessionService: SessionService) {
+	private sessionService: SessionService,
+	private userService: UserService) {
       this.submitted = false;
       this.newMilestone = new Milestone();
       this.programId = null;
 	  //this.valueCategories = new Array();
+	  this.assignedUserId = null;
+	  this.programUsers = new Array();
       this.resultSuccess = false;
       this.resultError = false;
      }
@@ -61,6 +69,17 @@ export class CreateNewMilestoneComponent implements OnInit {
 	  {
 		  this.valueTypes = this.educationValueType;
 	  }
+
+	  this.userService.getProgramUsers(this.milestoneService.getProgramId()).subscribe(
+		  response =>
+		  {
+			  this.programUsers = response;
+		  },
+		  error =>
+		  {
+			  console.log(`*******CreateNewMilestoneComponent.ts error: ${error}`);
+		  }
+	  )
   }
 
   create(createMilestoneForm: NgForm)
@@ -79,7 +98,7 @@ export class CreateNewMilestoneComponent implements OnInit {
 			this.message = "An error has occurred while creating the new milestone";
 			console.log('********** CreateNewMilestoneComponent.ts: ERROR **********');
 		}
-		this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate).subscribe(
+		this.milestoneService.createNewMilestone(this.newMilestone, this.programId, this.targetCompletionDate, this.assignedUserId).subscribe(
 			response => {
 				let newMilestoneId: number = response;
 				this.resultSuccess = true;
@@ -89,7 +108,7 @@ export class CreateNewMilestoneComponent implements OnInit {
 			error => {
 				this.resultError = true;
 				this.resultSuccess = false;
-				this.message = "An error has occurred while creating the new program: " + error;
+				this.message = "An error has occurred while creating the new milestone: " + error;
 				
 				console.log(`********** CreateNewMilestoneComponent.ts: ${error}`);
 			}

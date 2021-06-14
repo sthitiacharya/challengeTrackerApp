@@ -36,6 +36,13 @@
 				</mat-select>
 			  </mat-form-field>
 
+			  <mat-form-field *ngIf="milestoneToUpdate.milestoneType == 'Individual'" class="example-full-width">
+				<mat-label>Assign User To Milestone</mat-label>
+				<mat-select id="user" name="user" [(ngModel)]="assignedUserId">
+					<mat-option *ngFor="let user of programUsers" value="{{user.userId}}">{{user.username}}</mat-option>
+				</mat-select>
+			  </mat-form-field>
+
 			  <mat-form-field class="example-full-width">
 				<mat-label>Which of these categories does this milestone fit in?</mat-label>
 				<mat-select id="valueCategory" name="valueCategory" #valueCategory="ngModel" [(ngModel)]="milestoneToUpdate.valueCategory">

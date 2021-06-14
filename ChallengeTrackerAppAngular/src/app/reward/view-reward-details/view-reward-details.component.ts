@@ -54,7 +54,7 @@ export class ViewRewardDetailsComponent implements OnInit {
 			response => {
         this.error = false;
         this.message = `Reward ${rewardId} redeemed successfully`;
-				//this.router.navigate(['/redeemedRewards']);
+				this.router.navigate(['/redeemedRewards']);
 			},
 			error => {
         this.error = true;

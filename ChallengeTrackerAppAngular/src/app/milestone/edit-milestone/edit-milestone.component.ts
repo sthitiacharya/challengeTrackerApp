@@ -35,6 +35,8 @@ export class EditMilestoneComponent implements OnInit {
 	educationValueType = ["No. of hours studied / day", "No. of books read / day", "No. of assignments completed", "No. of courses completed"];
 	
   targetCompletionDate: string | undefined;
+  assignedUserId: number | null;
+  programUsers: User[];
 	
 	resultSuccess: boolean;
 	resultError: boolean;
@@ -43,12 +45,15 @@ export class EditMilestoneComponent implements OnInit {
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private milestoneService: MilestoneService,
-	private sessionService: SessionService) {
+	  private sessionService: SessionService,
+    private userService: UserService) {
       this.submitted = false;
       this.milestoneToUpdate = new Milestone();
 
       this.milestoneId = null;
       this.programId = null;
+      this.assignedUserId = null;
+      this.programUsers = new Array();
 
       this.retrieveMilestoneError = false;
       this.resultSuccess = false;
@@ -80,7 +85,15 @@ export class EditMilestoneComponent implements OnInit {
 
     this.programId = this.milestoneService.getProgramId();
     console.log(`Program ID: ${this.programId}`);
-    
+
+    this.userService.getProgramUsers(this.programId).subscribe(
+      response => {
+        this.programUsers = response;
+      },
+      error => {
+        console.log(`EditMilestoneComponent.ts: ${error}`);
+      }
+    );
 	}
   
   update(updateMilestoneForm: NgForm)
@@ -95,7 +108,7 @@ export class EditMilestoneComponent implements OnInit {
       return;
     }
 
-    this.milestoneService.updateMilestone(this.milestoneToUpdate, this.programId, this.targetCompletionDate).subscribe(
+    this.milestoneService.updateMilestone(this.milestoneToUpdate, this.programId, this.targetCompletionDate, this.assignedUserId).subscribe(
       response => {					
         this.resultSuccess = true;
         this.resultError = false;

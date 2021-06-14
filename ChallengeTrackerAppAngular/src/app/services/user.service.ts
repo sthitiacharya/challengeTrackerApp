@@ -51,6 +51,14 @@ export class UserService {
     );
   }
 
+  getProgramUsers(programId?: number | null): Observable<User[]>
+  {				
+    return this.httpClient.get<User[]>(`${this.baseUrl}/retrieveProgramUsers/${programId}`).pipe
+    (
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse)
   {
     let errorMessage: string = "";
