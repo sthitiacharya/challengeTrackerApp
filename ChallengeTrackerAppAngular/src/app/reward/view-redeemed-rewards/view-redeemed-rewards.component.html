@@ -5,12 +5,13 @@
 	
     <div class="main-wrapper" fxLayout="column" fxLayoutAlign="center center">
 		<mat-card *ngFor= "let rewardHistory of rewardHistories" class="box">
+            <img mat-card-image src="{{rewardHistory.reward?.rewardImageLink}}">
             <mat-card-header>
                 <mat-card-title>{{rewardHistory.reward?.rewardTitle}}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <h3>{{rewardHistory.dateOfRedemption}}</h3>
-                <h4>{{rewardHistory.redeemPointValue}} Points</h4>
+                <h3>Redeemed On: {{rewardHistory.dateOfRedemption}}</h3>
+                <h4>Redeemed For: {{rewardHistory.redeemPointValue}} Points</h4>
             </mat-card-content>
 		</mat-card>
 	</div>

@@ -3,8 +3,9 @@
     <div class="welcome"><h1>Rewards</h1></div>			
 	<br/>
 	
-    <div class="main-wrapper" fxLayout="row wrap" fxLayoutAlign="center center">
+    <div class="main-wrapper" fxLayout="column wrap" fxLayoutAlign="center center">
 		<mat-card *ngFor= "let reward of rewards" class="box">
+      <img mat-card-image src="{{reward.rewardImageLink}}">
 		  <mat-card-header>
 			<mat-card-title>{{reward.rewardTitle}}</mat-card-title>
 		  </mat-card-header>
