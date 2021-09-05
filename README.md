@@ -19,4 +19,4 @@ TrackVision is an application that incentivises the process of goal tracking thr
 ![Figure 3: Login Page of Application](/images/loginPage.png)
 
 ## Demo Video
-
+![Demo of Application](/images/TrackVision.mp4)
