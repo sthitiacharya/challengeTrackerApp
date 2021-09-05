@@ -15,15 +15,6 @@
 <br/><br/><br/>
 <mat-sidenav-container>
   <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
-    <mat-list-item>
-      <mat-icon mat-list-icon>person</mat-icon>
-      <div mat-line>{{user.username}}</div>
-    </mat-list-item>
-
-    <br/>
-    <mat-divider></mat-divider>
-    <br/>
-
     <button mat-button [routerLink]="['/reminders']">
       <mat-icon>timer</mat-icon>
       <span>Reminders</span>

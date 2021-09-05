@@ -64,7 +64,7 @@
 				<mat-select *ngIf="milestoneToUpdate.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="milestoneToUpdate.valueType" required="true">
 					<mat-option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </mat-option>
 				</mat-select>
-				<mat-label>None of the options above fit your needs? Specify your own measurement for the milestone here!</mat-label>
+				<br/><br/>
 				<input matInput id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="milestoneToUpdate.valueType" required="true" />
 			  </mat-form-field>
 			  <mat-error *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
@@ -74,7 +74,8 @@
 			  </mat-error>
 
 			  <mat-form-field class="example-full-width">
-				<mat-label>Initial Value</mat-label>
+				<mat-label *ngIf="milestoneToUpdate.milestoneType == 'Individual'">Initial Value (Absolute)</mat-label>
+				<mat-label *ngIf="milestoneToUpdate.milestoneType == 'Program'">Initial Value (Average)</mat-label>
 				<input matInput id="initialValue" name="initialValue" #initialValue="ngModel" type="text" [(ngModel)]="milestoneToUpdate.initialValue" required="true" />
 			  </mat-form-field>
 			  <mat-error *ngIf="initialValue.invalid && (initialValue.dirty || initialValue.touched || submitted)">
@@ -84,7 +85,8 @@
 			  </mat-error>
 
 			  <mat-form-field class="example-full-width">
-				<mat-label>Target Value</mat-label>
+				<mat-label *ngIf="milestoneToUpdate.milestoneType == 'Individual'">Target Value (Absolute)</mat-label>
+				<mat-label *ngIf="milestoneToUpdate.milestoneType == 'Program'">Target Value (Average)</mat-label>
 				<input matInput id="targetValue" name="targetValue" #targetValue="ngModel" type="text" [(ngModel)]="milestoneToUpdate.targetValue" required="true" />
 			  </mat-form-field>
 			  <mat-error *ngIf="targetValue.invalid && (targetValue.dirty || targetValue.touched || submitted)">

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-//import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +27,6 @@ import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/cr
 import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
 import { UserLoginComponent } from './userManagement/user-login/user-login.component';
 
-//import { AuthInterceptor } from './helpers/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
