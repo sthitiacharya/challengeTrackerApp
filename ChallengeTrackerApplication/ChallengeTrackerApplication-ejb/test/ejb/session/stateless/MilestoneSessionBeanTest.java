@@ -39,11 +39,11 @@ public class MilestoneSessionBeanTest {
     
     
     public MilestoneSessionBeanTest() {
-        milestoneSessionBean = lookupMilestoneSessionBeanLocal();
     }
     
     @BeforeClass
     public static void setUpClass() {
+        milestoneSessionBean = lookupMilestoneSessionBeanLocal();
     }
     
     @AfterClass
@@ -66,7 +66,7 @@ public class MilestoneSessionBeanTest {
         String stringDate2 = "17-05-2021";
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
-        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Weight", 10);
+        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58),"Health", "Weight", 10);
         Long actualMilestoneId = milestoneSessionBean.createMilestone(expectedMilestone, 1l);
         
         assertNotNull(actualMilestoneId);
@@ -80,7 +80,7 @@ public class MilestoneSessionBeanTest {
         String stringDate2 = "17-05-2021";
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
-        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Weight", 10);
+        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Health", "Weight", 10);
         Long actualMilestoneId = milestoneSessionBean.createMilestone(expectedMilestone, 1l);    
     }
  
@@ -91,7 +91,7 @@ public class MilestoneSessionBeanTest {
         String stringDate2 = "17-05-2021";
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
-        Milestone expectedMilestone = new Milestone("T1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Weight", 10);
+        Milestone expectedMilestone = new Milestone("T1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Health", "Weight", 10);
         Long actualMilestoneId = milestoneSessionBean.createMilestone(expectedMilestone, 1l);
         
     }
@@ -103,7 +103,7 @@ public class MilestoneSessionBeanTest {
         String stringDate2 = "17-05-2021";
         Date date = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate);
         Date date2 = new SimpleDateFormat("dd-MM-yyyy").parse(stringDate2);
-        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Weight", 10);
+        Milestone expectedMilestone = new Milestone("Title 1", "Description 1", "Program", date, date2, new BigDecimal(60), new BigDecimal(58), "Health", "Weight", 10);
         Long actualMilestoneId = milestoneSessionBean.createMilestone(expectedMilestone, 3l);   
     }
     

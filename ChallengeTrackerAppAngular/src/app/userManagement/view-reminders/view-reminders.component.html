@@ -1,0 +1,13 @@
+<section id="content" class="content">
+    <br/><br/><br/>
+    <div class="main-wrapper" fxLayout="column" fxLayoutAlign="center center">
+		<mat-card *ngFor= "let reminder of reminders" class="reminderbox">
+            <button mat-icon-button color="warn" style="margin-left: 750px;" aria-label="Dismiss" (click)="dismiss(reminder)">
+                <mat-icon>clear</mat-icon>
+            </button>
+		  <mat-card-header>
+			<mat-card-title>{{reminder}}</mat-card-title>
+		  </mat-card-header>
+		</mat-card>
+	</div>
+</section>

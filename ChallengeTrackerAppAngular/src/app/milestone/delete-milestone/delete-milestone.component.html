@@ -1,0 +1,31 @@
+<section id="content" class="content">
+    <br/><br/><br/>
+    <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+        <mat-card *ngIf="error == true" class="box">
+            <mat-card-header>
+              <mat-card-title style="color: red;">Milestone ID {{milestoneId}} does not exist!</mat-card-title>
+            </mat-card-header>
+            <button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Back</button>
+        </mat-card>
+
+		<mat-card *ngIf="error == false" class="programbox">
+		  <mat-card-header>
+			<mat-card-title>{{milestoneToDelete.title}}</mat-card-title>
+		  </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                      <mat-icon mat-list-icon>note</mat-icon>
+                      <div mat-line>Description: {{milestoneToDelete.description}}</div>
+                      <div mat-line>Target Completion Date: {{milestoneToDelete.targetCompletionDate}}</div>
+                      <div mat-line>Milestone Type: {{milestoneToDelete.milestoneType}}</div>
+                      <div mat-line>Value Type: {{milestoneToDelete.valueType}}</div>
+                      <div mat-line>Initial Value: {{milestoneToDelete.initialValue}}</div>
+                      <div mat-line>Target Value: {{milestoneToDelete.targetValue}}</div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+            <button mat-stroked-button color="primary" class="btn-block" (click)="deleteMilestone()">Confirm Deletion</button>
+		</mat-card>
+	</div>
+</section>

@@ -1,0 +1,8 @@
+<header class="header">
+  <mat-toolbar color="primary">
+    <span class="positronx">TrackVision</span>
+    <span class="nav-tool-items">
+      <a *ngIf="sessionService.getIsLogin() == true" mat-button mat-raised-button (click)="userLogout()" [routerLink]="['/index']">Logout</a>
+    </span>
+  </mat-toolbar>  
+</header>

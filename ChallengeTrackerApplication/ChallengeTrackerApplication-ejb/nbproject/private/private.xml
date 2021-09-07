@@ -3,14 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/ProgramSessionBean.java</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/UserEntitySessionBeanLocal.java</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/setup/glassfish-resources.xml</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/entity/Program.java</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/ProgramSessionBeanLocal.java</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/entity/User.java</file>
-            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/UserEntitySessionBean.java</file>
+            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/NewSessionBean.java</file>
+            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/src/java/ejb/session/stateless/NewSessionBeanLocal.java</file>
+            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/test/ejb/session/stateless/MilestoneSessionBeanTest.java</file>
             <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/test/ejb/session/stateless/ProgramSessionBeanTest.java</file>
+            <file>file:/C:/Users/sthit/Documents/ISYear2/CreditSuisseProject/ChallengeTrackerProject/ChallengeTrackerApplication/ChallengeTrackerApplication-ejb/test/ejb/session/stateless/NewTest.java</file>
         </group>
     </open-files>
 </project-private>

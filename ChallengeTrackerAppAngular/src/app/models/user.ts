@@ -8,7 +8,7 @@ export class User {
 	password: string | undefined;
 	enrolledPrograms: Program[] | undefined;
     programsManaging: Program[] | undefined;
-	
+	//authbody: string | undefined;
 	
 	constructor(userId?: number, email?: string, mailingAddress?: string, username?: string, password?: string)
 	{

@@ -4,17 +4,12 @@ import entity.Program;
 import entity.User;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import javax.transaction.UserTransaction;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -37,128 +32,88 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
     private UserEntitySessionBeanLocal userSessionBeanLocal;
 
     @PersistenceContext(unitName = "ChallengeTrackerApplication-ejbPU")
-    private EntityManager em;
+    private EntityManager entityManager;
     
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
-    
-    
+
     
     public ProgramSessionBean()
     {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
     }
-    
-    @Override
-    public Long createProgram(Program program) throws ProgramTitleExistException, UnknownPersistenceException, InputDataValidationException
-    {
-        Set<ConstraintViolation<Program>>constraintViolations = validator.validate(program);
         
-        if (constraintViolations.isEmpty())
-        {
-            try {
-                em.persist(program);
-                em.flush();
-                return program.getProgramId();
-            }
-            catch (PersistenceException ex)
-            {
-                if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
-                {
-                    if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                    {
-                        throw new ProgramTitleExistException();
-                    }
-                    else
-                    {
-                        throw new UnknownPersistenceException(ex.getMessage());
-                    }
-                }
-                else
-                {
-                    throw new UnknownPersistenceException(ex.getMessage());
-                }
-            }
-        }
-        else
-        {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
-        }
-    }
-    
     @Override
     public Long createProgram(Program program, Long programManagerId, List<Long> userIds) throws ProgramTitleExistException, UnknownPersistenceException, InputDataValidationException, CreateNewProgramException
     {
-        Set<ConstraintViolation<Program>>constraintViolations = validator.validate(program);
-        
-        if (constraintViolations.isEmpty())
-        {
-            try {
-                if (programManagerId != null)
-                {
-                    User programManager = userSessionBeanLocal.retrieveUserByUserId(programManagerId);
-                    em.persist(program);
-                    program.setProgramManager(programManager);
-                    programManager.getProgramsManaging().add(program);
-                }
-                else
-                {
-                    throw new CreateNewProgramException("Program must be associated with a program manager");
-                }
-                                
-                if (userIds != null && (!userIds.isEmpty()))
-                {
-                    for (Long userId : userIds)
-                    {
-                        User user = userSessionBeanLocal.retrieveUserByUserId(userId);
-                        program.getUserList().add(user);
-                        user.getEnrolledPrograms().add(program);
-                    }
-                }
-
-                em.flush();
-                return program.getProgramId();
-            }
-            catch (PersistenceException ex)
+        try {
+            Set<ConstraintViolation<Program>>constraintViolations = validator.validate(program);
+            if (!constraintViolations.isEmpty())
             {
-                if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            }
+            
+            //ensure mandatory association of program with program manager
+            if (programManagerId == null)
+            {
+                throw new CreateNewProgramException("Program must be associated with a program manager");
+            }
+            
+            //persisting object into database
+            User programManager = userSessionBeanLocal.retrieveUserByUserId(programManagerId);
+            entityManager.persist(program);
+            
+            //bi-directional association
+            program.setProgramManager(programManager);
+            programManager.getProgramsManaging().add(program);
+            
+            if (userIds != null && (!userIds.isEmpty()))
+            {
+                for (Long userId : userIds)
                 {
-                    if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
-                    {
-                        throw new ProgramTitleExistException("Program Title already exists");
-                    }
-                    else
-                    {
-                        throw new UnknownPersistenceException(ex.getMessage());
-                    }
+                    User user = userSessionBeanLocal.retrieveUserByUserId(userId);
+                    program.getUserList().add(user);
+                    user.getEnrolledPrograms().add(program);
+                }
+            }
+
+            entityManager.flush();
+            return program.getProgramId();
+        }
+        catch (PersistenceException ex)
+        {
+            if(ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException"))
+            {
+                if(ex.getCause().getCause() != null && ex.getCause().getCause().getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException"))
+                {
+                    throw new ProgramTitleExistException("Program Title already exists");
                 }
                 else
                 {
                     throw new UnknownPersistenceException(ex.getMessage());
-                }           
-            } catch (UserNotFoundException ex) {
-                throw new CreateNewProgramException("Invalid User ID keyed in");
+                }
             }
-        }
-        else
-        {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            else
+            {
+                throw new UnknownPersistenceException(ex.getMessage());
+            }           
+        } catch (UserNotFoundException ex) {
+            throw new CreateNewProgramException("Invalid User ID keyed in");
         }
     }
     
     @Override
     public List<Program> retrieveAllPrograms()
     {
-        Query query = em.createNamedQuery("Program.findAll");
+        Query query = entityManager.createNamedQuery("Program.findAll");
         return query.getResultList();
     }
     
     @Override
      public Program retrieveProgramByProgramId(Long programId) throws ProgramNotFoundException
     {
-       
-        Program program = em.find(Program.class, programId);
+        Program program = entityManager.find(Program.class, programId);
         
         if(program != null)
         {
@@ -172,7 +127,7 @@ public class ProgramSessionBean implements ProgramSessionBeanLocal {
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Program>>constraintViolations)
     {
-        String msg = "Input data validation error!:";
+        String msg = "Input data validation error:";
             
         for(ConstraintViolation constraintViolation:constraintViolations)
         {

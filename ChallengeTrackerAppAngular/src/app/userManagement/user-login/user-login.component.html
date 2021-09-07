@@ -1,0 +1,76 @@
+<section (childEvent)="parentEvent()">
+  <br/><br/><br/>
+  <div *ngIf="sessionService.getIsLogin() == false" class="welcome">
+    <h1><b>Welcome to TrackVision! To get started, please login</b></h1>
+  </div>
+  <br/>
+  <div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box" *ngIf="sessionService.getIsLogin() == false">
+        <mat-card-content>
+            <mat-card-header>
+                <mat-card-title>Log In</mat-card-title>
+            </mat-card-header>
+            <div>
+              <input matInput class="textbox" type="text" [(ngModel)]="username" placeholder="Username" size="16" required
+              maxlength="32" style="width: 400px;"/>
+            </div>
+          &nbsp;
+            <div>
+              <input matInput class="textbox" type="password" [(ngModel)]="password" placeholder="Password" size="16" required
+                  maxlength="32" style="width: 400px;" />
+            </div>
+            &nbsp;
+            <div>
+              <button mat-stroked-button color="primary" class="btn-block" (click)="userLogin()">Login</button>
+              &nbsp;
+              <p>New to this platform? </p>
+              <button mat-stroked-button color="warn" class="btn-block" [routerLink]="['/register']">Register</button>
+              &nbsp;
+            </div>
+        </mat-card-content>
+        <mat-error *ngIf="loginError == true">
+          {{ errorMessage }}
+        </mat-error>
+    </mat-card>
+
+    <mat-card class="box"*ngIf="sessionService.getIsLogin() == true">
+        <mat-card-content>
+            <mat-card-header>
+                <mat-card-title>Welcome, {{sessionService.getCurrentUser().username}}</mat-card-title>
+            </mat-card-header>
+            <button mat-raised-button color="primary" [routerLink]="['/program/createProgram']">Create Program</button>
+            <br/>
+            <br/>
+            <button mat-raised-button color="primary" (click)="userLogout()">Logout</button>
+        </mat-card-content>
+    </mat-card>
+  </div>
+</section>  
+<!--
+    <aside id="loginbox" class="loginbox">
+        <div *ngIf="sessionService.getIsLogin() == false">
+            <h2 style="text-align: center;">Log in</h2> &nbsp;
+            <div>
+            <input class="textbox" type="text" [(ngModel)]="username" placeholder="Username" size="16" required
+                maxlength="32" style="width: 400px;"/>
+            </div>
+            &nbsp;
+            <div>
+            <input class="textbox" type="password" [(ngModel)]="password" placeholder="Password" size="16" required
+                maxlength="32" style="width: 400px;" />
+            </div>
+            &nbsp;
+            <div>
+            <input mat-raised-button color="primary" type="button" (click)="userLogin()" value="Login"/>
+            &nbsp;
+            <p>New to this platform? </p>
+            <input mat-raised-button color="primary" type="button" [routerLink]="['/register']" value="Register" />
+            &nbsp;
+            </div>
+        </div>
+
+        <div *ngIf="loginError == true" style="text-align: right; color: red">
+            {{ errorMessage }}
+        </div>
+    </aside>
+-->

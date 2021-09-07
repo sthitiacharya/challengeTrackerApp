@@ -1,0 +1,134 @@
+<section id="content" class="content">
+	<br/><br/><br/>
+	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card class="box">
+		  <mat-card-header>
+			<mat-card-title>Register</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #createUserForm="ngForm" (ngSubmit)="create(createUserForm)">
+			<mat-card-content>
+			  <mat-form-field class="example-full-width">
+				<mat-label>Username</mat-label>
+				<input matInput id="username" name="username" #username="ngModel" type="text" [(ngModel)]="newUser.username" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="username.invalid && (username.dirty || username.touched || submitted)">
+				<div *ngIf="username.errors != null && username.errors.required">
+					Username is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Email</mat-label>
+				<input matInput id="email" name="email" #email="ngModel" type="text" [(ngModel)]="newUser.email" required="true"/>
+			  </mat-form-field>
+			  <mat-error *ngIf="email.invalid && (email.dirty || email.touched || submitted)">
+				<div *ngIf="email.errors != null && email.errors.required">
+					Email is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Password</mat-label>
+				<input matInput id="password" name="password" #password="ngModel" type="password" [(ngModel)]="newUser.password" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="password.invalid && (password.dirty || password.touched || submitted)">
+				<div *ngIf="password.errors != null && password.errors.required">
+					Password is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Mailing Address</mat-label>
+				<input matInput id="mailingAddress" name="mailingAddress" #mailingAddress="ngModel" type="text" [(ngModel)]="newUser.mailingAddress" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="mailingAddress.invalid && (mailingAddress.dirty || mailingAddress.touched || submitted)">
+				<div *ngIf="mailingAddress.errors != null && mailingAddress.errors.required">
+					Mailing address is required.
+				</div>
+			  </mat-error>
+
+			</mat-card-content>
+	  
+			<button mat-stroked-button color="primary" class="btn-block" type="submit">Register</button>
+		  </form>
+		  <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+		</mat-card>
+	</div>
+<!--
+	<h3>Register User</h3>
+	<br/>
+	
+	<div *ngIf="resultSuccess == true" style="color:blue;">
+		{{message}}
+	</div>
+	
+	<div *ngIf="resultError == true" style="color:red;">
+		{{message}}
+	</div>
+		
+    <form #createUserForm="ngForm" (ngSubmit)="create(createUserForm)" >
+	
+		<table width="100%">			
+			<tr>
+				<td width="20%" style="font-weight: bold;">Username: </td>
+				<td><input id="username" name="username" #username="ngModel" type="text" [(ngModel)]="newUser.username" required="true" /></td>
+				<td>
+					<div *ngIf="username.invalid && (username.dirty || username.touched || submitted)" class="errorText">
+						<div *ngIf="username.errors != null && username.errors.required">
+							Username is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Email: </td>
+				<td><input id="email" name="email" #email="ngModel" type="text" [(ngModel)]="newUser.email"/></td>
+                <td>
+					<div *ngIf="email.invalid && (email.dirty || email.touched || submitted)" class="errorText">
+						<div *ngIf="email.errors != null && email.errors.required">
+							Email is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Password: </td>
+				<td><input id="password" name="password" #password="ngModel" type="password" [(ngModel)]="newUser.password" required="true" /></td>
+				<td>
+					<div *ngIf="password.invalid && (password.dirty || password.touched || submitted)" class="errorText">
+						<div *ngIf="password.errors != null && password.errors.required">
+							Password is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+            <tr>
+				<td width="20%" style="font-weight: bold;">Mailing Address: </td>
+				<td><input id="mailingAddress" name="mailingAddress" #mailingAddress="ngModel" type="text" [(ngModel)]="newUser.mailingAddress" required="true" /></td>
+				<td>
+					<div *ngIf="mailingAddress.invalid && (mailingAddress.dirty || mailingAddress.touched || submitted)" class="errorText">
+						<div *ngIf="mailingAddress.errors != null && mailingAddress.errors.required">
+                            Mailing address is required.
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="text-align: center;">
+					<input type="submit" value="Register"/>
+				</td>
+			</tr>
+			
+		</table>
+	</form>
+	-->
+	<!--<div>
+        <button routerLink="/program/createProgram">Create Program</button>
+    </div>-->
+</section>

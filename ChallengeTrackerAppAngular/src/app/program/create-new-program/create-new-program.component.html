@@ -1,5 +1,71 @@
 <section id="content" class="content">
-			
+	<br/><br/><br/>
+	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card class="box">
+		  <mat-card-header>
+			<mat-card-title>Create Program</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #createProgramForm="ngForm" (ngSubmit)="create(createProgramForm)">
+			<mat-card-content>
+			  <mat-form-field class="example-full-width">
+				<mat-label>Title</mat-label>
+				<input matInput id="title" name="title" #title="ngModel" type="text" [(ngModel)]="newProgram.title" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="title.invalid && (title.dirty || title.touched || submitted)" class="errorText">
+				<div *ngIf="title.errors != null && title.errors.required">
+					Program Title is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Description</mat-label>
+				<textarea matInput id="description" name="description" #description="ngModel" [(ngModel)]="newProgram.description"></textarea>
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Start Date</mat-label>
+				<input matInput [matDatepicker]="picker" id="startDate" name="startDate" #startDate="ngModel" [(ngModel)]="newProgram.startDate" required="true">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			  </mat-form-field>
+			  <mat-error *ngIf="startDate.invalid && (startDate.dirty || startDate.touched || submitted)" class="errorText">
+				<div *ngIf="startDate.errors != null && startDate.errors.required">
+					Program Start Date is required.
+				</div>
+			  </mat-error>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Completion Date</mat-label>
+				<input matInput [matDatepicker]="picker2" id="targetCompletionDate" name="targetCompletionDate" #targetCompletionDate="ngModel" [(ngModel)]="newProgram.targetCompletionDate" required="true">
+				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+				<mat-datepicker #picker2></mat-datepicker>
+			  </mat-form-field>
+			  <mat-error *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
+				<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
+					Program Target Completion Date is required.
+				</div>
+			  </mat-error>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Assign Users To Program</mat-label>
+				<mat-select id="user" name="user" [(ngModel)]="userIds" multiple="true">
+					<mat-option *ngFor="let user of users" value="{{user.userId}}">{{user.username}}</mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			</mat-card-content>
+			<button mat-stroked-button color="primary" class="btn-block" *ngIf="resultSuccess == false" type="submit">Create New Program</button>
+			<button mat-stroked-button color="primary" class="btn-block" *ngIf="resultSuccess == true" routerLink="/milestone/createMilestone">Next</button>
+		  </form>
+		  <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+		</mat-card>
+	</div>
+<!--		
 	<h3>Create New Program</h3>
 	<br/>
 	
@@ -32,24 +98,24 @@
 			<tr>
 				<td width="20%" style="font-weight: bold;">Program Start Date: </td>
 				<td><input id="startDate" name="startDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="startDate" required="true" /></td>
-				<!--<td>
+				<td>
 					<div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched || submitted)" class="errorText">
 						<div *ngIf="startDate.errors != null && startDate.errors.required">
 							Start Date is required.
 						</div>
 					</div>
-				</td>-->
+				</td>
 			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">Program Target Completion Date: </td>
 				<td><input id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" /></td>
-				<!--<td>
+				<td>
 					<div *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
 						<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
 							Target Completion Date is required.
 						</div>
 					</div>
-				</td>-->
+				</td>
 			</tr>
 			<tr>
 				<td width="20%" style="font-weight: bold;">Assign Users to Program: </td>
@@ -72,5 +138,5 @@
 			
 		</table>
 	</form>
-	
+-->	
 </section>

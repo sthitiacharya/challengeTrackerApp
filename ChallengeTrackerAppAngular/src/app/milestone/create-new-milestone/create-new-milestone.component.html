@@ -1,5 +1,129 @@
 <section id="content" class="content">
-			
+	<div class="main-wrapper" fxLayout="row" fxLayoutAlign="center center">
+		<mat-card class="box">
+		  <mat-card-header>
+			<mat-card-title>Creating Milestones</mat-card-title>
+		  </mat-card-header>
+		  <form class="example-form" #createMilestoneForm="ngForm" (ngSubmit)="create(createMilestoneForm)">
+			<mat-card-content>
+			  <mat-form-field class="example-full-width">
+				<mat-label>Title</mat-label>
+				<input matInput id="title" name="title" #title="ngModel" type="text" [(ngModel)]="newMilestone.title" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="title.invalid && (title.dirty || title.touched || submitted)">
+				<div *ngIf="title.errors != null && title.errors.required">
+					Milestone Title is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Description</mat-label>
+				<textarea matInput id="description" name="description" #description="ngModel" [(ngModel)]="newMilestone.description"></textarea>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Completion Date</mat-label>
+				<input matInput [matDatepicker]="picker" id="targetCompletionDate" name="targetCompletionDate" placeholder="dd-mm-yyyy" #targetCompletionDate="ngModel" [(ngModel)]="newMilestone.targetCompletionDate">
+				<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker></mat-datepicker>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Milestone Type</mat-label>
+				<mat-select id="milestoneType" name="milestoneType" #milestoneType="ngModel" [(ngModel)]="newMilestone.milestoneType">
+					<mat-option value="Individual">Individual</mat-option>
+					<mat-option value="Program">Program</mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Which of these categories does this milestone fit in?</mat-label>
+				<mat-select id="valueCategory" name="valueCategory" #valueCategory="ngModel" [(ngModel)]="newMilestone.valueCategory">
+					<mat-option *ngFor="let name of valueCategories" [value]="name"> {{valueCategoryEnum[name]}} </mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>How would you like to measure your milestone by?</mat-label>
+				<mat-select *ngIf="newMilestone.valueCategory == 'Health'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+					<mat-option *ngFor="let healthValue of healthValueType" [value]="healthValue"> {{healthValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="newMilestone.valueCategory == 'Career'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+					<mat-option *ngFor="let careerValue of careerValueType" [value]="careerValue"> {{careerValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="newMilestone.valueCategory == 'Finance'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+					<mat-option *ngFor="let financeValue of financeValueType" [value]="financeValue"> {{financeValue}} </mat-option>
+				</mat-select>
+				<mat-select *ngIf="newMilestone.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+					<mat-option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </mat-option>
+				</mat-select>
+				<mat-label>None of the options above fit your needs? Specify your own measurement for the milestone here!</mat-label>
+				<input matInput id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
+				<div *ngIf="valueType.errors != null && valueType.errors.required">
+					Value type is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Initial Value</mat-label>
+				<input matInput id="initialValue" name="initialValue" #initialValue="ngModel" type="text" [(ngModel)]="newMilestone.initialValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="initialValue.invalid && (initialValue.dirty || initialValue.touched || submitted)">
+				<div *ngIf="initialValue.errors != null && initialValue.errors.required">
+					Initial value is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Target Value</mat-label>
+				<input matInput id="targetValue" name="targetValue" #targetValue="ngModel" type="text" [(ngModel)]="newMilestone.targetValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="targetValue.invalid && (targetValue.dirty || targetValue.touched || submitted)">
+				<div *ngIf="targetValue.errors != null && targetValue.errors.required">
+					Target value is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Reward Value</mat-label>
+				<input matInput id="rewardValue" name="rewardValue" #rewardValue="ngModel" type="text" [(ngModel)]="newMilestone.rewardValue" required="true" />
+			  </mat-form-field>
+			  <mat-error *ngIf="rewardValue.invalid && (rewardValue.dirty || rewardValue.touched || submitted)">
+				<div *ngIf="rewardValue.errors != null && rewardValue.errors.required">
+					Reward value is required.
+				</div>
+			  </mat-error>
+
+			  <mat-form-field class="example-full-width">
+				<mat-label>Set Reminder Start Date:</mat-label>
+				<input matInput [matDatepicker]="picker2" id="reminderStartDate" name="reminderStartDate" #reminderStartDate="ngModel" [(ngModel)]="newMilestone.reminderStartDate">
+				<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+				<mat-datepicker #picker2></mat-datepicker>
+			  </mat-form-field>
+			  
+			  <mat-form-field class="example-full-width">
+				<mat-label>Reminder Interval</mat-label>
+				<mat-select id="reminderInterval" name="reminderInterval" #reminderInterval="ngModel" [(ngModel)]="newMilestone.reminderInterval">
+					<mat-option *ngFor="let reminder of reminderIntervals" [value]="reminder"> {{reminder}} </mat-option>
+				</mat-select>
+			  </mat-form-field>
+
+			</mat-card-content>
+			<button mat-stroked-button color="primary" class="btn-block" routerLink="/program/createProgram">Back</button>
+			<button mat-stroked-button color="primary" class="btn-block" type="submit">Create New Milestone</button>
+			<button mat-stroked-button color="primary" class="btn-block" routerLink="/dashboard">Finish</button>
+		  </form>
+		  <div *ngIf="resultSuccess == true" style="color:blue;">
+			{{message}}
+		  </div>
+		  <div *ngIf="resultError == true" style="color:red;">
+			{{message}}
+		  </div>
+		</mat-card>
+	</div>
+	<!--
 	<h3>Create New Program - Adding Milestones</h3>
 	<br/>
 	
@@ -32,13 +156,13 @@
             <tr>
 				<td width="20%" style="font-weight: bold;">Milestone Target Completion Date: </td>
 				<td><input id="targetCompletionDate" name="targetCompletionDate" type="text" placeholder="dd-mm-yyyy" [(ngModel)]="targetCompletionDate" required="true" /></td>
-				<!--<td>
+				<td>
 					<div *ngIf="targetCompletionDate.invalid && (targetCompletionDate.dirty || targetCompletionDate.touched || submitted)" class="errorText">
 						<div *ngIf="targetCompletionDate.errors != null && targetCompletionDate.errors.required">
 							Target Completion Date is required.
 						</div>
 					</div>
-				</td>-->
+				</td>
 			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">Milestone Type: </td>
@@ -56,13 +180,42 @@
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<td width="20%" style="font-weight: bold;">Which of these categories does this milestone fit in?</td>
+				<td>
+					<select id="valueCategory" name="valueCategory" #valueCategory="ngModel" [(ngModel)]="newMilestone.valueCategory">
+                        <option *ngFor="let name of valueCategories" [value]="name"> {{valueCategoryEnum[name]}} </option>
+                    </select>	
+				</td>
+				<td>
+					<div *ngIf="valueCategory.invalid && (valueCategory.dirty || valueCategory.touched || submitted)" class="errorText">
+						<div *ngIf="valueCategory.errors != null && valueCategory.errors.required">
+							Value category is required.
+						</div>
+					</div>
+				</td>
+			</tr>
             <tr>
 				<td width="20%" style="font-weight: bold;">How would you like to measure your milestone by?</td>
-				<td><input id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" /></td>
+				<td>
+					<select *ngIf="newMilestone.valueCategory == 'Health'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let healthValue of healthValueType" [value]="healthValue"> {{healthValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Career'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let careerValue of careerValueType" [value]="careerValue"> {{careerValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Finance'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let financeValue of financeValueType" [value]="financeValue"> {{financeValue}} </option>
+					</select>
+					<select *ngIf="newMilestone.valueCategory == 'Education'" id="valueType" name="valueType" #valueType="ngModel" [(ngModel)]="newMilestone.valueType" required="true">
+						<option *ngFor="let educationValue of educationValueType" [value]="educationValue"> {{educationValue}} </option>
+					</select>
+				</td>
+				<td><input id="valueType" name="valueType" #valueType="ngModel" type="text" [(ngModel)]="newMilestone.valueType" required="true" /></td>-
 				<td>
 					<div *ngIf="valueType.invalid && (valueType.dirty || valueType.touched || submitted)" class="errorText">
 						<div *ngIf="valueType.errors != null && valueType.errors.required">
-							Milestone type is required.
+							Value type is required.
 						</div>
 					</div>
 				</td>
@@ -110,5 +263,5 @@
 		</table>
 		
 	</form>
-	
+-->
 </section>
