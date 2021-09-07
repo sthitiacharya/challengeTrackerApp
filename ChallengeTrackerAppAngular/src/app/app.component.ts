@@ -11,9 +11,10 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
-  title = 'ChallengeTrackerAppAngular';
+  title = 'TrackVision';
   constructor(private router: Router,
-    public sessionService: SessionService) { }
+    public sessionService: SessionService) {
+     }
 
   ngOnInit(): void {
   }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-//import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +16,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +27,6 @@ import { CreateNewMilestoneComponent } from './milestone/create-new-milestone/cr
 import { RegisterUserComponent } from './userManagement/register-user/register-user.component';
 import { UserLoginComponent } from './userManagement/user-login/user-login.component';
 
-//import { AuthInterceptor } from './helpers/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ViewDashboardComponent } from './program/view-dashboard/view-dashboard.component';
 import { ViewProgramDetailsComponent } from './program/view-program-details/view-program-details.component';
@@ -36,6 +37,10 @@ import { DeleteMilestoneComponent } from './milestone/delete-milestone/delete-mi
 import { ViewMilestoneDetailsComponent } from './milestone/view-milestone-details/view-milestone-details.component';
 import { EditProgressLogComponent } from './progressHistory/edit-progress-log/edit-progress-log.component';
 import { ViewRemindersComponent } from './userManagement/view-reminders/view-reminders.component';
+import { ViewAllRewardsComponent } from './reward/view-all-rewards/view-all-rewards.component';
+import { ViewRewardDetailsComponent } from './reward/view-reward-details/view-reward-details.component';
+import { ViewRedeemedRewardsComponent } from './reward/view-redeemed-rewards/view-redeemed-rewards.component';
+import { ConfirmDialogComponent } from './confirmDialog/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +57,11 @@ import { ViewRemindersComponent } from './userManagement/view-reminders/view-rem
     DeleteMilestoneComponent,
     ViewMilestoneDetailsComponent,
     EditProgressLogComponent,
-    ViewRemindersComponent
+    ViewRemindersComponent,
+    ViewAllRewardsComponent,
+    ViewRewardDetailsComponent,
+    ViewRedeemedRewardsComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +82,13 @@ import { ViewRemindersComponent } from './userManagement/view-reminders/view-rem
     MatTableModule,
     MatListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   providers: [
     //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

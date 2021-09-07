@@ -6,6 +6,8 @@ export class Program {
     description: string | undefined;
 	startDate: string | undefined;
 	targetCompletionDate: Date | undefined;
+	actualCompletedDate: Date | undefined;
+	currentProgressRate: number | undefined;
 	programManager: User | undefined;
     users: User[] | undefined;
 	

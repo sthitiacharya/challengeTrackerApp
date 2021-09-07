@@ -11,8 +11,11 @@
 		  </mat-card-header>
         <mat-card-content>
             <p>Description: {{program.description}}</p>
-            <h5>Program Start Date: {{program.startDate}}</h5>
-            <h5>Target Completion Date: {{program.targetCompletionDate}}</h5>
+            <h4>Program Start Date: {{program.startDate}}</h4>
+            <h4 *ngIf="program.actualCompletedDate == null">Target Completion Date: {{program.targetCompletionDate}}</h4>
+            <h4 *ngIf="program.actualCompletedDate != null">Completed on: {{program.actualCompletedDate}}</h4>
+            <mat-progress-spinner style="margin: auto;" mode="determinate" value="{{program.currentProgressRate}}"></mat-progress-spinner>
+            <h3 style="color: blueviolet; text-align: center;"><b>{{program.currentProgressRate}} %</b></h3>  
         </mat-card-content>
         <button mat-stroked-button color="primary" class="btn-block" routerLink="/program/{{program.programId}}">View More</button>
 		</mat-card>

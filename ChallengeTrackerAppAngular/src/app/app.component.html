@@ -19,13 +19,25 @@
       <mat-icon>timer</mat-icon>
       <span>Reminders</span>
     </button>
+    <br/>
     <button mat-button [routerLink]="['/dashboard']">
       <mat-icon>home</mat-icon>
       <span>Dashboard</span>
     </button>
+    <br/>
     <button mat-button [routerLink]="['/program/createProgram']">
       <mat-icon>add</mat-icon>
       <span>Create Program</span>
+    </button>
+    <br/>
+    <button mat-button [routerLink]="['/rewards']">
+      <mat-icon>store</mat-icon>
+      <span>Rewards Store</span>
+    </button>
+    <br/>
+    <button mat-button [routerLink]="['/redeemedRewards']">
+      <mat-icon>star</mat-icon>
+      <span>Redeemed Rewards</span>
     </button>
   </mat-sidenav>
   <router-outlet></router-outlet>

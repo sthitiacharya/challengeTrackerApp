@@ -21,9 +21,9 @@ export class MilestoneService {
 
   constructor(private httpClient : HttpClient) { }
 
-  createNewMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
+  createNewMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string, assignedUserId?: number | null): Observable<number>
   {		
-    let createMilestoneReq: CreateMilestoneReq = new CreateMilestoneReq(milestone, programId, targetCompletionDate);
+    let createMilestoneReq: CreateMilestoneReq = new CreateMilestoneReq(milestone, programId, targetCompletionDate, assignedUserId);
 
     return this.httpClient.post<number>(this.baseUrl + "/createMilestone", createMilestoneReq, httpOptions).pipe
     (
@@ -45,9 +45,9 @@ export class MilestoneService {
     );
   }
 
-  updateMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string): Observable<number>
+  updateMilestone(milestone?: Milestone, programId?: number | null, targetCompletionDate?: string, assignedUserId?: number | null): Observable<number>
   {		
-    let updateMilestoneReq: UpdateMilestoneReq = new UpdateMilestoneReq(milestone, programId, targetCompletionDate);
+    let updateMilestoneReq: UpdateMilestoneReq = new UpdateMilestoneReq(milestone, programId, targetCompletionDate, assignedUserId);
 
     return this.httpClient.put<number>(this.baseUrl + `/editMilestone/${milestone?.milestoneId}`, updateMilestoneReq, httpOptions).pipe
     (

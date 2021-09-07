@@ -6,6 +6,7 @@ export class User {
     mailingAddress: string | undefined;
 	username: string | undefined;
 	password: string | undefined;
+	rewardPoints: number | undefined;
 	enrolledPrograms: Program[] | undefined;
     programsManaging: Program[] | undefined;
 	//authbody: string | undefined;
