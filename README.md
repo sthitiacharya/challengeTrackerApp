@@ -2,7 +2,7 @@
 
 
 ## Introduction
-TrackVision is an application that incentivises the process of goal tracking through the redeeming of rewards. This application has been built using the Spring framework and Java for the backend, Angular for the frontend of the application, and MySQL for the management of the database. 
+TrackVision is an application that incentivises the process of financial goal tracking through the redeeming of rewards. This application has been built using the Spring framework and Java for the backend, Angular for the frontend of the application, and MySQL for the management of the database. 
 
 ## Features
 **Programs:** In TrackVision, users can start by creating a new program. Within this program, users can invite other users in their friend circle to join this program, so that everyone can work on achieving their goals with the support of their friends. 
